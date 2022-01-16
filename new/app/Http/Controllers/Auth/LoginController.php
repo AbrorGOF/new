@@ -4,11 +4,14 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\DeskLogs;
+use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class LoginController extends Controller
 {
@@ -134,5 +137,91 @@ class LoginController extends Controller
             return ['error' => 'Pinfl is incorrect!'];
         }
 
+    }
+    public function SelectOptions()
+    {
+        $data = array();
+        $regions = DB::table('regions')->get();
+        $cats = DB::table('categories')->get();
+        $data['regions'] = $regions;
+        $data['cats'] = $cats;
+        return response()->json(['data'=>$data]);
+    }
+
+    protected function AuthReg(Request $request)
+    {
+        $check = checkNurse($request->region_id, $request->category_id, $request->passport);
+        if (!empty($check['error'])){
+            session(['check_cert'=> $check['error']['messages']]);
+            return redirect()->back()->withErrors($check['error'])->withInput();
+        }
+        $request->phone = str_replace(array('+','(',')',' ','-'),'',$request->phone);
+        $request->pinfl = str_replace(array('+','(',')',' ','-'),'',$request->pinfl);
+        $request->passport = str_replace(array('+','(',')',' ','-'),'',$request->passport);
+        $validator=Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+            'surname' => 'required|string|max:255',
+            'patronym' => 'string|max:255',
+            'phone' => 'required|unique:users',
+            'user_type' => [Rule::in('worker', 'nurse')],
+            'role' => 'string',
+            'password' => 'required|confirmed:min:8',
+            'pinfl' => 'unique:users|unique:users',
+            'passport' => 'unique:users|unique:users',
+            'region_id' => 'required|integer',
+            'category_id' => 'required|integer',
+            'institution' => 'required|max:255',
+            'diplom_number' => 'required|max:255',
+            'diplom_date' => 'required',
+            'degree' => [Rule::in('1', '2')],
+            'diplom_file' => 'required|mimes:jpg,jpeg,png',
+            'certificate_institution' => 'required|max:255',
+            'certificate_number' => 'required|max:255',
+            'certificate_date' => 'required',
+            'certificate_file' => 'required|mimes:jpg,jpeg,png',
+            'central_polyclinic' => 'required|max:255',
+            'family_polyclinic' => 'required|max:255',
+            'doctor_station' => 'required|max:255',
+        ]);
+        if ($validator->fails()) {
+            $messages = $validator->messages();
+            return redirect()->back()->withErrors($messages)->withInput();
+        }
+
+        $user = new User();
+        $user->phone = $request->phone;
+        $user->name = $request->name;
+        $user->surname = $request->surname;
+        $user->patronym = $request->patronym;
+        $user->type = $request->user_type;
+        $user->category_id = $request->category_id;
+        $user->region_id = $request->region_id;
+        $user->role = $request->role;
+        $user->password = bcrypt($request->password);
+        $user->pinfl = $request->pinfl;
+        $user->passport = $request->passport;
+        $user->central_polyclinic = $request->central_polyclinic;
+        $user->family_polyclinic = $request->family_polyclinic;
+        $user->doctor_station = $request->doctor_station;
+
+        $user->save();
+        $user_id = $user->id;
+
+        DB::table('user_diplomas')->insert([
+            'user_id' => $user_id,
+            'institution' => $request->institution,
+            'number' => $request->diplom_number,
+            'date' => date('Y-m-d', strtotime($request->diplom_date)),
+            'file' => uploadFile($request->file('diplom_file')),
+            'degree' => $request->degree,
+        ]);
+        DB::table('user_certificates')->insert([
+            'user_id' => $user_id,
+            'institution' => $request->certificate_institution,
+            'number' => $request->certificate_number,
+            'date' => date('Y-m-d', strtotime($request->certificate_date)),
+            'file' => uploadFile($request->file('certificate_file')),
+        ]);
+        return redirect("login")->withSuccess('Telefon raqam va parol orqali kabinetga kirishingiz mumkin!');
     }
 }

@@ -21,10 +21,14 @@ class CreateUsersTable extends Migration
             $table->string('phone')->unique();
             $table->string('passport');
             $table->string('pinfl');
-            $table->enum('type', ['worker', 'nurse']);
-            $table->string('role');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
+            $table->bigInteger('category_id');
+            $table->bigInteger('region_id');
+            $table->string('central_polyclinic');
+            $table->string('family_polyclinic');
+            $table->string('doctor_station');
+            $table->enum('type', ['worker', 'nurse'])->nullable();
+            $table->string('role')->nullable();
+            $table->string('email')->unique()->nullable();
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
@@ -40,7 +44,12 @@ class CreateUsersTable extends Migration
                 'role' => '1',
                 'phone' => '998909999341',
                 'email' => 'admin@gx.uz',
-                'password' => bcrypt('odilbekda')
+                'password' => bcrypt('odilbekda'),
+                'central_polyclinic' => '1',
+                'family_polyclinic' => '1',
+                'doctor_station' => '1',
+                'region_id' => '1',
+                'category_id' => '1',
             ]);
     }
 
