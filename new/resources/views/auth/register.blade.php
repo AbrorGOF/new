@@ -322,6 +322,8 @@
                                     </button>
                                 </div>
                             </div>
+                            <input type="hidden" name="category_id" id="category_id">
+                            <input type="hidden" name="region_id" id="region_id">
                         </form>
                     </div>
                 </div>
@@ -333,6 +335,9 @@
 <script src="{{asset('js/main.js')}}"></script>
 
 <script>
+    @if (count($errors) > 0)
+        $('#reg').removeClass('d-none');
+    @endif
     window.addEventListener('load', function() {
         $.ajax({
             url: '/select/options',
@@ -397,6 +402,8 @@
                 success: function(dataResult){
                     if (dataResult.desk && dataResult.imedic){
                         $('#reg').removeClass('d-none');
+                        $('#category_id').val(cat_id);
+                        $('#region_id').val(reg_id);
                         // desk info
                         var person = dataResult.desk;
                         var fullName= person.fullName

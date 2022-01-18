@@ -173,11 +173,11 @@ class LoginController extends Controller
 
     protected function AuthReg(Request $request)
     {
-        $check = checkNurse($request->region_id, $request->category_id, $request->passport);
-        if (!empty($check['error'])){
-            session(['check_cert'=> $check['error']['messages']]);
-            return redirect()->back()->withErrors($check['error'])->withInput();
-        }
+//        $check = checkNurse($request->region_id, $request->category_id, $request->passport);
+//        if (!empty($check['error'])){
+//            session(['check_cert'=> $check['error']['messages']]);
+//            return redirect()->back()->withErrors($check['error'])->withInput();
+//        }
         $request->phone = str_replace(array('+','(',')',' ','-'),'',$request->phone);
         $request->pinfl = str_replace(array('+','(',')',' ','-'),'',$request->pinfl);
         $request->passport = str_replace(array('+','(',')',' ','-'),'',$request->passport);
@@ -197,11 +197,9 @@ class LoginController extends Controller
             'diplom_number' => 'required|max:255',
             'diplom_date' => 'required',
             'degree' => [Rule::in('1', '2')],
-            'diplom_file' => 'required|mimes:jpg,jpeg,png',
             'certificate_institution' => 'required|max:255',
             'certificate_number' => 'required|max:255',
             'certificate_date' => 'required',
-            'certificate_file' => 'required|mimes:jpg,jpeg,png',
             'central_polyclinic' => 'required|max:255',
             'family_polyclinic' => 'required|max:255',
             'doctor_station' => 'required|max:255',
@@ -235,7 +233,7 @@ class LoginController extends Controller
             'institution' => $request->institution,
             'number' => $request->diplom_number,
             'date' => date('Y-m-d', strtotime($request->diplom_date)),
-            'file' => uploadFile($request->file('diplom_file')),
+            'file' => 'test',
             'degree' => $request->degree,
         ]);
         DB::table('user_certificates')->insert([
@@ -243,7 +241,7 @@ class LoginController extends Controller
             'institution' => $request->certificate_institution,
             'number' => $request->certificate_number,
             'date' => date('Y-m-d', strtotime($request->certificate_date)),
-            'file' => uploadFile($request->file('certificate_file')),
+            'file' => 'test',
         ]);
         return redirect("login")->withSuccess('Telefon raqam va parol orqali kabinetga kirishingiz mumkin!');
     }
