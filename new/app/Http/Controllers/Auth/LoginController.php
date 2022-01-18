@@ -56,6 +56,8 @@ class LoginController extends Controller
     public function ConnectPinfl(Request $request)
     {
         $pinfl = $request->pinfl;
+        $category_id = $request->cat_id;
+        $region_id = $request->reg_id;
         if (is_numeric($pinfl) && strlen($pinfl) == 14) {
             //configda oy korsatilgan bo'ladi, agarda zapis bo'lsa va ko'rsatilgan
             //oydan oldingi ma'lumot bo'lsa actual bo'midi oyda status ozgaradi
@@ -65,7 +67,18 @@ class LoginController extends Controller
                 ->where('status', '=', '1')
                 ->first();
             if ($is_in_db) {
-                return ['result' => json_decode($is_in_db->response)];
+                $desk = json_decode($is_in_db->response, true);
+                $passport = $desk['passSeries'].$desk['passNumber'];
+                $nurse = checkNurse($region_id, $category_id, $passport);
+                if (isset($nurse['success'])){
+                    $send = [
+                        'desk' => $desk,
+                        'imedic' => $nurse['success'][0]
+                    ];
+                }else{
+                    $send['error'] = $nurse['error']['messages'];
+                }
+                return $send;
             } else {
                 //config ga token va auth_token yoziladi
                 $token = 'blabla';
@@ -122,7 +135,17 @@ class LoginController extends Controller
                     $info['status'] = '1';
                     $info['http_code'] = 200;
                     $info['response'] = $response['result'];
-                    $send = ['result' => $info['response']];
+                    $result = $info['response'];
+                    $passport = $result['passSeries'].$result['passNumber'];
+                    $nurse = checkNurse($region_id, $category_id, $passport);
+                    if (isset($nurse['success'])){
+                        $send = [
+                            'desk' => $info['response'],
+                            'imedic' => $nurse['success']
+                        ];
+                    }else{
+                        $send['error'] = $nurse['error']['messages'];
+                    }
                 } else {
                     $info['status'] = '2';
                     $info['http_code'] = 101;

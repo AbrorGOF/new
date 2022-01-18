@@ -1,67 +1,28 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-12">
-            <div class="card">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-12">
+                <div class="card">
 
-                <div class="card-header">
-                    @if(session()->get('check_cert'))
-                        <h3 class="text-danger">{{ session()->get('check_cert') }}</h3>
-                        @php
-                           Illuminate\Support\Facades\Session::forget('check_cert');
-                        @endphp
-                    @else
-                        Ro'yxatdan o'tish
-                    @endif
-                </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-3">
-                            <div class="row mb-3">
-                                <label for="search_pinfl" class="col-md-3 col-form-label text-md-end">{{ __('PINFL') }}</label>
-                                <div class="col-md-9">
-                                    <input id="search_pinfl" type="text" class="form-control" name="search_pinfl" value="{{ old('pinfl') }}" autofocus>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="row mb-3">
-                                <label for="search_category_id" class="col-md-3 col-form-label text-md-end">Yo'nalish</label>
-                                <div class="col-md-9">
-                                    <select id="search_category_id" class="form-control" @error('search_category_id') is-invalid @enderror name="search_category_id" required autocomplete="search_category_id">
-                                        <option value="">Yo'nalish</option>
-                                    </select>
-                                    @error('search_category_id')
-                                    <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="row mb-3">
-                                <label for="search_region_id" class="col-md-3 col-form-label text-md-end">{{ __('Viloyat') }}</label>
-                                <div class="col-md-9">
-                                    <select id="search_region_id" class="form-control" @error('search_region_id') is-invalid @enderror name="search_region_id" required autocomplete="search_region_id">
-                                        <option value="">Viloyat</option>
-                                    </select>
-                                    @error('search_region_id')
-                                    <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-2">
-                            <button type="button" class="btn btn-info" onclick="getInfo()">Jo'natish</button>
-                        </div>
-                        <div class="col-md-3"></div>
+                    <div class="card-header">
+                        @if(session()->get('check_cert'))
+                            <h3 class="text-danger">{{ session()->get('check_cert') }}</h3>
+                            @php
+                                Illuminate\Support\Facades\Session::forget('check_cert');
+                            @endphp
+                        @else
+                            Ro'yxatdan o'tish
+                        @endif
                     </div>
-                    <div class="" id="reg">
+                    <div class="card-body">
+                        <div class="row mb-3">
+                            <label for="search_pinfl" class="col-md-4 col-form-label text-md-end">{{ __('PINFL') }}</label>
+                            <div class="col-md-6">
+                                <input id="search_pinfl" type="text" class="form-control" name="search_pinfl" value="{{ old('pinfl') }}" onkeyup="getInfo()" autofocus>
+                            </div>
+                        </div>
                         <form method="POST" action="/auth/reg" enctype="multipart/form-data">
                             @csrf
                             <div class="row">
@@ -178,6 +139,17 @@
                                             @enderror
                                         </div>
                                     </div>
+                                    <div class="row mb-3">
+                                        <label for="diplom_file" class="col-md-3 col-form-label text-md-end">{{ __('Diplom nusxasi') }}</label>
+                                        <div class="col-md-9">
+                                            <input id="diplom_file" type="file" class="form-control @error('diplom_file') is-invalid @enderror" name="diplom_file" value="{{ old('diplom_file') }}" required autocomplete="diplom_file">
+                                            @error('diplom_file')
+                                            <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                            @enderror
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="row mb-3">
@@ -204,8 +176,19 @@
                                             <input id="certificate_institution" type="text" class="form-control @error('certificate_institution') is-invalid @enderror" name="certificate_institution" value="{{ old('certificate_institution') }}" required autocomplete="certificate_institution" >
                                             @error('certificate_institution')
                                             <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <label for="certificate_file" class="col-md-3 col-form-label text-md-end">{{ __('Sertifikat nusxasi') }}</label>
+                                        <div class="col-md-9">
+                                            <input id="certificate_file" type="file" class="form-control @error('certificate_file') is-invalid @enderror" name="certificate_file" value="{{ old('certificate_file') }}" required autocomplete="certificate_file">
+                                            @error('certificate_file')
+                                            <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
                                             @enderror
                                         </div>
                                     </div>
@@ -222,12 +205,38 @@
                                             @enderror
                                         </div>
                                     </div>
+                                    <div class="row mb-3">
+                                        <label for="region_id" class="col-md-3 col-form-label text-md-end">{{ __('Viloyat') }}</label>
+                                        <div class="col-md-9">
+                                            <select id="region_id" class="form-control" @error('region_id') is-invalid @enderror name="region_id" required autocomplete="region_id">
+                                                <option value="">Viloyat</option>
+                                            </select>
+                                            @error('region_id')
+                                            <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                            @enderror
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="row mb-3">
                                         <label for="certificate_date" class="col-md-3 col-form-label text-md-end">{{ __('Berilgan sana') }}</label>
                                         <div class="col-md-9">
                                             <input id="certificate_date" type="date" class="form-control @error('certificate_date') is-invalid @enderror" name="certificate_date" value="{{ old('certificate_date') }}" required autocomplete="certificate_date" >
+                                            @error('certificate_date')
+                                            <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <label for="category_id" class="col-md-3 col-form-label text-md-end">Yo'nalish</label>
+                                        <div class="col-md-9">
+                                            <select id="category_id" class="form-control" @error('category_id') is-invalid @enderror name="category_id" required autocomplete="category_id">
+                                                <option value="">Yo'nalish</option>
+                                            </select>
                                             @error('certificate_date')
                                             <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -328,7 +337,6 @@
             </div>
         </div>
     </div>
-</div>
 @endsection
 <script src="{{asset('js/main.js')}}"></script>
 
@@ -343,10 +351,10 @@
                 var regions = dataResult.data.regions;
                 if (cats) {
                     $.each(cats, function(key, value) {
-                        $('#search_category_id').append(`<option value="${value.cat_id}">${value.title}</option>`);
+                        $('#category_id').append(`<option value="${value.cat_id}">${value.title}</option>`);
                     });
                 }else{
-                    $('#search_category_id')
+                    $('#category_id')
                         .find('option')
                         .remove()
                         .end()
@@ -356,10 +364,10 @@
                 }
                 if (regions) {
                     $.each(regions, function(key, value) {
-                        $('#search_region_id').append(`<option value="${value.id}">${value.title}</option>`);
+                        $('#region_id').append(`<option value="${value.id}">${value.title}</option>`);
                     });
                 }else{
-                    $('#search_region_id')
+                    $('#region_id')
                         .find('option')
                         .remove()
                         .end()
@@ -379,75 +387,41 @@
 
     function getInfo() {
 
-        var pinfl = $('#search_pinfl').val();
-        var cat_id = $('#search_category_id').val();
-        var reg_id = $('#search_region_id').val();
-        if (pinfl.length===14) {
+        var num = $('#search_pinfl').val();
+        if (num.length===14) {
             $.ajax({
                 url: '/get/nurse/info',
                 type: "POST",
                 headers: { 'X-CSRF-Token' : $('meta[name=_token]').attr('content') }, // More information on this below
-                data:{
-                    "_token": "{{ csrf_token() }}",
-                    'pinfl':pinfl,
-                    'cat_id':cat_id,
-                    'reg_id':reg_id
-                },
+                data:{"_token": "{{ csrf_token() }}", ' pinfl':num},
                 dataType: 'json',
                 success: function(dataResult){
-                    if (dataResult.desk && dataResult.imedic){
-                        // desk info
-                        var person = dataResult.desk;
-                        var fullName= person.fullName
-                        fullName = fullName.split(" ",4);
-                        var surname = fullName[0];
-                        var name = fullName[1];
-                        var patronym = '';
-                        if (fullName[3]) {
-                             patronym = fullName[2]+' '+fullName[3];
-                        }else{
-                             patronym = fullName[2];
-                        }
-                        var day = pinfl.slice(1,3);
-                        var month = pinfl.slice(3,5);
-                        var year = pinfl.slice(5,7);
-                        if (year.slice(0,1)<5) {
-                            year = '20'+year;
-                        }else{
-                            year = '19'+year;
-                        }
-                        var birthDate = year+'-'+month+'-'+day;
-                        var passport = person.passSeries+person.passNumber
-                        $('#name').val(name);
-                        $('#surname').val(surname);
-                        $('#patronym').val(patronym);
-                        $('#passport').val(passport);
-                        $('#birth_date').val(birthDate);
-                        $('#pinfl').val(pinfl);
-                        // desk info
-                        // imedic
-                            var nurse = dataResult.imedic;
-                            var nurse_phone = nurse.nurse_phone;
-                            var nurse_diplom = nurse.nurse_diplom;
-                            var nurse_diplom_number = nurse.nurse_diplom_number;
-                            var nurse_diplom_date = nurse.nurse_diplom_date;
-                            if (nurse.certificate_date){
-                                var certificate_date = nurse.certificate_date;
-                                $('#certificate_date').val(certificate_date);
-                            }
-                            if (nurse.certificate_number){
-                                var certificate_number = nurse.certificate_number;
-                                $('#certificate_number').val(certificate_number);
-                            }
-                            $('#phone').val(nurse_phone);
-                            $('#institution').val(nurse_diplom);
-                            $('#diplom_number').val(nurse_diplom_number);
-                            $('#diplom_date').val(nurse_diplom_date);
-                        // imedic
+                    var person = dataResult.result;
+                    var fullName= person.fullName
+                    fullName = fullName.split(" ",4);
+                    var surname = fullName[0];
+                    var name = fullName[1];
+                    if (fullName[3]) {
+                        var patronym = fullName[2]+' '+fullName[3];
                     }else{
-                        alert(dataResult.error);
+                        var patronym = fullName[2];
                     }
-
+                    var day = num.slice(1,3);
+                    var month = num.slice(3,5);
+                    var year = num.slice(5,7);
+                    if (year.slice(0,1)<5) {
+                        year = '20'+year;
+                    }else{
+                        year = '19'+year;
+                    }
+                    var birthDate = year+'-'+month+'-'+day;
+                    var passport = person.passSeries+person.passNumber
+                    $('#name').val(name);
+                    $('#surname').val(surname);
+                    $('#patronym').val(patronym);
+                    $('#passport').val(passport);
+                    $('#birth_date').val(birthDate);
+                    $('#pinfl').val(num);
                 }
             });
         }
