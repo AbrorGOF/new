@@ -61,7 +61,7 @@
                         </div>
                         <div class="col-md-3"></div>
                     </div>
-                    <div class="" id="reg">
+                    <div class="d-none" id="reg">
                         <form method="POST" action="/auth/reg" enctype="multipart/form-data">
                             @csrf
                             <div class="row">
@@ -396,6 +396,7 @@
                 dataType: 'json',
                 success: function(dataResult){
                     if (dataResult.desk && dataResult.imedic){
+                        $('#reg').removeClass('d-none');
                         // desk info
                         var person = dataResult.desk;
                         var fullName= person.fullName
@@ -446,6 +447,7 @@
                             $('#diplom_date').val(nurse_diplom_date);
                         // imedic
                     }else{
+                        ('#reg').addClass('d-none');
                         alert(dataResult.error);
                     }
 
