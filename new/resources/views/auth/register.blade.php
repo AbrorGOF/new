@@ -424,6 +424,7 @@
                         $('#passport').val(passport);
                         $('#birth_date').val(birthDate);
                         $('#pinfl').val(pinfl);
+
                         // desk info
                         // imedic
                             var nurse = dataResult.imedic;
