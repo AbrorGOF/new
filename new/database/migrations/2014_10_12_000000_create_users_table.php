@@ -27,6 +27,7 @@ class CreateUsersTable extends Migration
             $table->string('central_polyclinic');
             $table->string('family_polyclinic');
             $table->string('doctor_station');
+            $table->string('reference');
             $table->enum('type', ['worker', 'nurse'])->nullable();
             $table->string('role')->nullable();
             $table->string('email')->unique()->nullable();
@@ -51,6 +52,7 @@ class CreateUsersTable extends Migration
                 'doctor_station' => '1',
                 'region_id' => '1',
                 'category_id' => '1',
+                'reference' => '/123/12.pdf',
             ]);
 
     }

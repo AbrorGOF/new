@@ -33,7 +33,7 @@
                                         </p>
                                     </div>
                                     <div class="form-body">
-                                        <form class="row g-3" action="{{ route('login') }}" method="POST">
+                                        <form class="row g-3" action="/auth/log" method="POST">
                                             @csrf
                                             <div class="col-12">
                                                 <label for="phone" class="form-label">Telefon</label>
@@ -76,9 +76,11 @@
 
     <!--plugins-->
     <script src="assets/js/jquery.min.js"></script>
-
+    <script src="{{ asset('/js/app.js') }}"></script>
     <script>
         $(document).ready(function () {
+            $('#phone').inputmask({"mask": "+\\9\\98 99 999-99-99"}); //specifying options
+            // $("#phone").inputmask({removeMaskOnSubmit: true});
             $("#show_hide_password a").on('click', function (event) {
                 event.preventDefault();
                 if ($('#show_hide_password input').attr("type") == "text") {

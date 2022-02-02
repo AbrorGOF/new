@@ -5,6 +5,7 @@ use App\Http\Controllers\Nurse\NurseController;
 use App\Http\Controllers\Report\JournalController;
 use App\Http\Controllers\Report\QuarterlyController;
 use App\Http\Controllers\HomeController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Redirect;
 /*
@@ -17,14 +18,14 @@ use Illuminate\Support\Facades\Redirect;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/welcome', [HomeController::class, 'welcome'])->name('welcome');
 Route::get('/', function () {
     if (Auth::check()) {
         return Redirect::route('home');
     } else {
-        return redirect("login");
+        return Redirect::route('welcome');
     }
-})->name('home');
+});
+Route::get('/welcome', [HomeController::class, 'welcome'])->name('welcome');
 
 Auth::routes();
 
@@ -39,4 +40,5 @@ Route::group(['middleware' => 'auth'], function () {
 });
 Route::post('/get/nurse/info', [LoginController::class, 'ConnectPinfl'])->name('get-nurse-info');
 Route::post('/auth/reg', [LoginController::class, 'AuthReg'])->name('auth-reg');
+Route::post('/auth/log', [LoginController::class, 'AuthLog'])->name('auth-log');
 Route::get('/select/options', [LoginController::class, 'SelectOptions'])->name('get-select-options');

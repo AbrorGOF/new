@@ -10,6 +10,7 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 
@@ -170,7 +171,24 @@ class LoginController extends Controller
         $data['cats'] = $cats;
         return response()->json(['data'=>$data]);
     }
+    public function AuthLog(Request $request){
+        $validator=Validator::make($request->all(), [
+            'phone' => 'required',
+            'password' => 'required',
+        ]);
+        if ($validator->fails()) {
+            $messages = $validator->messages();
+            return redirect()->back()->withErrors($messages)->withInput();
+        }
+        $credentials = $request->only('phone', 'password');
+        $credentials['phone']=str_replace(array('+','(',')',' ','-'),'',$credentials['phone']);
 
+        if (Auth::attempt($credentials,$request->get('remember'))) {
+            return redirect()->route('home');
+        }
+
+        return redirect("login")->withSuccess('Login details are not valid');
+    }
     protected function AuthReg(Request $request)
     {
         $request->region_id = 1;
@@ -202,10 +220,10 @@ class LoginController extends Controller
             'central_polyclinic' => 'required|max:255',
             'family_polyclinic' => 'required|max:255',
             'doctor_station' => 'required|max:255',
+            'reference' => 'mimes:pdf',
         ]);
         if ($validator->fails()) {
             $messages = $validator->messages();
-            dd($messages);
             return redirect()->back()->withErrors($messages)->withInput();
         }
 
@@ -224,7 +242,8 @@ class LoginController extends Controller
         $user->central_polyclinic = $request->central_polyclinic;
         $user->family_polyclinic = $request->family_polyclinic;
         $user->doctor_station = $request->doctor_station;
-
+        $path = $request->file('reference')->storeAs('public/references', $user->passport.'.pdf');
+        $user->reference = $path;
         $user->save();
         $user_id = $user->id;
 

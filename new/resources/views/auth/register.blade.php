@@ -19,6 +19,21 @@
 </head>
 
 <body class="bg-login">
+<style>
+    #thumbwrap {
+        position:relative;
+    }
+    .thumb span {
+        position:absolute;
+        visibility:hidden;
+    }
+    .thumb:hover, .thumb:hover span {
+        visibility:visible;
+        top:50px;
+        left:30px;
+        z-index:1;
+    }
+</style>
     <!--wrapper-->
     <div class="wrapper">
         <div class="d-flex align-items-center justify-content-center my-5 my-lg-0">
@@ -37,7 +52,10 @@
                                         <div class="row g-3">
                                             <div class="col-sm-3">
                                                 <label for="search_pinfl" class="form-label">PINFL</label>
-                                                <input id="search_pinfl" type="text" class="form-control" name="search_pinfl" value="{{ old('pinfl') }}" autofocus>
+                                                <div id="thumbwrap">
+                                                    <a class="thumb" href="#"><input id="search_pinfl" type="text" class="form-control" name="search_pinfl" value="{{ old('pinfl') }}" autofocus>
+                                                        <span><img src="/images/pnfl.jpg" alt="" width="500" style="max-width: 60vw"></span></a>
+                                                </div>
                                             </div>
                                             <div class="col-sm-3">
                                                 <label for="search_category_id" class="form-label">Yo'nalish</label>
@@ -69,6 +87,7 @@
                                         <div class="d-none" id="reg">
                                             <form class="row g-3 mt-3" action="/auth/reg" method="POST" enctype="multipart/form-data">
                                                 @csrf
+                                                <div class="col-md-12"><h5 class="text-center">Shaxsiy ma'lumotlar</h5></div>
                                                 <div class="col-sm-4">
                                                     <label for="name" class="form-label">Ism</label>
                                                     <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" >
@@ -90,7 +109,7 @@
                                                         <span class="text-danger">{{ $message }}</span>
                                                     @enderror
                                                 </div>
-                                                <div class="col-4">
+                                                <div class="col-md-4">
                                                     <label for="pinfl" class="form-label">PINFL</label>
                                                     <input id="pinfl" type="text" class="form-control @error('pinfl') is-invalid @enderror" name="pinfl" value="{{ old('pinfl') }}" required autocomplete="pinfl">
                                                     @error('pinfl')
@@ -114,6 +133,7 @@
                                                     <span class="text-danger">{{ $message }}</span>
                                                     @enderror
                                                 </div>
+                                                <div class="col-md-12"><h5 class="text-center">Diplom ma'lumotlari</h5></div>
                                                 <div class="col-md-4">
                                                     <label for="institution" class="form-label">Diplom bergan muassasa</label>
                                                     <input id="institution" type="text" class="form-control @error('institution') is-invalid @enderror" name="institution" value="{{ old('institution') }}" required autocomplete="institution" >
@@ -135,6 +155,7 @@
                                                         <span class="text-danger">{{ $message }}</span>
                                                     @enderror
                                                 </div>
+                                                <div class="col-md-12"><h5 class="text-center">Sertifikat ma'lumotlari</h5></div>
                                                 <div class="col-md-4">
                                                     <label for="certificate_institution" class="form-label">Sertifikat bergan muassasa</label>
                                                     <input id="certificate_institution" type="text" class="form-control @error('certificate_institution') is-invalid @enderror" name="certificate_institution" value="{{ old('certificate_institution') }}" required autocomplete="certificate_institution" >
@@ -156,6 +177,7 @@
                                                         <span class="text-danger">{{ $message }}</span>
                                                     @enderror
                                                 </div>
+                                                <div class="col-md-12"><h5 class="text-center">Hamkor poliklinika ma'lumotlari</h5></div>
                                                 <div class="col-md-4">
                                                     <label for="central_polyclinic" class="form-label">Markaziy poliklinika</label>
                                                     <input id="central_polyclinic" type="text" class="form-control @error('central_polyclinic') is-invalid @enderror" name="central_polyclinic" value="{{ old('central_polyclinic') }}" required autocomplete="central_polyclinic" >
@@ -177,7 +199,14 @@
                                                         <span class="text-danger">{{ $message }}</span>
                                                     @enderror
                                                 </div>
-                                                <div class="col-md-12"><h4 class="text-center">Kabinetga kirish uchun</h4> </div>
+                                                <div class="col-md-12">
+                                                    <label for="reference" class="form-label">Ma'lumotnoma (QR-kodli)</label>
+                                                    <input id="reference" type="file" class="form-control @error('reference') is-invalid @enderror" name="reference" value="{{ old('reference') }}" required autocomplete="reference" accept="application/pdf,application/vnd.ms-excel">
+                                                    @error('reference')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                    @enderror
+                                                </div>
+                                                <div class="col-md-12"><h5 class="text-center">Kabinetga kirish uchun</h5></div>
                                                 <div class="col-md-4">
                                                     <label for="phone" class="form-label">Telefon</label>
                                                     <input id="phone" type="text" class="form-control @error('phone') is-invalid @enderror" name="phone" value="{{ old('phone') }}" required autocomplete="phone">
@@ -207,7 +236,7 @@
                                                     <input type="hidden" name="category_id" id="category_id">
                                                     <input type="hidden" name="region_id" id="region_id">
                                                     <div class="d-grid">
-                                                        <button type="submit" class="btn btn-primary"><i class='bx bx-user'></i>Sign up</button>
+                                                        <button type="submit" class="btn btn-primary"><i class='bx bx-user'></i>Saqlash</button>
                                                     </div>
                                                 </div>
                                             </form>
