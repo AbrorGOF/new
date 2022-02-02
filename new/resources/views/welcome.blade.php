@@ -1,306 +1,455 @@
-<!--
-Author: W3layouts
-Author URL: http://w3layouts.com
-License: Creative Commons Attribution 3.0 Unported
-License URL: http://creativecommons.org/licenses/by/3.0/
--->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>HAMSHIRALIK ISHI FAOLIYATI</title>
-<!-- custom-theme -->
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="keywords" content="Medicate Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template, 
-Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" />
-<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
-		function hideURLbar(){ window.scrollTo(0,1); } </script>
-<!-- //custom-theme -->
-<script type="text/javascript" src="{{asset('js/welcome/jquery-1.11.1.min.js')}}"></script>
-<script type="text/javascript" src="{{asset('js/welcome/bootstrap.js')}}"></script>
-<!-- stylesheet -->
-<link href="{{ asset('css/welcome/bootstrap.css') }}" rel="stylesheet" type="text/css" media="all" />
-<link href="{{ asset('css/welcome/easy-responsive-tabs.css') }}" rel='stylesheet' type='text/css'/>
-<link href="{{ asset('css/welcome/style.css') }}" rel="stylesheet" type="text/css" media="all" />
-<link href="{{ asset('css/welcome/gallery.css') }}" rel="stylesheet" type="text/css" media="all" /> <!-- gallery css -->
-<!-- //stylesheet -->
-<!-- online fonts -->
-<link href="//fonts.googleapis.com/css?family=Titillium+Web:200,200i,300,300i,400,400i,600,600i,700,700i,900" rel="stylesheet">
-<link href="//fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
-<!-- //online fonts -->
-<!-- font-awesome-icons -->
-<link href="{{ asset('css/welcome/font-awesome.css')}}" type="text/css" rel="stylesheet"> 
-<!-- //font-awesome-icons -->
-<script src="{{asset('js/welcome/modernizr.custom.js')}}"></script>
-<script type="text/javascript" src="{{asset('js/welcome/modernizr.custom.79639.js')}}"></script>		
-<link rel="stylesheet" type="text/css" href="{{asset('css/welcome/custom.css')}}" />	
-<!-- for smooth scrolling -->
-<script type="text/javascript" src="{{asset('js/welcome/move-top.js')}}"></script>
-<script type="text/javascript" src="{{asset('js/welcome/easing.js')}}"></script>
-<script type="text/javascript">
-jQuery(document).ready(function($) {
-	$(".scroll").click(function(event){		
-		event.preventDefault();
-		$('html,body').animate({scrollTop:$(this.hash).offset().top},1000);
-	});
-});
-window.addEventListener ("touchmove", function (event) { event.preventDefault (); }, {passive: false});
-</script>
-<!-- //for smooth scrolling -->
+
+    <title>iMedic</title>
+    <!--
+
+    Template 2098 Health
+
+    http://www.tooplate.com/view/2098-health
+
+    -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="author" content="Tooplate">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <link href="{{ asset('css/template/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/template/animate.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/template/font-awesome.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/template/owl.carousel.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/template/owl.theme.default.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/template/tooplate-style.css') }}" rel="stylesheet">
+
+
 </head>
-<body>
-<div class="agileits_main">
-    <!-- header -->
-	<div class="container">
-		<div class="w3_agile_logo">
-			<h1><a href="/welcome"><i class="agileits-logo fa fa-plus" aria-hidden="true"></i>Imedic</a></h1>
-		</div>
-		<div class="agileits_w3layouts_nav">
-			<div id="toggle_m_nav">
-				<div id="m_nav_menu" class="m_nav">
-					<div class="m_nav_ham w3_agileits_ham" id="m_ham_1"></div>
-					<div class="m_nav_ham" id="m_ham_2"></div>
-					<div class="m_nav_ham" id="m_ham_3"></div>
-				</div>
-			</div>
-			<div id="m_nav_container" class="m_nav wthree_bg">
-				<nav class="menu menu--sebastian">
-					<ul id="m_nav_list" class="m_nav menu__list">
-						<li class="m_nav_item menu__item menu__item--current" id="m_nav_item_1"> <a href="/welcome" class="menu__link"><i class="menu-icon fa fa-home" aria-hidden="true"></i> Bosh sahifa </a></li>
-						<li class="m_nav_item menu__item" id="moble_nav_item_2"> <a href="{{ route('login') }}" class="menu__link"><i class="menu-icon fa fa-sign-in" aria-hidden="true"></i>Kirish </a> </li>
-						<li class="m_nav_item menu__item" id="moble_nav_item_3"> <a href="{{ route('register') }}" class="menu__link"><i class="menu-icon fas fa-registered" aria-hidden="true"></i>Registratsiya</a> </li>
-					</ul>
-				</nav>
-			</div>
-		</div>
-	</div>
-	<!-- menu -->
-	<script type="text/javascript" src="{{asset('js/welcome/main.js')}}"></script>
-	<!-- //menu -->
-	<!--// header -->
-	<!-- banner -->
-	<div class="w3_banner">
-	    <div class="container">
-		    <div class="slider">
-			    <div class="callbacks_container">
-				   <ul class="rslides callbacks callbacks1" id="slider4">
-                        <li>							
-							<div class="banner_text_w3layouts">
-								<h3>Asosiy vazifamiz – tibbiyot sohasini yuqori samara bilan ishlaydigan, chinakam xalqchil tizimga aylantirishdan iborat.</h3>
-								<p>Shavkat Mirziyoyev</p>
-							</div>
-					    </li>
-                        <li>	
-							<div class="banner_text_w3layouts">
-								<h3>Inson salomatligi jamiyatning bebaho boyligi, shifokorlar esa ana shu boylikning fidoyi posbonlaridir</h3>
-								<p>Shavkat Mirziyoyev</p>
-							</div>
-						</li>
-					    <li>	
-						    <div class="banner_text_w3layouts">
-								<h3>Odamlar dardiga darmon bo‘lmoq-ezgulik va olijanoblikning yuksak namunasidir</h3>
-								<p>Abu Ali Ibn Sino</p>
-						    </div>
-					    </li>
-			    	</ul>
-				</div>
-			  <script src="{{asset('js/welcome/responsiveslides.js')}}"></script>
-			  <script>
-				// You can also use "$(window).load(function() {"
-				$(function () {
-				  // Slideshow 4
-				  $("#slider4").responsiveSlides({
-					auto: false,
-					pager:true,
-					nav:true,
-					speed: 500,
-					namespace: "callbacks",
-					before: function () {
-					  $('.events').append("<li>before event fired.</li>");
-					},
-					after: function () {
-					  $('.events').append("<li>after event fired.</li>");
-					}
-				  });
-			
-				});
-			 </script>
-		   </div>
-		</div>   
-	</div>	
-</div>
-<!-- //banner -->
-<!-- about -->
-<!-- <div class="jarallax w3ls-about w3ls-section " id="about">
-	<div class="container">
-		<h3 class="h3-w3l">about us</h3>
-		<div class="about-head text-center">
-			<div class="col-md-4 col-sm-4 col-xs-6 wthree-s1 " >
-				 <span class="fa fa-medkit sicon" aria-hidden="true"></span>
-				 <h4>transplants</h4>
-				 <p>Praesent imperdiet mollis odio,eget sodales tortor porttitor.Vac turpis egestas tortor.eget sodales tortor porttitor</p>
-				 <div class="w3-button">
-					<a href="#" data-toggle="modal" data-target="#myModal">Read More</a>
-				</div>
-			</div>
-			<div class="col-md-4 col-sm-4 col-xs-6 wthree-s1  s1  s1-active">
-				 <span class="fa fa-user-md sicon" aria-hidden="true"></span>
-				 <h4>critical care</h4>
-				 <p>Praesent imperdiet mollis odio,eget sodales tortor porttitor.Vac turpis egestas tortor.eget sodales tortor porttitor</p>
-				 <div class="w3-button">
-					<a href="#" data-toggle="modal" data-target="#myModal">Read More</a>
-				</div>
-			</div>
-			<div class="col-md-4 col-sm-4 col-xs-6 wthree-s1">
-				 <span class="fa fa-ambulance sicon" aria-hidden="true"></span>
-				 <h4>Emergency</h4>
-				 <p>Praesent imperdiet mollis odio,eget sodales tortor porttitor.Vac turpis egestas tortor.eget sodales tortor porttitor</p>
-				 <div class="w3-button">
-					<a href="#" data-toggle="modal" data-target="#myModal">Read More</a>
-				</div>
-			</div>
-			<div class="clearfix"></div>
-		</div>		
-	</div>
-</div>	 -->
-<!-- //about -->
-<!-- Tooltip -->
-<!-- <div class="tooltip-content">
-	<div class="modal fade features-modal" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
-		<div class="modal-dialog modal-md">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-					<h4 class="modal-title text-center">medicate</h4>
-				</div>
-				<div class="modal-body">
-					<img src="images/1.jpg" class="img-responsive" alt="image">
-					<p>Fusce et congue nibh, ut ullamcorper magna. Donec ac massa tincidunt, fringilla sapien vel, tempus massa. Vestibulum felis leo, tincidunt sit amet tristique accumsan. In vitae dapibus metus. Donec nec massa non nulla mattis aliquam egestas et mi.</p>
-				</div>
-			</div>
-		</div>
-	</div>
-</div> -->
-<!-- //Tooltip -->
-<!-- <div class="jarallax w3ls-services w3ls-section" id="services">
-	<div class="container">
-		<h3 class="h3-w3l">services</h3>
-		<div class="services-head text-center">
-			<h4>the skill to heal.the spirit to care</h4>
-			<p>Fusce et congue nibh, ut ullamcorper magna. Donec ac massa tincidunt, fringilla sapien vel, tempus massa. Vestibulum felis leo, tincidunt sit amet tristique accumsan. In vitae dapibus metus. Donec nec massa non nulla mattis aliquam egestas et mi.</p>
-		</div>
-		<div class="services-bg">
-			<h6>Hope lives here</h6>
-			<a href="#" data-toggle="modal" data-target="#myModal">Read More</a>
-		</div>
-	</div>	
-	<div class="wthree-services-bottom">
-		<div class="container">
-			<div class="col-md-3 col-sm-3 col-xs-6 wthree-sb1 " >
-				 <span class="fa fa-certificate sicon" aria-hidden="true"></span>
-				 <span class="num">01</span><h4>service1</h4>
-				 <p>Praesent imperdiet mollis odio, eget sodales tortor porttitor.Vac turpis egestas tortor.</p>
-			</div>
-			<div class="col-md-3 col-sm-3 col-xs-6 wthree-sb1  sb1">
-				 <span class="fa fa-heartbeat sicon" aria-hidden="true"></span>
-				 <span class="num">02</span><h4>service2</h4>
-				 <p>Praesent imperdiet mollis odio, eget sodales tortor porttitor.Vac turpis egestas tortor.</p>
-			</div>
-			<div class="col-md-3 col-sm-3 col-xs-6 wthree-sb1 sb2">
-				 <span class="fa fa-star-o sicon" aria-hidden="true"></span>
-				 <span class="num">03</span><h4>service3</h4>
-				 <p>Praesent imperdiet mollis odio, eget sodales tortor porttitor.Vac turpis egestas tortor.</p>
-			</div>
-			<div class="col-md-3 col-sm-3 col-xs-6 wthree-sb1">
-				 <span class="fa fa-plus-circle sicon" aria-hidden="true"></span>
-				 <span class="num">04</span><h4>service4</h4>
-				 <p>Praesent imperdiet mollis odio, eget sodales tortor porttitor.Vac turpis egestas tortor.</p>
-			</div>
-			<div class="clearfix"></div>
-		</div>	
-	</div>
-</div>	 -->
-<!-- footer-->	
-<div class="agileits_w3layouts-footer">
-	<div class="copy-right text-center">
-		<span class="agileits-copy fa fa-plus" aria-hidden="true"></span>
-		<p>&copy; 2017 ROOSUPPORT. All rights reserved</p>
-	</div>	
-</div>	
-<!-- footer-->	
-<script src="{{asset('js/welcome/jarallax.js')}}"></script>
-<script src="{{asset('js/welcome/SmoothScroll.min.js')}}"></script>
-<script type="text/javascript">
-	/* init Jarallax */
-	$('.jarallax').jarallax({
-		speed: 0.5,
-		imgWidth: 1366,
-		imgHeight: 768
-	})
-</script>
-<!-- here starts scrolling icon -->
-		<!-- start-smoth-scrolling -->
-		<script type="text/javascript" src="{{asset('js/welcome/move-top.js')}}"></script>
-		<script type="text/javascript" src="{{asset('js/welcome/easing.js')}}"></script>
-		<script type="text/javascript">
-			jQuery(document).ready(function($) {
-				$(".scroll").click(function(event){		
-					event.preventDefault();
-					$('html,body').animate({scrollTop:$(this.hash).offset().top},1000);
-				});
-			});
-		</script>
-		<!-- /ends-smoth-scrolling -->
-	<!-- //here ends scrolling icon -->
-	<!--start-date-piker-->
-		<link rel="stylesheet" href="{{asset('css/welcome/jquery-ui.css')}}" />
-		<script src="{{asset('js/welcome/jquery-ui.js')}}"></script>
-			<script>
-				$(function() {
-				$( "#datepicker,#datepicker1" ).datepicker();
-				});
-			</script>
-<!-- //End-date-piker -->	
-<!-- here starts scrolling icon -->
-		<script type="text/javascript">
-			$(document).ready(function() {
-				/*
-					var defaults = {
-					containerID: 'toTop', // fading element id
-					containerHoverID: 'toTopHover', // fading element hover id
-					scrollSpeed: 1200,
-					easingType: 'linear' 
-					};
-				*/
-										
-				$().UItoTop({ easingType: 'easeOutQuart' });
-									
-				});
-		</script>
-<!--tabs-->
-		<script src="{{asset('js/welcome/easy-responsive-tabs.js')}}"></script>
-		<script>
-		$(document).ready(function () {
-		$('#horizontalTab').easyResponsiveTabs({
-		type: 'default', //Types: default, vertical, accordion           
-		width: 'auto', //auto or any width like 600px
-		fit: true,   // 100% fit in a container
-		closed: 'accordion', // Start closed if in accordion view
-		activate: function(event) { // Callback function if tab is switched
-		var $tab = $(this);
-		var $info = $('#tabInfo');
-		var $name = $('span', $info);
-		$name.text($tab.text());
-		$info.show();
-		}
-		});
-		$('#verticalTab').easyResponsiveTabs({
-		type: 'vertical',
-		width: 'auto',
-		fit: true
-		});
-		});
-		</script>
-<!--//tabs-->
+<body id="top" data-spy="scroll"  data-offset="50">
+
+<!-- PRE LOADER -->
+<section class="preloader">
+    <div class="spinner">
+
+        <span class="spinner-rotate"></span>
+
+    </div>
+</section>
+
+
+<!-- HEADER -->
+<header>
+    <div class="container">
+        <div class="row">
+
+            <div class="col-md-4 col-sm-5">
+                <p>Xamshiralarni malaka oshirish markazi</p>
+            </div>
+
+            <div class="col-md-8 col-sm-7 text-align-right">
+                <span class="phone-icon"><i class="fa fa-phone"></i> 871-214-4731</span>
+                <span class="date-icon"><i class="fa fa-calendar"></i> 09:00 dan - 18:00 gacha (Dushanba-Juma)</span>
+                {{-- <span class="email-icon"><i class="fa fa-envelope-o"></i> <a href="#">info@imedic.uz</a></span> --}}
+            </div>
+
+        </div>
+    </div>
+</header>
+
+
+<!-- MENU -->
+<section class="navbar navbar-default navbar-static-top" role="navigation">
+    <div class="container">
+
+        <div class="navbar-header">
+            <button class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse">
+                <span class="icon icon-bar"></span>
+                <span class="icon icon-bar"></span>
+                <span class="icon icon-bar"></span>
+            </button>
+
+            <!-- lOGO TEXT HERE -->
+            <a href="/welcome" class="navbar-brand"><i class="fa fa-info"></i> Medic</a>
+        </div>
+
+        <!-- MENU LINKS -->
+        <div class="collapse navbar-collapse" id="navbar-collapse">
+            <ul class="nav navbar-nav navbar-right">
+                {{-- <li><a href="#top" class="smoothScroll">Home</a></li>
+                <li><a href="#about" class="smoothScroll">About Us</a></li>
+                <li><a href="#team" class="smoothScroll">Doctors</a></li>
+                <li><a href="#news" class="smoothScroll">News</a></li>
+                <li><a href="#google-map" class="smoothScroll">Contact</a></li> --}}
+                <li class="appointment-btn"><a href="{{ route('login') }}">Kirish</a></li>
+                <li class="appointment-btn"><a href="{{ route('register') }}">Ro'yxatdan o'tish</a></li>
+            </ul>
+        </div>
+
+    </div>
+</section>
+
+
+<!-- HOME -->
+<section id="home" class="slider" data-stellar-background-ratio="0.5">
+    <div class="container">
+        <div class="row">
+
+            <div class="owl-carousel owl-theme">
+                <div class="item item-first">
+                    <div class="caption">
+                        <div class="col-md-offset-1 col-md-10">
+                            <h3>Ma'lakangizni oshiring</h3>
+                            <h1>TEST TOPSHIRING</h1>
+                            <a href="#team" class="section-btn btn btn-default smoothScroll">Test topshirish</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="item item-second">
+                    <div class="caption">
+                        <div class="col-md-offset-1 col-md-10">
+                            <h3>Malakali Hamshira bo'ling</h3>
+                            <h1>TEST TOPSHIRING</h1>
+                            <a href="#about" class="section-btn btn btn-default btn-gray smoothScroll">Test topshirish</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="item item-third">
+                    <div class="caption">
+                        <div class="col-md-offset-1 col-md-10">
+                            <h3>Bilimingizni sinang</h3>
+                            <h1>TEST TOPSHIRING</h1>
+                            <a href="#news" class="section-btn btn btn-default btn-blue smoothScroll">Test topshirish</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+<!-- ABOUT -->
+<section id="about">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-md-6 col-sm-6">
+                <div class="about-info">
+                    <h2 class="wow fadeInUp " data-wow-delay="0.6s"><span style="color: #a5c422;"><i class="fa fa-info"></i> Medic</span> ga <br> Hush Kelibsiz</h2>
+                    <div class="wow fadeInUp" data-wow-delay="0.8s">
+                        <p>Asosiy vazifamiz – tibbiyot sohasini yuqori samara bilan ishlaydigan, chinakam xalqchil tizimga aylantirishdan iborat.</p>
+                      
+                    </div>
+                 
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+{{-- <!-- TEAM --> --}}
+{{-- <section id="team" data-stellar-background-ratio="1">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-md-6 col-sm-6">
+                <div class="about-info">
+                    <h2 class="wow fadeInUp" data-wow-delay="0.1s">Bizning malakali professorlar</h2>
+                </div>
+            </div>
+
+            <div class="clearfix"></div>
+
+            <div class="col-md-4 col-sm-6">
+                <div class="team-thumb wow fadeInUp" data-wow-delay="0.2s">
+                    <img src="{{asset('/images/template/team-image1.jpg')}}" class="img-responsive" alt="">
+
+                    <div class="team-info">
+                        <h3>Abror Azimov</h3>
+                        <p>Bosh jarrox</p>
+                        <div class="team-contact-info">
+                            <p><i class="fa fa-phone"></i> 899-518-1521</p>
+                            <p><i class="fa fa-envelope-o"></i> <a href="#">abror.azimov@imedic.uz</a></p>
+                        </div>
+                        <ul class="social-icon">
+                            <li><a href="#" class="fa fa-linkedin-square"></a></li>
+                            <li><a href="#" class="fa fa-envelope-o"></a></li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-md-4 col-sm-6">
+                <div class="team-thumb wow fadeInUp" data-wow-delay="0.4s">
+                    <img src="{{asset('/images/template/team-image2.jpg')}}" class="img-responsive" alt="">
+
+                    <div class="team-info">
+                        <h3>Otabek Raxmonov</h3>
+                        <p>Bosh dietolog</p>
+                        <div class="team-contact-info">
+                            <p><i class="fa fa-phone"></i> 890-070-0170</p>
+                            <p><i class="fa fa-envelope-o"></i> <a href="#">otabek.raxmonov@imedic.uz</a></p>
+                        </div>
+                        <ul class="social-icon">
+                            <li><a href="#" class="fa fa-facebook-square"></a></li>
+                            <li><a href="#" class="fa fa-envelope-o"></a></li>
+                            <li><a href="#" class="fa fa-flickr"></a></li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-md-4 col-sm-6">
+                <div class="team-thumb wow fadeInUp" data-wow-delay="0.6s">
+                    <img src="{{asset('/images/template/team-image3.jpg')}} " class="img-responsive" alt="">
+
+                    <div class="team-info">
+                        <h3>Latifaxon Abdullayeva</h3>
+                        <p>Bosh xamshira</p>
+                        <div class="team-contact-info">
+                            <p><i class="fa fa-phone"></i> 899-040-0140</p>
+                            <p><i class="fa fa-envelope-o"></i> <a href="#">latifaxon.abdullayeva@imedic.uz</a></p>
+                        </div>
+                        <ul class="social-icon">
+                            <li><a href="#" class="fa fa-twitter"></a></li>
+                            <li><a href="#" class="fa fa-envelope-o"></a></li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section> --}}
+
+
+<!-- NEWS -->
+<section id="news" data-stellar-background-ratio="2.5">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-md-12 col-sm-12">
+                <!-- SECTION TITLE -->
+                <div class="section-title wow fadeInUp" data-wow-delay="0.1s">
+                    <h2>So'nggi Yangiliklar</h2>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-sm-6">
+                <!-- NEWS THUMB -->
+                <div class="news-thumb wow fadeInUp" data-wow-delay="0.4s">
+                    <a href="news-detail.html">
+                        <img src="images/news-image1.jpg" class="img-responsive" alt="">
+                    </a>
+                    <div class="news-info">
+                        <span>1 Fevral, 2022</span>
+                        <h3><a href="news-detail.html">Sog'liqni Saqlash Vazirligi</a></h3>
+                        <p>Sog'liqni saqlash tizimidagi islohotlarning yangi ustuvor yo'nalishlari belgilab berildi.</p>
+                        <div class="author" style="display: none">
+                            <img src="images/author-image.jpg" class="img-responsive" alt="">
+                            <div class="author-info">
+                                <h5>Jeremie Carlson</h5>
+                                <p>CEO / Founder</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-sm-6">
+                <!-- NEWS THUMB -->
+                <div class="news-thumb wow fadeInUp" data-wow-delay="0.6s">
+                    <a href="news-detail.html">
+                        <img src="images/news-image2.jpg" class="img-responsive" alt="">
+                    </a>
+                    <div class="news-info">
+                        <span>1 Yanvar, 2022</span>
+                        <h3><a href="news-detail.html">Sog'liqni Saqlash Vazirligi</a></h3>
+                        <p>Tibbiy faoliyatni amalga oshirish huquqini beruvchi litsenziya uzaytirildi.</p>
+                        <div class="author" style="display: none">
+                            <img src="images/author-image.jpg" class="img-responsive" alt="">
+                            <div class="author-info">
+                                <h5>Jason Stewart</h5>
+                                <p>General Director</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-sm-6">
+                <!-- NEWS THUMB -->
+                <div class="news-thumb wow fadeInUp" data-wow-delay="0.8s">
+                    <a href="news-detail.html">
+                        <img src="images/news-image3.jpg" class="img-responsive" alt="">
+                    </a>
+                    <div class="news-info">
+                        <span>27 Yanvar, 2022</span>
+                        <h3><a href="news-detail.html">Sog'liqni Saqlash Vazirligi</a></h3>
+                        <p>Faoliyatning yoki filialning turini qisqartirish munosabati bilan litsenziyani yangilash.</p>
+                        <div class="author" style="display: none">
+                            <img src="images/author-image.jpg" class="img-responsive" alt="">
+                            <div class="author-info">
+                                <h5>Andrio Abero</h5>
+                                <p>Online Advertising</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+{{-- <!-- MAKE AN APPOINTMENT -->
+<section id="appointment" data-stellar-background-ratio="3">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-md-6 col-sm-6">
+                <img src="images/appointment-image.jpg" class="img-responsive" alt="">
+            </div>
+
+            <div class="col-md-6 col-sm-6">
+                <!-- CONTACT FORM HERE -->
+                <form id="appointment-form" role="form" method="post" action="#">
+
+                    <!-- SECTION TITLE -->
+                    <div class="section-title wow fadeInUp" data-wow-delay="0.4s">
+                        <h2>Ariza qoldiring</h2>
+                    </div>
+
+                    <div class="wow fadeInUp" data-wow-delay="0.8s">
+                        <div class="col-md-6 col-sm-6">
+                            <label for="name">Ism</label>
+                            <input type="text" class="form-control" id="name" name="name" placeholder="To'liq ism sharifingiz">
+                        </div>
+
+                        <div class="col-md-6 col-sm-6">
+                            <label for="email">E-mail</label>
+                            <input type="email" class="form-control" id="email" name="email" placeholder="E-mail">
+                        </div>
+
+                        <div class="col-md-6 col-sm-6">
+                            <label for="date">Tashrif vaqti</label>
+                            <input type="date" name="date" value="" class="form-control">
+                        </div>
+
+                        <div class="col-md-6 col-sm-6">
+                            <label for="select">Yo'nalish</label>
+                            <select class="form-control">
+                                <option>Jarroxlik</option>
+                                <option>Kardiologiya</option>
+                                <option>Stomatologiya</option>
+                                <option>Dietologiya</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-12 col-sm-12">
+                            <label for="telephone">Telefon</label>
+                            <input type="tel" class="form-control" id="phone" name="phone" placeholder="Telefon raqamingiz">
+                            <label for="Message">Qo'shimcha ma'lumot</label>
+                            <textarea class="form-control" rows="5" id="message" name="message" placeholder=""></textarea>
+                            <button type="submit" class="form-control" id="cf-submit" name="submit">Yuborish</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</section> --}}
+
+
+<!-- GOOGLE MAP -->
+<section id="google-map">
+    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2994.428690077023!2d69.18128531567007!3d41.36477000535938!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38ae8e8775f4080d%3A0xba44991cc82e4503!2z0JzQtdC00LjRhtC40L3RgdC60LjQuSDQs9C-0YDQvtC00L7Qug!5e0!3m2!1sru!2s!4v1643721722462!5m2!1sru!2s" width="100%" height="350" frameborder="0" style="border:0" allowfullscreen loading="lazy"></iframe>
+</section>
+
+
+<!-- FOOTER -->
+<footer data-stellar-background-ratio="5">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-md-4 col-sm-4">
+                <div class="footer-thumb">
+                    <h4 class="wow fadeInUp" data-wow-delay="0.4s">Manzil</h4>
+                    <p>Toshkent shahar, Olmazor tumani, 2-chi Shifokorlar tor ko'chasi, 14.</p>
+
+                    <div class="contact-info">
+                        <p><i class="fa fa-phone"></i> 871-214-4731</p>
+                        {{-- <p><i class="fa fa-envelope-o"></i> <a href="#">info@imedic.uz</a></p> --}}
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-4">
+                <div class="footer-thumb">
+                    <div class="opening-hours">
+                        <h4 class="wow fadeInUp" data-wow-delay="0.4s">Qa'bul vaqtlari</h4>
+                        <p>Dushanba - Juma <span>09:00 dan - 18:00 gacha</span></p>
+                     
+                    </div>
+
+                    <ul class="social-icon">
+                        <li><a href="#" class="fa fa-facebook-square" attr="facebook icon"></a></li>
+                        <li><a href="#" class="fa fa-twitter"></a></li>
+                        <li><a href="#" class="fa fa-instagram"></a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-md-12 col-sm-12 border-top">
+                <div class="col-md-4 col-sm-6">
+                    <div class="copyright-text">
+                        <p>Copyright &copy; 2022 iMedic
+
+                          
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-6">
+                    <div class="footer-link">
+                        <a href="#">Laboratoriya</a>
+                        <a href="#">Yo'nalishlar</a>
+                        <a href="#">Kafolatlash</a>
+                        <a href="#">Ish o'rinlari</a>
+                    </div>
+                </div>
+                <div class="col-md-2 col-sm-2 text-align-center">
+                    <div class="angle-up-btn">
+                        <a href="#top" class="smoothScroll wow fadeInUp" data-wow-delay="1.2s"><i class="fa fa-angle-up"></i></a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</footer>
+
+<!-- SCRIPTS -->
+
+<script src="{{asset('js/template/jquery.js')}}"></script>
+<script src="{{asset('js/template/bootstrap.min.js')}}"></script>
+<script src="{{asset('js/template/jquery.sticky.js')}}"></script>
+<script src="{{asset('js/template/jquery.stellar.min.js')}}"></script>
+<script src="{{asset('js/template/wow.min.js')}}"></script>
+<script src="{{asset('js/template/smoothscroll.js')}}"></script>
+<script src="{{asset('js/template/owl.carousel.min.js')}}"></script>
+<script src="{{asset('js/template/custom.js')}}"></script>
+
+@yield('extra-js')
+
+
 </body>
 </html>
