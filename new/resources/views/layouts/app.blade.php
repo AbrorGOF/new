@@ -38,7 +38,11 @@
 @include("layouts.nav")
 <!--end navigation-->
     <!--start page wrapper -->
-@yield("content")
+    <div class="page-wrapper">
+        <div class="page-content">
+            @yield("content")
+        </div>
+    </div>
 <!--end page wrapper -->
     <!--start overlay-->
     <div class="overlay toggle-icon"></div>

@@ -20,63 +20,63 @@ class CreateRegionsTable extends Migration
         });
         DB::table('regions')->insert([
             [
-                'title' => 'Тошкент шахри',
+                'title' => 'Toshkent shahri',
                 'link' => 'https://toshkent.imedic.uz/api/method/cabinet.check'
             ],
             [
-                'title' => 'Тошкент вилояти',
+                'title' => 'Toshkent viloyati',
                 'link' => 'https://toshkent.imedic.uz/api/method/cabinet.check'
             ],
             [
-                'title' => 'Самарканд вилояти',
+                'title' => 'Samarqand viloyati',
                 'link' => 'https://samarqand.imedic.uz/api/method/cabinet.check'
             ],
             [
-                'title' => 'Жиззах вилояти',
+                'title' => 'Jizzax viloyati',
                 'link' => 'https://jizzax.imedic.uz/api/method/cabinet.check'
             ],
             [
-                'title' => 'Сирдарё вилояти',
+                'title' => 'Sirdaryo viloyati',
                 'link' => 'https://guliston.imedic.uz/api/method/cabinet.check'
             ],
             [
-                'title' => 'Фаргона вилояти',
+                'title' => 'Fargona viloyati',
                 'link' => 'https://fargona.imedic.uz/api/method/cabinet.check'
             ],
             [
-                'title' => 'Андижон вилояти',
+                'title' => 'Andijon viloyati',
                 'link' => 'https://andijon.imedic.uz/api/method/cabinet.check'
             ],
             [
-                'title' => 'Кашакадарё вилояти',
+                'title' => 'Qashqadaryo viloyati',
                 'link' => 'https://qarshi.imedic.uz/api/method/cabinet.check'
             ],
             [
-                'title' => 'Наманган вилояти',
+                'title' => 'Namangan viloyati',
                 'link' => 'https://namangan.imedic.uz/api/method/cabinet.check'
             ],
             [
-                'title' => 'Сурхондарё вилояти',
+                'title' => 'Surxandaryo viloyati',
                 'link' => 'https://termiz.imedic.uz/api/method/cabinet.check'
             ],
             [
-                'title' => 'Бухоро вилояти',
+                'title' => 'Buxoro viloyati',
                 'link' => 'https://buxoro.imedic.uz/api/method/cabinet.check'
             ],
             [
-                'title' => 'Навоий вилояти',
+                'title' => 'Navoiy viloyati',
                 'link' => 'https://navoiy.imedic.uz/api/method/cabinet.check'
             ],
             [
-                'title' => 'Коракалпогистон Республикаси',
+                'title' => 'Qoraqalpog`iston Respublikasi',
                 'link' => 'https://nukus.imedic.uz/api/method/cabinet.check'
             ],
             [
-                'title' => 'Хоразм вилояти',
+                'title' => 'Xorazm viloyati',
                 'link' => 'https://urganch.imedic.uz/api/method/cabinet.check'
             ],
             [
-                'title' => 'Кукон шахри',
+                'title' => 'Qo`qon шахри',
                 'link' => 'https://qoqon.imedic.uz/api/method/cabinet.check'
             ],
         ]);

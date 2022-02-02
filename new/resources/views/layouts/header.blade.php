@@ -193,7 +193,7 @@
                                         <a class="dropdown-item" href="javascript:;">
                                             <div class="d-flex align-items-center">
                                                 <div class="user-online">
-                                                    <img src="/assets/images/avatars/avatar-2.png" class="msg-avatar" alt="user avatar">
+                                                    <img src="/assets/images/avatars/avatar-6.png" class="msg-avatar" alt="user avatar">
                                                 </div>
                                                 <div class="flex-grow-1">
                                                     <h6 class="msg-name">Althea Cabardo <span class="msg-time float-end">14
@@ -329,7 +329,7 @@
                             <li><a class="dropdown-item" href="javascript:;"><i class="bx bx-cog"></i><span>Settings</span></a><li>
                             <div class="dropdown-divider mb-0"></div>
                             </li>
-                            <li><a class="dropdown-item" href="javascript:;"><i class='bx bx-log-out-circle'></i><span>Chiqish</span></a>
+                            <li><a class="dropdown-item" href="/logout"><i class='bx bx-log-out-circle'></i><span>Chiqish</span></a>
                             </li>
                         </ul>
                     </div>
