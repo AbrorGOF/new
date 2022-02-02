@@ -1,9 +1,3 @@
-<!--
-Author: W3layouts
-Author URL: http://w3layouts.com
-License: Creative Commons Attribution 3.0 Unported
-License URL: http://creativecommons.org/licenses/by/3.0/
--->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,7 +5,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <!-- custom-theme -->
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="keywords" content="Medicate Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template, 
+<meta name="keywords" content="Medicate Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template,
 Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" />
 <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
 		function hideURLbar(){ window.scrollTo(0,1); } </script>
@@ -29,17 +23,17 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <link href="//fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
 <!-- //online fonts -->
 <!-- font-awesome-icons -->
-<link href="{{ asset('css/welcome/font-awesome.css')}}" type="text/css" rel="stylesheet"> 
+<link href="{{ asset('css/welcome/font-awesome.css')}}" type="text/css" rel="stylesheet">
 <!-- //font-awesome-icons -->
 <script src="{{asset('js/welcome/modernizr.custom.js')}}"></script>
-<script type="text/javascript" src="{{asset('js/welcome/modernizr.custom.79639.js')}}"></script>		
-<link rel="stylesheet" type="text/css" href="{{asset('css/welcome/custom.css')}}" />	
+<script type="text/javascript" src="{{asset('js/welcome/modernizr.custom.79639.js')}}"></script>
+<link rel="stylesheet" type="text/css" href="{{asset('css/welcome/custom.css')}}" />
 <!-- for smooth scrolling -->
 <script type="text/javascript" src="{{asset('js/welcome/move-top.js')}}"></script>
 <script type="text/javascript" src="{{asset('js/welcome/easing.js')}}"></script>
 <script type="text/javascript">
 jQuery(document).ready(function($) {
-	$(".scroll").click(function(event){		
+	$(".scroll").click(function(event){
 		event.preventDefault();
 		$('html,body').animate({scrollTop:$(this.hash).offset().top},1000);
 	});
@@ -84,19 +78,19 @@ window.addEventListener ("touchmove", function (event) { event.preventDefault ()
 		    <div class="slider">
 			    <div class="callbacks_container">
 				   <ul class="rslides callbacks callbacks1" id="slider4">
-                        <li>							
+                        <li>
 							<div class="banner_text_w3layouts">
 								<h3>Asosiy vazifamiz – tibbiyot sohasini yuqori samara bilan ishlaydigan, chinakam xalqchil tizimga aylantirishdan iborat.</h3>
 								<p>Shavkat Mirziyoyev</p>
 							</div>
 					    </li>
-                        <li>	
+                        <li>
 							<div class="banner_text_w3layouts">
 								<h3>Inson salomatligi jamiyatning bebaho boyligi, shifokorlar esa ana shu boylikning fidoyi posbonlaridir</h3>
 								<p>Shavkat Mirziyoyev</p>
 							</div>
 						</li>
-					    <li>	
+					    <li>
 						    <div class="banner_text_w3layouts">
 								<h3>Odamlar dardiga darmon bo‘lmoq-ezgulik va olijanoblikning yuksak namunasidir</h3>
 								<p>Abu Ali Ibn Sino</p>
@@ -122,12 +116,12 @@ window.addEventListener ("touchmove", function (event) { event.preventDefault ()
 					  $('.events').append("<li>after event fired.</li>");
 					}
 				  });
-			
+
 				});
 			 </script>
 		   </div>
-		</div>   
-	</div>	
+		</div>
+	</div>
 </div>
 <!-- //banner -->
 <!-- about -->
@@ -160,7 +154,7 @@ window.addEventListener ("touchmove", function (event) { event.preventDefault ()
 				</div>
 			</div>
 			<div class="clearfix"></div>
-		</div>		
+		</div>
 	</div>
 </div>	 -->
 <!-- //about -->
@@ -193,7 +187,7 @@ window.addEventListener ("touchmove", function (event) { event.preventDefault ()
 			<h6>Hope lives here</h6>
 			<a href="#" data-toggle="modal" data-target="#myModal">Read More</a>
 		</div>
-	</div>	
+	</div>
 	<div class="wthree-services-bottom">
 		<div class="container">
 			<div class="col-md-3 col-sm-3 col-xs-6 wthree-sb1 " >
@@ -217,17 +211,17 @@ window.addEventListener ("touchmove", function (event) { event.preventDefault ()
 				 <p>Praesent imperdiet mollis odio, eget sodales tortor porttitor.Vac turpis egestas tortor.</p>
 			</div>
 			<div class="clearfix"></div>
-		</div>	
+		</div>
 	</div>
 </div>	 -->
-<!-- footer-->	
+<!-- footer-->
 <div class="agileits_w3layouts-footer">
 	<div class="copy-right text-center">
 		<span class="agileits-copy fa fa-plus" aria-hidden="true"></span>
 		<p>&copy; 2017 ROOSUPPORT. All rights reserved</p>
-	</div>	
-</div>	
-<!-- footer-->	
+	</div>
+</div>
+<!-- footer-->
 <script src="{{asset('js/welcome/jarallax.js')}}"></script>
 <script src="{{asset('js/welcome/SmoothScroll.min.js')}}"></script>
 <script type="text/javascript">
@@ -244,7 +238,7 @@ window.addEventListener ("touchmove", function (event) { event.preventDefault ()
 		<script type="text/javascript" src="{{asset('js/welcome/easing.js')}}"></script>
 		<script type="text/javascript">
 			jQuery(document).ready(function($) {
-				$(".scroll").click(function(event){		
+				$(".scroll").click(function(event){
 					event.preventDefault();
 					$('html,body').animate({scrollTop:$(this.hash).offset().top},1000);
 				});
@@ -260,7 +254,7 @@ window.addEventListener ("touchmove", function (event) { event.preventDefault ()
 				$( "#datepicker,#datepicker1" ).datepicker();
 				});
 			</script>
-<!-- //End-date-piker -->	
+<!-- //End-date-piker -->
 <!-- here starts scrolling icon -->
 		<script type="text/javascript">
 			$(document).ready(function() {
@@ -269,12 +263,12 @@ window.addEventListener ("touchmove", function (event) { event.preventDefault ()
 					containerID: 'toTop', // fading element id
 					containerHoverID: 'toTopHover', // fading element hover id
 					scrollSpeed: 1200,
-					easingType: 'linear' 
+					easingType: 'linear'
 					};
 				*/
-										
+
 				$().UItoTop({ easingType: 'easeOutQuart' });
-									
+
 				});
 		</script>
 <!--tabs-->
@@ -282,7 +276,7 @@ window.addEventListener ("touchmove", function (event) { event.preventDefault ()
 		<script>
 		$(document).ready(function () {
 		$('#horizontalTab').easyResponsiveTabs({
-		type: 'default', //Types: default, vertical, accordion           
+		type: 'default', //Types: default, vertical, accordion
 		width: 'auto', //auto or any width like 600px
 		fit: true,   // 100% fit in a container
 		closed: 'accordion', // Start closed if in accordion view
