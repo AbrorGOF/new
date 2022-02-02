@@ -205,6 +205,7 @@ class LoginController extends Controller
         ]);
         if ($validator->fails()) {
             $messages = $validator->messages();
+            dd($messages);
             return redirect()->back()->withErrors($messages)->withInput();
         }
 

@@ -29,6 +29,7 @@ class CreateDiplomTable extends Migration
             $table->string('institution');
             $table->string('number');
             $table->date('date');
+            $table->date('end_date');
             $table->string('file');
             $table->timestamps();
         });
