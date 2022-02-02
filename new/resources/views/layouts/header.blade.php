@@ -5,10 +5,10 @@
                     <div class="mobile-toggle-menu"><i class='bx bx-menu'></i>
                     </div>
 
-                    <div class="top-menu ms-auto">
+                    <div class="top-menu ms-auto d-none">
                         <ul class="navbar-nav align-items-center">
                             <li class="nav-item mobile-search-icon">
-                                <a class="nav-link" href="#">   <i class='bx bx-search'></i>
+                                <a class="nav-link" href="#">  <i class='bx bx-search'></i>
                                 </a>
                             </li>
                             <li class="nav-item dropdown dropdown-large">
@@ -318,7 +318,7 @@
                             </li>
                         </ul>
                     </div>
-                    <div class="user-box dropdown">
+                    <div class="user-box dropdown ms-auto">
                         <a class="d-flex align-items-center nav-link dropdown-toggle dropdown-toggle-nocaret" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <img src="/assets/images/avatars/avatar-6.png" class="user-img" alt="user avatar">
                             <div class="user-info ps-3">
