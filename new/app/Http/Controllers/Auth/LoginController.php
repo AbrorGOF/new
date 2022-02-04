@@ -191,8 +191,6 @@ class LoginController extends Controller
     }
     protected function AuthReg(Request $request)
     {
-        $request->region_id = 1;
-        $request->category_id = 78;
         $request->phone = str_replace(array('+','(',')',' ','-'),'',$request->phone);
         $request->pinfl = str_replace(array('+','(',')',' ','-'),'',$request->pinfl);
         $request->passport = str_replace(array('+','(',')',' ','-'),'',$request->passport);

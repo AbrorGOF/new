@@ -1,12 +1,15 @@
 <!--sidebar wrapper -->
+<style>
+    .logo-text-new{
+        font-size: 22px;
+        margin-bottom: 0;
+        margin-left: 2px;
+        letter-spacing: 1px;
+    }
+</style>
 <div class="sidebar-wrapper" data-simplebar="true">
     <div class="sidebar-header">
-        <div>
-            <img src="/assets/images/logo-icon.png" class="logo-icon" alt="logo icon">
-        </div>
-        <div>
-            <h4 class="logo-text">Rocker</h4>
-        </div>
+        <a href="/home" class="navbar-brand"><i class="fa fa-info"></i> Medic</a>
         <div class="toggle-icon ms-auto"><i class='bx bx-arrow-to-left'></i>
         </div>
     </div>

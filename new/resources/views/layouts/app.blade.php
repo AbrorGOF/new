@@ -20,12 +20,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
     <link href="/assets/css/app.css" rel="stylesheet">
     <link href="/assets/css/icons.css" rel="stylesheet">
+    <link href="/css/template/font-awesome.min.css" rel="stylesheet">
 
     <!-- Theme Style CSS -->
     <link rel="stylesheet" href="/assets/css/dark-theme.css" />
     <link rel="stylesheet" href="/assets/css/semi-dark.css" />
     <link rel="stylesheet" href="/assets/css/header-colors.css" />
-    <title>Rocker - Bootstrap 5 Admin Dashboard Template</title>
+    <title>Online platform for nurses</title>
 </head>
 
 <body>
@@ -50,7 +51,7 @@
     <!--Start Back To Top Button--> <a href="javaScript:;" class="back-to-top"><i class='bx bxs-up-arrow-alt'></i></a>
     <!--End Back To Top Button-->
     <footer class="page-footer">
-        <p class="mb-0">Copyright © 2021. All right reserved.</p>
+        <p class="mb-0">Copyright © {{ date('Y') }}. All right reserved.</p>
     </footer>
 </div>
 <!--end wrapper-->

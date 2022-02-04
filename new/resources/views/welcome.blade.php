@@ -100,54 +100,27 @@
                     <div class="caption">
                         <div class="col-md-offset-1 col-md-10">
                             <h3>Ma'lakangizni oshiring</h3>
-                            <h1>TEST TOPSHIRING</h1>
-                            <a href="#team" class="section-btn btn btn-default smoothScroll">Test topshirish</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="item item-second">
-                    <div class="caption">
-                        <div class="col-md-offset-1 col-md-10">
-                            <h3>Malakali Hamshira bo'ling</h3>
-                            <h1>TEST TOPSHIRING</h1>
-                            <a href="#about" class="section-btn btn btn-default btn-gray smoothScroll">Test topshirish</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="item item-third">
-                    <div class="caption">
-                        <div class="col-md-offset-1 col-md-10">
-                            <h3>Bilimingizni sinang</h3>
-                            <h1>TEST TOPSHIRING</h1>
-                            <a href="#news" class="section-btn btn btn-default btn-blue smoothScroll">Test topshirish</a>
+                            <h1>HAMSHIRALIK ISHI FAOLIYATINI BOSHLANG</h1>
                         </div>
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 </section>
-
 
 <!-- ABOUT -->
 <section id="about">
     <div class="container">
         <div class="row">
-
             <div class="col-md-6 col-sm-6">
                 <div class="about-info">
                     <h2 class="wow fadeInUp " data-wow-delay="0.6s"><span style="color: #a5c422;"><i class="fa fa-info"></i> Medic</span> ga <br> Hush Kelibsiz</h2>
                     <div class="wow fadeInUp" data-wow-delay="0.8s">
                         <p>Asosiy vazifamiz – tibbiyot sohasini yuqori samara bilan ishlaydigan, chinakam xalqchil tizimga aylantirishdan iborat.</p>
-                      
                     </div>
-                 
                 </div>
             </div>
-
         </div>
     </div>
 </section>
@@ -240,27 +213,17 @@
             <div class="col-md-12 col-sm-12">
                 <!-- SECTION TITLE -->
                 <div class="section-title wow fadeInUp" data-wow-delay="0.1s">
-                    <h2>So'nggi Yangiliklar</h2>
+                    <h2>Mustaqil hamshira bo'lish</h2>
                 </div>
             </div>
 
             <div class="col-md-4 col-sm-6">
                 <!-- NEWS THUMB -->
                 <div class="news-thumb wow fadeInUp" data-wow-delay="0.4s">
-                    <a href="news-detail.html">
-                        <img src="images/news-image1.jpg" class="img-responsive" alt="">
-                    </a>
                     <div class="news-info">
-                        <span>1 Fevral, 2022</span>
-                        <h3><a href="news-detail.html">Sog'liqni Saqlash Vazirligi</a></h3>
-                        <p>Sog'liqni saqlash tizimidagi islohotlarning yangi ustuvor yo'nalishlari belgilab berildi.</p>
-                        <div class="author" style="display: none">
-                            <img src="images/author-image.jpg" class="img-responsive" alt="">
-                            <div class="author-info">
-                                <h5>Jeremie Carlson</h5>
-                                <p>CEO / Founder</p>
-                            </div>
-                        </div>
+                        <span>1-qadam</span>
+                        <h3><a href="#">Sertifikat</a></h3>
+                        <p>Viloyat Malaka oshirish markazlarida malaka oshirish orqali olinadi.</p>
                     </div>
                 </div>
             </div>
@@ -268,45 +231,25 @@
             <div class="col-md-4 col-sm-6">
                 <!-- NEWS THUMB -->
                 <div class="news-thumb wow fadeInUp" data-wow-delay="0.6s">
-                    <a href="news-detail.html">
-                        <img src="images/news-image2.jpg" class="img-responsive" alt="">
-                    </a>
                     <div class="news-info">
-                        <span>1 Yanvar, 2022</span>
-                        <h3><a href="news-detail.html">Sog'liqni Saqlash Vazirligi</a></h3>
-                        <p>Tibbiy faoliyatni amalga oshirish huquqini beruvchi litsenziya uzaytirildi.</p>
-                        <div class="author" style="display: none">
-                            <img src="images/author-image.jpg" class="img-responsive" alt="">
-                            <div class="author-info">
-                                <h5>Jason Stewart</h5>
-                                <p>General Director</p>
-                            </div>
-                        </div>
+                        <span>2-qadam</span>
+                        <h3><a href="#">Guvohnoma</a></h3>
+                        <p>Soliq to‘lovchining shaxsiy kabineti orqali yoxud davlat
+                            soliq xizmati organiga kelgan holda ro‘yxatdan o‘tgan holda (QR-kod) ega bo‘lgan ma’lumotnoma rasmiylashtiriladi.</p>
                     </div>
                 </div>
             </div>
 
-            <div class="col-md-4 col-sm-6">
+            <div class="col-md-4 col-sm-6" >
                 <!-- NEWS THUMB -->
-                <div class="news-thumb wow fadeInUp" data-wow-delay="0.8s">
-                    <a href="news-detail.html">
-                        <img src="images/news-image3.jpg" class="img-responsive" alt="">
-                    </a>
+                <div class="news-thumb wow fadeInUp" data-wow-delay="0.8s" style="height: 100%">
                     <div class="news-info">
-                        <span>27 Yanvar, 2022</span>
-                        <h3><a href="news-detail.html">Sog'liqni Saqlash Vazirligi</a></h3>
-                        <p>Faoliyatning yoki filialning turini qisqartirish munosabati bilan litsenziyani yangilash.</p>
-                        <div class="author" style="display: none">
-                            <img src="images/author-image.jpg" class="img-responsive" alt="">
-                            <div class="author-info">
-                                <h5>Andrio Abero</h5>
-                                <p>Online Advertising</p>
-                            </div>
-                        </div>
+                        <span>3-qadam</span>
+                        <h3><a href="news-detail.html">Profil</a></h3>
+                        <p>Shu saytda ro'yxatdan o'tish orqali amalga oshiriladi.</p>
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 </section>
@@ -399,7 +342,7 @@
                     <div class="opening-hours">
                         <h4 class="wow fadeInUp" data-wow-delay="0.4s">Qa'bul vaqtlari</h4>
                         <p>Dushanba - Juma <span>09:00 dan - 18:00 gacha</span></p>
-                     
+
                     </div>
 
                     <ul class="social-icon">
@@ -415,7 +358,7 @@
                     <div class="copyright-text">
                         <p>Copyright &copy; 2022 iMedic
 
-                          
+
                     </div>
                 </div>
                 <div class="col-md-6 col-sm-6">
