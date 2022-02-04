@@ -3,18 +3,18 @@
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-12">
+            <div class="col-12">
                 <div class="card">
                     <div class="card-header">
                         {{ __('Muolajalar bo‘yicha hisobot') }}
-                        <button id="edit-btn" type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#addToJournal">
+                        <button id="edit-btn" type="button" class="btn btn-primary float-end" data-bs-toggle="modal" data-bs-target="#addToJournal">
                             <i class="feather icon-edit-2 mr-2"></i>
                             Hisobot qo'shish
                         </button>
                     </div>
 
                     <div class="card-body">
-                        <table class="table table-bordered mb-5">
+                        <table class="table table-bordered text-center">
                             <thead>
                             <tr class="table-success">
                                 <th scope="col">#</th>
@@ -48,16 +48,12 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="addToJournal" tabindex="-1" role="dialog" aria-
-         labelledby="demoModalLabel" aria-hidden="true">
+    <div class="modal fade" id="addToJournal" tabindex="-1" role="dialog" aria-labelledby="demoModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="demoModalLabel">Hisobot qo'shish</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-
-                            label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <form role="form" method="POST" action="/report/journal/add">
                     @csrf
@@ -159,7 +155,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default waves-effect " data-dismiss="modal">Bekor qilish</button>
+                        <button type="button" class="btn btn-default waves-effect " data-bs-dismiss="modal">Bekor qilish</button>
                         <button type="submit" class="btn btn-primary waves-effect waves-light ">{{ __('Saqlash') }}</button>
                     </div>
                 </form>
