@@ -1,6 +1,8 @@
 <?php
 
+use App\Models\DeskLogs;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
 
 function getQuarterOfYear()
 {
@@ -112,4 +114,93 @@ function uploadFile($files)
     $storePath = 'temp/' . $random;
     $path = $files->storeAs($storePath, $fileNameToStore);
     return $path;
+}
+function getDateInLatin($date = false): string
+{
+    if (!isset($date)){
+        $date = date('Y.m.d');
+    }
+    $date = date('Y n F', strtotime($date));
+    $months = array(
+        'January'=>'yanvar',
+        'February'=>'fevral',
+        'March'=>'mart',
+        'April'=>'aprel',
+        'May'=>'may',
+        'June'=>'iyun',
+        'July'=>'iyul',
+        'August'=>'avgust',
+        'September'=>'sentyabr', 'October'=>'oktyabr', 'November'=>'noyabr', 'December'=>'dekabr' );
+    $d = explode(' ', $date);
+    return  $d[0].' yil '.$d[1].' '.$months[$d[2]];
+}
+function getAddress($pin)
+{
+    $address = array();
+    $info = DeskLogs::where('pinfl', $pin)->first();
+    $response = json_decode($info->response, true);
+    $token = 'blabla';
+    $auth_token = "test";
+    $data = [
+        "method" => "connect.region",
+        "params" => array(
+            "token" => $token,
+            "districtId" => $response['DistrictId'],
+        )
+    ];
+    $data_json = json_encode($data);
+    $curl = curl_init();
+    curl_setopt_array($curl, array(
+        CURLOPT_URL => "https://desk.e-invoice.uz/app",
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => "",
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 30000,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => "POST",
+        CURLOPT_POSTFIELDS => $data_json,
+        CURLOPT_HTTPHEADER => array(
+            "Authorization: $auth_token",
+            "content-type: application/json",
+        ),
+    ));
+    $result = curl_exec($curl);
+    $result = json_decode($result, true);
+    $err = curl_error($curl);
+    curl_close($curl);
+    if ($result['result']){
+        $reg = $result['result']['region'];
+        $dis = $result['result']['district'];
+        $address['region'] = krillLatin($reg);
+        $address['district'] = krillLatin($dis);
+    }
+    return $address;
+}
+function krillLatin($string){
+    $string    = strip_tags(trim($string));
+    $string    = str_replace(' ', '-', $string);
+
+    $slug = preg_replace ('/[^A-ZА-Яa-zа-яёқўғҳЁЎҚҒҲ\'0-9\-\/]/u', '-', $string);
+    $slug = preg_replace('/([-]+)/i', ' ', $slug);
+    $slug = trim($slug, '-');
+    $ru_en = array(
+        'А'=>'A', 'Б'=>'B', 'В'=>'V', 'Г'=>'G', 'Д'=>'D', 'Е'=>'E',
+        'Ё'=>'YO', 'Ж'=>'J', 'З'=>'Z', 'И'=>'I', 'Й'=>'Y', 'К'=>'K', 'Л'=>'L', 'М'=>'M',
+        'Н'=>'N', 'О'=>'O', 'П'=>'P', 'Р'=>'R', 'С'=>'S', 'Т'=>'T', 'У'=>'U', 'Ф'=>'F',
+        'Х'=>'X', 'Ц'=>'S', 'Ч'=>'CH', 'Ш'=>'SH',
+        'Щ'=>'SH','Ю'=>'YU','Ҳ'=>'H','Э'=>'E','Қ'=>'Q','('=>'(',')'=>')', 'Я'=>'YA',
+        'а'=>'a','б'=>'b','в'=>'v','г'=>'g','д'=>'d',
+        'е'=>'e','ё'=>'yo','ж'=>'j','з'=>'z',
+        'и'=>'i','й'=>'y','к'=>'k','л'=>'l','м'=>'m',
+        'н'=>'n','о'=>'o','п'=>'p','р'=>'r','с'=>'s',
+        'т'=>'t','у'=>'u','ф'=>'f','х'=>'x','ц'=>'ts',
+        'ч'=>'ch','ш'=>'sh','щ'=>'sh','ъ'=>'','ы'=>'y',
+        'ь'=>'','э'=>'e','ю'=>'yu','я'=>'ya','қ'=>'q','ў'=>'o`','ҳ'=>'h','ғ'=>'g`','ъ'=>"`"
+    );
+    foreach($ru_en as $ru=>$en){
+        $slug = str_replace($ru, $en, $slug);
+    }
+    if (!$slug){ $slug = 'untitled'; }
+    if (is_numeric($slug)){ $slug .= strtolower(date('F')); }
+    return $slug;
 }

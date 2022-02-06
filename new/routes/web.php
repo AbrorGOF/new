@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Nurse\NurseController;
+use App\Http\Controllers\PdfController;
 use App\Http\Controllers\Report\JournalController;
 use App\Http\Controllers\Report\QuarterlyController;
 use App\Http\Controllers\HomeController;
@@ -42,3 +43,6 @@ Route::post('/get/nurse/info', [LoginController::class, 'ConnectPinfl'])->name('
 Route::post('/auth/reg', [LoginController::class, 'AuthReg'])->name('auth-reg');
 Route::post('/auth/log', [LoginController::class, 'AuthLog'])->name('auth-log');
 Route::get('/select/options', [LoginController::class, 'SelectOptions'])->name('get-select-options');
+Route::get('/pdf/new', [PdfController::class, 'new'])->name('new-pdf');
+Route::get('/pdf/reference/download', [PdfController::class, 'downloadReference'])->name('reference-pdf-download');
+Route::get('/pdf/reference/view', [PdfController::class, 'viewReference'])->name('reference-pdf-view');

@@ -201,7 +201,7 @@
                                                 </div>
                                                 <div class="col-md-12">
                                                     <label for="reference" class="form-label">Ma'lumotnoma (QR-kodli)</label>
-                                                    <input id="reference" type="file" class="form-control @error('reference') is-invalid @enderror" name="reference" value="{{ old('reference') }}" required autocomplete="reference" accept="application/pdf,application/vnd.ms-excel">
+                                                    <input id="reference" type="file" class="form-control @error('reference') is-invalid @enderror" name="reference" value="{{ old('reference') }}" autocomplete="reference" accept="application/pdf,application/vnd.ms-excel">
                                                     @error('reference')
                                                     <span class="text-danger">{{ $message }}</span>
                                                     @enderror

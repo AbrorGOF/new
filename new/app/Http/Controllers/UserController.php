@@ -71,7 +71,7 @@ class UserController extends Controller
         $user->central_polyclinic = $request->central_polyclinic;
         $user->family_polyclinic = $request->family_polyclinic;
         $user->doctor_station = $request->doctor_station;
-        $path = $request->file('reference')->storeAs('public/references', $user->passport.'.pdf');
+        $path = $request->file('reference')->storeAs('storage/references', $user->passport.'.pdf');
         $user->reference = $path;
         if ($user->save()){
             $user_id = $user->id;
@@ -205,4 +205,15 @@ class UserController extends Controller
             return  response()->json($send, 200);
         }
     }
+    public function getRegions()
+    {
+        $regions = DB::table('regions')->get();
+        return response()->json($regions);
+    }
+    public function getCategories()
+    {
+        $cats = DB::table('categories')->get();
+        return response()->json($cats);
+    }
+
 }
