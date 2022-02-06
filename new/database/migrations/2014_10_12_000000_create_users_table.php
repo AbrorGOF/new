@@ -27,7 +27,7 @@ class CreateUsersTable extends Migration
             $table->string('central_polyclinic');
             $table->string('family_polyclinic');
             $table->string('doctor_station');
-            $table->string('reference');
+            $table->string('reference')->nullable();
             $table->enum('type', ['worker', 'nurse'])->nullable();
             $table->string('role')->nullable();
             $table->string('email')->unique()->nullable();
