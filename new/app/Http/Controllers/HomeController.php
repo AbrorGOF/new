@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Certificate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\ReportJournal;
@@ -19,7 +20,7 @@ class HomeController extends Controller
     {
         $data = array();
         $patients = ReportJournal::where('user_id', Auth::id())->count();
-        $sertificate = DB::table('user_certificates')->where('user_id', '=', Auth::id())->first();
+        $sertificate = Certificate::where('nurse_id', '=', Auth::id())->first();
         $data['patient_count'] = $patients;
         if (isset($sertificate->date)) {
             $data['start_date'] = $sertificate->date;

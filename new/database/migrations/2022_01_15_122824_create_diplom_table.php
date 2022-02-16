@@ -13,20 +13,20 @@ class CreateDiplomTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_diplomas', function (Blueprint $table) {
+        Schema::create('nurse_diplomas', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('user_id');
-            $table->string('institution');
+            $table->unsignedBigInteger('nurse_id');
+            $table->unsignedBigInteger('college_id');
             $table->string('number');
             $table->date('date');
             $table->tinyInteger('degree');
             $table->string('file');
             $table->timestamps();
         });
-        Schema::create('user_certificates', function (Blueprint $table) {
+        Schema::create('nurse_certificates', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('user_id');
-            $table->string('institution');
+            $table->unsignedBigInteger('nurse_id');
+            $table->unsignedBigInteger('training_center_id');
             $table->string('number');
             $table->date('date');
             $table->date('end_date');

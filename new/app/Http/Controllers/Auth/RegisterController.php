@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Polyclinic;
+use App\Models\TrainingCenter;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -69,5 +72,12 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+    }
+    public function index(){
+        $polyclinics = Polyclinic::get();
+        $centers = TrainingCenter::get();
+        $regions = DB::table('regions')->get();
+        $categories = DB::table('categories')->get();
+        return view('auth.register', compact('regions', 'polyclinics', 'centers', 'categories'));
     }
 }
