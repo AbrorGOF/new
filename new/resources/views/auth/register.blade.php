@@ -2,19 +2,29 @@
 <html lang="en">
 
 <head>
-    <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!--favicon-->
-{{--    <link rel="icon" href="assets/images/favicon-32x32.png" type="image/png" />--}}
-<!-- loader-->
-    <link href="assets/css/pace.min.css" rel="stylesheet" />
-    <script src="assets/js/pace.min.js"></script>
+    <link rel="icon" href="/assets/images/favicon-32x32.png" type="image/png" />
+    <!--plugins-->
+    @yield("style")
+    <link href="/assets/plugins/simplebar/css/simplebar.css" rel="stylesheet" />
+    <link href="/assets/plugins/perfect-scrollbar/css/perfect-scrollbar.css" rel="stylesheet" />
+    <link href="/assets/plugins/metismenu/css/metisMenu.min.css" rel="stylesheet" />
+    <!-- loader-->
+    <link href="/assets/css/pace.min.css" rel="stylesheet" />
+    <script src="/assets/js/pace.min.js"></script>
     <!-- Bootstrap CSS -->
-    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/assets/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
-    <link href="assets/css/app.css" rel="stylesheet">
-    <link href="assets/css/icons.css" rel="stylesheet">
+    <link href="/assets/css/app.css" rel="stylesheet">
+    <link href="/assets/css/icons.css" rel="stylesheet">
+    <link href="/css/template/font-awesome.min.css" rel="stylesheet">
+
+    <!-- Theme Style CSS -->
+    <link rel="stylesheet" href="/assets/css/dark-theme.css" />
+    <link rel="stylesheet" href="/assets/css/semi-dark.css" />
+    <link rel="stylesheet" href="/assets/css/header-colors.css" />
     <title>HAMSHIRALIK ISHI FAOLIYATI</title>
 </head>
 
@@ -49,198 +59,248 @@
                                         </p>
                                     </div>
                                     <div class="form-body">
-                                        <div class="row g-3">
-                                            <div class="col-sm-3">
-                                                <label for="search_pinfl" class="form-label">PINFL</label>
-                                                <div id="thumbwrap">
-                                                    <a class="thumb" href="#"><input id="search_pinfl" type="text" class="form-control" name="search_pinfl" value="{{ old('pinfl') }}" autofocus>
-                                                        <span><img src="/images/pnfl.jpg" alt="" width="500" style="max-width: 60vw"></span></a>
+                                        <form action="/nurse/add" method="POST" enctype="multipart/form-data">
+                                                <div class="row">
+                                                    <div class="col-3">
+                                                        <h5 style="text-align: right !important;">PINFL orqali qidirish</h5>
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <input type="text" class="form-control" name="search_pinfl" id="search_pinfl" value="{{ old('search_pinfl') }}">
+                                                    </div>
+                                                    <div class="col-3"></div>
                                                 </div>
-                                            </div>
-                                            <div class="col-sm-3">
-                                                <label for="search_category_id" class="form-label">Yo'nalish</label>
-                                                <select id="search_category_id" class="form-control" @error('search_category_id') is-invalid @enderror name="search_category_id" required autocomplete="search_category_id">
-                                                    <option value="">Yo'nalish</option>
-                                                </select>
-                                                @error('search_category_id')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                                @enderror
-                                            </div>
-                                            <div class="col-sm-3">
-                                                <label for="search_region_id" class="form-label">Viloyat</label>
-                                                <select id="search_region_id" class="form-control" @error('search_region_id') is-invalid @enderror name="search_region_id" required autocomplete="search_region_id">
-                                                    <option value="">Viloyat</option>
-                                                </select>
-                                                @error('search_region_id')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                                @enderror
-                                            </div>
-                                            <div class="col-sm-3">
-                                                <label for="search_nurse" class="form-label"> .</label>
-                                                <button type="button" id="search_nurse" class="btn btn-info form-control" onclick="getInfo()">Jo'natish</button>
-                                            </div>
-                                        </div>
-                                        <div class="d-none" id="reg">
-                                            <form class="row g-3 mt-3" action="/auth/reg" method="POST" enctype="multipart/form-data">
                                                 @csrf
-                                                <div class="col-md-12"><h5 class="text-center">Shaxsiy ma'lumotlar</h5></div>
-                                                <div class="col-sm-4">
-                                                    <label for="name" class="form-label">Ism</label>
-                                                    <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" >
-                                                    @error('name')
-                                                        <span class="text-danger">{{ $message }}</span>
-                                                    @enderror
+                                                <div class="row">
+                                                    <h4 class="text-center">Shaxsiy ma'lumotlar</h4>
+                                                    <div class="col-3">
+                                                        <label class="form-label">Ism</label>
+                                                        <input class="form-control mb-3" type="text" name="name" id="name" value="{{ old('name') }}" required>
+                                                        @error('name')
+                                                        <span class="text-danger">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                                        @enderror
+                                                    </div>
+                                                    <div class="col-3">
+                                                        <label class="form-label">Familiya</label>
+                                                        <input class="form-control mb-3" type="text" name="surname" id="surname" value="{{ old('surname') }}" required>
+                                                        @error('surname')
+                                                        <span class="text-danger">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                                        @enderror
+                                                    </div>
+                                                    <div class="col-3">
+                                                        <label class="form-label">Otasini ismi</label>
+                                                        <input class="form-control mb-3" type="text" name="patronymic" id="patronymic" value="{{ old('patronymic') }}" required>
+                                                        @error('patronymic')
+                                                        <span class="text-danger">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                                        @enderror
+                                                    </div>
+                                                    <div class="col-3">
+                                                        <label class="form-label">Tugilgan yili</label>
+                                                        <input class="form-control mb-3" type="date" name="birth_date" id="birth_date" value="{{ old('birth_date') }}" required>
+                                                        @error('birth_date')
+                                                        <span class="text-danger">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                                        @enderror
+                                                    </div>
+                                                    <div class="col-3">
+                                                        <label class="form-label">Pasport</label>
+                                                        <input class="form-control mb-3" type="text" name="passport" id="passport" value="{{ old('passport') }}" required>
+                                                        @error('passport')
+                                                        <span class="text-danger">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                                        @enderror
+                                                    </div>
+                                                    <div class="col-3">
+                                                        <label class="form-label">PINFL</label>
+                                                        <input class="form-control mb-3" type="text" name="pinfl" id="pinfl" value="{{ old('pinfl') }}" required>
+                                                        @error('pinfl')
+                                                        <span class="text-danger">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                                        @enderror
+                                                    </div>
+                                                    <div class="col-3">
+                                                        <label class="form-label">Ma'lumoti</label>
+                                                        <select class="form-select mb-3" name="degree" id="degree">
+                                                            <option>Tanlang</option>
+                                                            <option value="1">O'rta maxsus</option>
+                                                            <option value="2">Oliy</option>
+                                                        </select>
+                                                        @error('degree')
+                                                        <span class="text-danger">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                                        @enderror
+                                                    </div>
+                                                    <div class="col-3">
+                                                        <label class="form-label"> Mustaqil hamshira ma’lumotnomasi</label>
+                                                        <input class="form-control mb-3" type="file" name="licence_file" value="" required>
+                                                        @error('licence_file')
+                                                        <span class="text-danger">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                                        @enderror
+                                                    </div>
                                                 </div>
-                                                <div class="col-sm-4">
-                                                    <label for="surname" class="form-label">Familiya</label>
-                                                    <input id="surname" type="text" class="form-control @error('surname') is-invalid @enderror" name="surname" value="{{ old('surname') }}" required autocomplete="surname" >
-                                                    @error('surname')
-                                                        <span class="text-danger">{{ $message }}</span>
-                                                    @enderror
+                                                <div class="row">
+                                                    <h4 class="text-center">Diplom ma'lumotlari</h4>
+                                                    <div class="col-3">
+                                                        <label class="form-label">Diplom bergan muassasa</label>
+                                                        <select class="form-select mb-3" name="diploma_institution" id="diploma_institution">
+                                                            <option>Tanlang</option>
+                                                            @forelse($polyclinics as $polyclinic)
+                                                                <option value="{{ $polyclinic->id }}" {{ old('diploma_institution') == $polyclinic->id ? "selected" :""}}>{{ $polyclinic->title }}</option>
+                                                            @empty
+                                                            @endforelse
+                                                        </select>
+                                                        @error('diploma_institution')
+                                                        <span class="text-danger">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                                        @enderror
+                                                    </div>
+                                                    <div class="col-3">
+                                                        <label class="form-label">Diplom raqami</label>
+                                                        <input class="form-control mb-3" type="text" name="diploma_number" value="{{ old('diploma_number') }}" required>
+                                                        @error('diploma_number')
+                                                        <span class="text-danger">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                                        @enderror
+                                                    </div>
+                                                    <div class="col-3">
+                                                        <label class="form-label">Diplom berilgan sana</label>
+                                                        <input class="form-control mb-3" type="date" name="diploma_date" value="{{ old('diploma_date') }}" required>
+                                                        @error('diploma_date')
+                                                        <span class="text-danger">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                                        @enderror
+                                                    </div>
+                                                    <div class="col-3">
+                                                        <label class="form-label">Diplom nusxasi</label>
+                                                        <input class="form-control mb-3" type="file" name="diploma_file" value="" required>
+                                                        @error('diploma_file')
+                                                        <span class="text-danger">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                                        @enderror
+                                                    </div>
+                                                    <h4 class="text-center">Sertifikat malumotlari</h4>
+                                                    <div class="col-3">
+                                                        <label class="form-label">Sertifikat bergan muassasa</label>
+                                                        <select class="form-select mb-3" name="certificate_institution" id="certificate_institution">
+                                                            <option>Tanlang</option>
+                                                            @forelse($centers as $center)
+                                                                <option value="{{ $center->id }}" {{ old('certificate_institution') == $center->id ? "selected" :""}}>{{ $center->title }}</option>
+                                                            @empty
+                                                            @endforelse
+                                                        </select>
+                                                        @error('certificate_institution')
+                                                        <span class="text-danger">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                                        @enderror
+                                                    </div>
+                                                    <div class="col-3">
+                                                        <label class="form-label">Sertifikat raqami</label>
+                                                        <input class="form-control mb-3" type="text" name="certificate_number" value="{{ old('certificate_number') }}">
+                                                        @error('certificate_number')
+                                                        <span class="text-danger">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                                        @enderror
+                                                    </div>
+                                                    <div class="col-3">
+                                                        <label class="form-label">Sertifikat berilgan sana</label>
+                                                        <input class="form-control mb-3" type="date" name="certificate_date" value="{{ old('certificate_date') }}">
+                                                        @error('certificate_date')
+                                                        <span class="text-danger">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                                        @enderror
+                                                    </div>
+                                                    <div class="col-3">
+                                                        <label class="form-label">Sertifikat nusxasi</label>
+                                                        <input class="form-control mb-3" type="file" name="certificate_file" value="">
+                                                        @error('certificate_file')
+                                                        <span class="text-danger">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                                        @enderror
+                                                    </div>
                                                 </div>
-                                                <div class="col-sm-4">
-                                                    <label for="patronym" class="form-label">Otasini ismi</label>
-                                                    <input id="patronym" type="text" class="form-control @error('patronym') is-invalid @enderror" name="patronym" value="{{ old('patronym') }}" required autocomplete="patronym" >
-                                                    @error('patronym')
-                                                        <span class="text-danger">{{ $message }}</span>
-                                                    @enderror
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <label for="pinfl" class="form-label">PINFL</label>
-                                                    <input id="pinfl" type="text" class="form-control @error('pinfl') is-invalid @enderror" name="pinfl" value="{{ old('pinfl') }}" required autocomplete="pinfl">
-                                                    @error('pinfl')
-                                                        <span class="text-center">{{ $message }}</span>
-                                                    @enderror
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <label for="passport" class="form-label">Pasport</label>
-                                                    <input id="passport" type="text" class="form-control @error('passport') is-invalid @enderror" name="passport" value="{{ old('passport') }}" required autocomplete="passport">
-                                                    @error('passport')
-                                                        <span class="text-danger">{{ $message }}</span>
-                                                    @enderror
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <label for="degree" class="form-label">Ma'lumoti</label>
-                                                    <select id="degree" class="form-control" @error('degree') is-invalid @enderror name="degree" required autocomplete="degree">
-                                                        <option value="1">O'rta maxsus</option>
-                                                        <option value="2">Oliy</option>
-                                                    </select>
-                                                    @error('degree')
-                                                    <span class="text-danger">{{ $message }}</span>
-                                                    @enderror
-                                                </div>
-                                                <div class="col-md-12"><h5 class="text-center">Diplom ma'lumotlari</h5></div>
-                                                <div class="col-md-4">
-                                                    <label for="institution" class="form-label">Diplom bergan muassasa</label>
-                                                    <input id="institution" type="text" class="form-control @error('institution') is-invalid @enderror" name="institution" value="{{ old('institution') }}" required autocomplete="institution" >
-                                                    @error('institution')
-                                                        <span class="text-danger">{{ $message }}</span>
-                                                    @enderror
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <label for="diplom_number" class="form-label">Diplom raqami</label>
-                                                    <input id="diplom_number" type="text"class="form-control @error('diplom_number') is-invalid @enderror" name="diplom_number" value="{{ old('diplom_number') }}" required autocomplete="diplom_number">
-                                                    @error('diplom_number')
-                                                        <span class="text-danger">{{ $message }}</span>
-                                                    @enderror
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <label for="diplom_date" class="form-label">Diplom berilgan sana</label>
-                                                    <input id="diplom_date" type="date" class="form-control @error('diplom_date') is-invalid @enderror" name="diplom_date" value="{{ old('diplom_date') }}" required autocomplete="diplom_date" >
-                                                    @error('diplom_date')
-                                                        <span class="text-danger">{{ $message }}</span>
-                                                    @enderror
-                                                </div>
-                                                <div class="col-md-12"><h5 class="text-center">Sertifikat ma'lumotlari</h5></div>
-                                                <div class="col-md-4">
-                                                    <label for="certificate_institution" class="form-label">Sertifikat bergan muassasa</label>
-                                                    <input id="certificate_institution" type="text" class="form-control @error('certificate_institution') is-invalid @enderror" name="certificate_institution" value="{{ old('certificate_institution') }}" required autocomplete="certificate_institution" >
-                                                    @error('certificate_institution')
-                                                        <span class="text-danger">{{ $message }}</span>
-                                                    @enderror
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <label for="certificate_number" class="form-label">Sertifikat raqami</label>
-                                                    <input id="certificate_number" type="text" class="form-control @error('certificate_number') is-invalid @enderror" name="certificate_number" value="{{ old('certificate_number') }}" required autocomplete="certificate_number" >
-                                                    @error('certificate_number')
-                                                        <span class="text-danger">{{ $message }}</span>
-                                                    @enderror
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <label for="certificate_date" class="form-label">Sertifikat berilgan sana</label>
-                                                    <input id="certificate_date" type="date" class="form-control @error('certificate_date') is-invalid @enderror" name="certificate_date" value="{{ old('certificate_date') }}" required autocomplete="certificate_date" >
-                                                    @error('certificate_date')
-                                                        <span class="text-danger">{{ $message }}</span>
-                                                    @enderror
-                                                </div>
-                                                <div class="col-md-12"><h5 class="text-center">Hamkor poliklinika ma'lumotlari</h5></div>
-                                                <div class="col-md-4">
-                                                    <label for="central_polyclinic" class="form-label">Markaziy poliklinika</label>
-                                                    <input id="central_polyclinic" type="text" class="form-control @error('central_polyclinic') is-invalid @enderror" name="central_polyclinic" value="{{ old('central_polyclinic') }}" required autocomplete="central_polyclinic" >
-                                                    @error('central_polyclinic')
-                                                        <span class="text-danger">{{ $message }}</span>
-                                                    @enderror
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <label for="family_polyclinic" class="form-label">Oilaviy poliklinika</label>
-                                                    <input id="family_polyclinic" type="text" class="form-control @error('family_polyclinic') is-invalid @enderror" name="family_polyclinic" value="{{ old('family_polyclinic') }}" required autocomplete="family_polyclinic" >
-                                                    @error('family_polyclinic')
-                                                        <span class="text-danger">{{ $message }}</span>
-                                                    @enderror
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <label for="doctor_station" class="form-label">Shifokor punkti</label>
-                                                    <input id="doctor_station" type="text" class="form-control @error('doctor_station') is-invalid @enderror" name="doctor_station" value="{{ old('doctor_station') }}" required autocomplete="doctor_station" >
-                                                    @error('doctor_station')
-                                                        <span class="text-danger">{{ $message }}</span>
-                                                    @enderror
-                                                </div>
-                                                <div class="col-md-12">
-                                                    <label for="reference" class="form-label">Ma'lumotnoma (QR-kodli)</label>
-                                                    <input id="reference" type="file" class="form-control @error('reference') is-invalid @enderror" name="reference" value="{{ old('reference') }}" autocomplete="reference" accept="application/pdf,application/vnd.ms-excel">
-                                                    @error('reference')
-                                                    <span class="text-danger">{{ $message }}</span>
-                                                    @enderror
-                                                </div>
-                                                <div class="col-md-12"><h5 class="text-center">Kabinetga kirish uchun</h5></div>
-                                                <div class="col-md-4">
-                                                    <label for="phone" class="form-label">Telefon</label>
-                                                    <input id="phone" type="text" class="form-control @error('phone') is-invalid @enderror" name="phone" value="{{ old('phone') }}" required autocomplete="phone">
-                                                    @error('phone')
-                                                        <span class="text-danger">{{ $message }}</span>
-                                                    @enderror
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <label for="password" class="form-label">Parol</label>
-                                                    <div class="input-group" id="show_hide_password">
-                                                        <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password"><a href="javascript:;" class="input-group-text bg-transparent"><i class='bx bx-hide'></i></a>
+                                                <div class="row">
+                                                    <h4 class="text-center">Qo'shimcha ma'lumotlari</h4>
+                                                    <div class="col-4">
+                                                        <label class="form-label">Yo'nalish</label>
+                                                        <select class="form-select mb-3" name="category_id" id="category_id" required>
+                                                            <option>Tanlang</option>
+                                                            @forelse($categories as $category)
+                                                                <option value="{{ $category->id }}" >{{ $category->title }}</option>
+                                                            @empty
+                                                            @endforelse
+                                                        </select>
+                                                        @error('category_id')
+                                                        <span class="text-danger">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                                        @enderror
+                                                    </div>
+                                                    <div class="col-4">
+                                                        <label class="form-label">Hamkor muassasa</label>
+                                                        <select class="form-select mb-3" name="partner_polyclinic" id="partner_polyclinic" required>
+                                                            <option>Tanlang</option>
+                                                            @forelse($polyclinics as $polyclinic)
+                                                                <option value="{{ $polyclinic->id }}" >{{ $polyclinic->title }}</option>
+                                                            @empty
+                                                            @endforelse
+                                                        </select>
+                                                        @error('partner_polyclinic')
+                                                        <span class="text-danger">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                                        @enderror
+                                                    </div>
+                                                    <div class="col-4">
+                                                        <label class="form-label">Hudud</label>
+                                                        <input class="form-control mb-3" type="text" name="area" value="{{ old('area') }}">
+                                                        @error('area')
+                                                        <span class="text-danger">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                                        @enderror
+                                                    </div>
+                                                    <div class="col-4">
+                                                        <label class="form-label">Telefon</label>
+                                                        <input class="form-control mb-3" type="number" name="phone" id="phone" value="{{ old('phone') }}" required>
+                                                        @error('phone')
+                                                        <span class="text-danger">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                                        @enderror
+                                                    </div>
+                                                    <div class="col-4">
+                                                        <label class="form-label">Parol</label>
+                                                        <input class="form-control mb-3" type="text" name="password" id="password" value="" required>
                                                         @error('password')
-                                                        <span class="text-danger">{{ $message }}</span>
+                                                        <span class="text-danger">
+                                    <strong>{{ $message }}</strong>
+                                </span>
                                                         @enderror
                                                     </div>
                                                 </div>
-                                                <div class="col-md-4">
-                                                    <label for="password_confirmation" class="form-label">Parol qaytadan</label>
-                                                    <div class="input-group" id="show_hide_password">
-                                                        <input id="password_confirmation" type="password" class="form-control @error('password_confirmation') is-invalid @enderror" name="password_confirmation" required autocomplete="current-password"><a href="javascript:;" class="input-group-text bg-transparent"><i class='bx bx-hide'></i></a>
-                                                        @error('password_confirmation')
-                                                        <span class="text-danger">{{ $message }}</span>
-                                                        @enderror
-                                                    </div>
-                                                </div>
-                                                <div class="col-12">
-                                                    <input type="hidden" name="category_id" id="category_id">
-                                                    <input type="hidden" name="region_id" id="region_id">
-                                                    <div class="d-grid">
-                                                        <button type="submit" class="btn btn-primary"><i class='bx bx-user'></i>Saqlash</button>
-                                                    </div>
-                                                </div>
-                                            </form>
-                                        </div>
+                                            <div class="col-12">
+                                                <button type="submit" class="btn btn-primary px-5">Saqlash</button>
+                                            </div>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
@@ -251,15 +311,15 @@
             </div>
         </div>
     </div>
-    <!--end wrapper-->
     <!-- Bootstrap JS -->
-        <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <script src="/assets/js/bootstrap.bundle.min.js"></script>
     <!--plugins-->
-        <script src="assets/js/jquery.min.js"></script>
-        <script src="assets/plugins/simplebar/js/simplebar.min.js"></script>
-        <script src="assets/plugins/metismenu/js/metisMenu.min.js"></script>
-        <script src="assets/plugins/perfect-scrollbar/js/perfect-scrollbar.js"></script>
-    <!--plugins-->
+    <script src="/assets/js/jquery.min.js"></script>
+    <script src="/assets/plugins/simplebar/js/simplebar.min.js"></script>
+    <script src="/assets/plugins/metismenu/js/metisMenu.min.js"></script>
+    <script src="/assets/plugins/perfect-scrollbar/js/perfect-scrollbar.js"></script>
+    <!--app JS-->
+    <script src="/assets/js/app.js"></script>
     <script>
         @if (count($errors) > 0)
         $('#reg').removeClass('d-none');
@@ -403,6 +463,7 @@
             });
         });
     </script>
+
 </body>
 
 </html>

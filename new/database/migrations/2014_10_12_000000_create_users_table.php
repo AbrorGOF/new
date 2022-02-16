@@ -16,20 +16,12 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('parent_id')->nullable();
             $table->string('name');
-            $table->string('surname');
-            $table->string('patronym')->nullable();
             $table->string('phone')->unique();
-            $table->string('passport');
-            $table->string('pinfl');
-            $table->bigInteger('category_id');
-            $table->bigInteger('region_id');
-            $table->string('central_polyclinic');
-            $table->string('family_polyclinic');
-            $table->string('doctor_station');
-            $table->string('reference')->nullable();
-            $table->enum('type', ['worker', 'nurse'])->nullable();
+            $table->string('type')->nullable();
             $table->string('role')->nullable();
+            $table->string('status')->default('active');
             $table->string('email')->unique()->nullable();
             $table->string('password');
             $table->rememberToken();
@@ -37,22 +29,13 @@ class CreateUsersTable extends Migration
         });
         DB::table('users')
             ->insert([
-                'name' => 'Odilbek',
-                'surname' => 'Raxmonov',
-                'patronym' => 'Orifjon ogli',
-                'passport' => 'AA1234567',
-                'pinfl' => '3123456789',
-                'type' => 'worker',
+                'name' => 'Odilbek Raxmonov',
+                'type' => 'admin',
                 'role' => '1',
                 'phone' => '998909999341',
                 'email' => 'admin@gx.uz',
                 'password' => bcrypt('odilbekda'),
-                'central_polyclinic' => '1',
-                'family_polyclinic' => '1',
-                'doctor_station' => '1',
-                'region_id' => '1',
-                'category_id' => '1',
-                'reference' => '/123/12.pdf',
+                'status' => 'active',
             ]);
 
     }

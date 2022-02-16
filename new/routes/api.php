@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\PassportController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -26,3 +27,4 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('check/user/tokens', [PassportController::class, 'checkUserTokens']);
     Route::get('detail', [PassportController::class, 'detail']);
 });
+Route::post('/test', [AdminController::class, 'index']);

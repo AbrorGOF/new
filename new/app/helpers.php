@@ -3,6 +3,7 @@
 use App\Models\DeskLogs;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Validator;
 
 function getQuarterOfYear()
 {
@@ -203,4 +204,58 @@ function krillLatin($string){
     if (!$slug){ $slug = 'untitled'; }
     if (is_numeric($slug)){ $slug .= strtolower(date('F')); }
     return $slug;
+}
+function passportInfo($pinfl){
+    //config ga token va auth_token yoziladi
+    $token = 'blabla';
+    $auth_token = "test";
+    $data = [
+        "method" => "connect.pinfl",
+        "params" => array(
+            "token" => $token,
+            "pinfl" => $pinfl,
+        )
+    ];
+    $data_json = json_encode($data);
+    $log_id = DB::table('desk_logs')
+        ->insertGetId([
+            'pinfl' => $pinfl,
+            'request' => $data_json,
+            'status' => '0'
+        ]);
+    $curl = curl_init();
+    curl_setopt_array($curl, array(
+        CURLOPT_URL => "https://desk.e-invoice.uz/app",
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => "",
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 30000,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => "POST",
+        CURLOPT_POSTFIELDS => $data_json,
+        CURLOPT_HTTPHEADER => array(
+            "Authorization: $auth_token",
+            "content-type: application/json",
+        ),
+    ));
+    $response = curl_exec($curl);
+    $err = curl_error($curl);
+    curl_close($curl);
+    if (isset($err)) {
+        $info['status'] = '2';
+        $info['http_code'] = 403;
+        $info['response'] = $err;
+        $send = ['error' => $err];
+    }
+    $result = json_decode($response, true);
+    $result['log_id'] = $log_id;
+    return $result;
+}
+function webValidator($request, $options){
+    $validator = Validator::make($request->all(), $options);
+    if ($validator->fails()) {
+        return $validator->messages();
+    }else{
+        return true;
+    }
 }

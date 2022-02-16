@@ -1,11 +1,16 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\Nurse\NurseController;
+use App\Http\Controllers\NurseController as Nurse;
 use App\Http\Controllers\PdfController;
 use App\Http\Controllers\Report\JournalController;
 use App\Http\Controllers\Report\QuarterlyController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\WorkerController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Redirect;
@@ -27,7 +32,7 @@ Route::get('/', function () {
     }
 });
 Route::get('/welcome', [HomeController::class, 'welcome'])->name('welcome');
-
+Route::get('/auth/register', [RegisterController::class, 'index'])->name('index');
 Auth::routes();
 
 Route::group(['middleware' => 'auth'], function () {
@@ -38,6 +43,30 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/report/quarterly', [QuarterlyController::class, 'viewPdf'])->name('report-quarterly');
     Route::get('/report/quarterly/pdf', [QuarterlyController::class, 'viewPdf'])->name('report-quarterly-pdf');
     Route::get('/nurse/list', [NurseController::class, 'list'])->name('nurse-list');
+    //    ADMIN  //
+        Route::post('/admin/get/info', [AdminController::class, 'getInfo'])->name('admin-get-info');
+        Route::get('/admin/polyclinic', [AdminController::class, 'PolyclinicIndex'])->name('polyclinic-index');
+        Route::get('/admin/polyclinic/list', [AdminController::class, 'PolyclinicList'])->name('polyclinic-list');
+        Route::post('/admin/polyclinic/add', [AdminController::class, 'PolyclinicAdd'])->name('polyclinic-add');
+        Route::get('/admin/training/center', [AdminController::class, 'TrainingCenterIndex'])->name('admin-training-center-index');
+        Route::get('/admin/training/center/list', [AdminController::class, 'TrainingCenterList'])->name('admin-training-center-list');
+        Route::post('/admin/training/center/add', [AdminController::class, 'TrainingCenterAdd'])->name('admin-training-center-add');
+    //    ADMIN  //
+    //    worker  //
+        Route::get('/worker', [WorkerController::class, 'index'])->name('worker-index');
+        Route::get('/worker/list', [WorkerController::class, 'WorkerList'])->name('worker-list');
+        Route::post('/worker/add', [WorkerController::class, 'WorkerAdd'])->name('worker-add');
+    //    worker  //
+    //    worker  //
+        Route::get('/doctor', [DoctorController::class, 'index'])->name('doctor-index');
+        Route::get('/doctor/list', [DoctorController::class, 'DoctorList'])->name('doctor-list');
+        Route::post('/doctor/add', [DoctorController::class, 'DoctorAdd'])->name('doctor-add');
+    //    worker  //
+    //    worker  //
+        Route::get('/nurse', [Nurse::class, 'index'])->name('nurse-index');
+        Route::get('/nurse/list', [Nurse::class, 'NurseList'])->name('nurse-list');
+        Route::post('/nurse/add', [Nurse::class, 'NurseAdd'])->name('nurse-add');
+    //    worker  //
 });
 Route::post('/get/nurse/info', [LoginController::class, 'ConnectPinfl'])->name('get-nurse-info');
 Route::post('/auth/reg', [LoginController::class, 'AuthReg'])->name('auth-reg');

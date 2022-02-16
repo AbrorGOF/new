@@ -82,7 +82,7 @@
                 <li><a href="#news" class="smoothScroll">News</a></li>
                 <li><a href="#google-map" class="smoothScroll">Contact</a></li> --}}
                 <li class="appointment-btn"><a href="{{ route('login') }}">Kirish</a></li>
-                <li class="appointment-btn"><a href="{{ route('register') }}">Ro'yxatdan o'tish</a></li>
+                <li class="appointment-btn"><a href="/auth/register">Ro'yxatdan o'tish</a></li>
             </ul>
         </div>
 

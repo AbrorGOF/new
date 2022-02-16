@@ -3,11 +3,16 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Certificate;
 use App\Models\DeskLogs;
+use App\Models\Diplom;
+use App\Models\Nurse;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -81,50 +86,8 @@ class LoginController extends Controller
                 }
                 return $send;
             } else {
-                //config ga token va auth_token yoziladi
-                $token = 'blabla';
-                $auth_token = "test";
-                $data = [
-                    "method" => "connect.pinfl",
-                    "params" => array(
-                        "token" => $token,
-                        "pinfl" => $pinfl,
-                    )
-                ];
-                $data_json = json_encode($data);
-                $log_id = DB::table('desk_logs')
-                    ->insertGetId([
-                        'pinfl' => $pinfl,
-                        'request' => $data_json,
-                        'status' => '0'
-                    ]);
-                $curl = curl_init();
-                curl_setopt_array($curl, array(
-                    CURLOPT_URL => "https://desk.e-invoice.uz/app",
-                    CURLOPT_RETURNTRANSFER => true,
-                    CURLOPT_ENCODING => "",
-                    CURLOPT_MAXREDIRS => 10,
-                    CURLOPT_TIMEOUT => 30000,
-                    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                    CURLOPT_CUSTOMREQUEST => "POST",
-                    CURLOPT_POSTFIELDS => $data_json,
-                    CURLOPT_HTTPHEADER => array(
-                        "Authorization: $auth_token",
-                        "content-type: application/json",
-                    ),
-                ));
-                $response = curl_exec($curl);
-                $err = curl_error($curl);
-                curl_close($curl);
-
-                if (isset($err)) {
-                    $info['status'] = '2';
-                    $info['http_code'] = 403;
-                    $info['response'] = $err;
-                    $send = ['error' => $err];
-                }
-
-                $response = json_decode($response, true);
+                $response = passportInfo($pinfl);
+                $log_id = $response['log_id'];
                 unset($response['jsonrpc']);
                 unset($response['method']);
                 if (!empty($response['error'])) {
@@ -194,73 +157,96 @@ class LoginController extends Controller
         $request->phone = str_replace(array('+','(',')',' ','-'),'',$request->phone);
         $request->pinfl = str_replace(array('+','(',')',' ','-'),'',$request->pinfl);
         $request->passport = str_replace(array('+','(',')',' ','-'),'',$request->passport);
-        $validator=Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
-            'surname' => 'required|string|max:255',
-            'patronym' => 'string|max:255',
-            'phone' => 'required|unique:users',
-            'user_type' => [Rule::in('worker', 'nurse')],
-            'role' => 'string',
-            'password' => 'required|confirmed:min:8',
-            'pinfl' => 'unique:users|unique:users',
-            'passport' => 'unique:users|unique:users',
-            'region_id' => 'required|integer',
-            'category_id' => 'required|integer',
-            'institution' => 'required|max:255',
-            'diplom_number' => 'required|max:255',
-            'diplom_date' => 'required',
-            'degree' => [Rule::in('1', '2')],
-            'diplom_file' => 'mimes:jpg,jpeg,png',
-            'certificate_institution' => 'required|max:255',
-            'certificate_number' => 'required|max:255',
-            'certificate_date' => 'required',
-            'certificate_file' => 'mimes:jpg,jpeg,png',
-            'central_polyclinic' => 'required|max:255',
-            'family_polyclinic' => 'required|max:255',
-            'doctor_station' => 'required|max:255',
-            'reference' => 'mimes:pdf',
-        ]);
-        if ($validator->fails()) {
-            $messages = $validator->messages();
-            return redirect()->back()->withErrors($messages)->withInput();
+        $options = [
+            'name' => 'required|max:255',
+            'surname' => 'required',
+            'patronymic' => 'required',
+            'passport' => 'required|unique:doctors',
+            'pinfl' => 'required|unique:doctors',
+            'birth_date' => 'required',
+            'degree' => 'required',
+            'diploma_institution' => 'required',
+            'diploma_number' => 'required',
+            'diploma_date' => 'required',
+            'partner_polyclinic' => 'required',
+            'category_id' => 'required',
+            'area' => 'required',
+            'licence_file' => 'required',
+            'phone' => 'required|unique:users|max:12',
+            'password' => 'required|min:8'
+        ];
+        $validator = webValidator($request, $options);
+        if ($validator !== true){
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+        $start = Carbon::parse($request->diploma_date);
+        $end =  Carbon::parse(date('d.m.Y'));
+        $days = $end->diffInDays($start);
+        if ($days>1095){
+            $new_options = [
+                'certificate_number' => 'required|max:255',
+                'certificate_institution' => 'required',
+                'certificate_date' => 'required',
+                'certificate_file' => 'required',
+            ];
+            $new_validator = webValidator($request, $new_options);
+            if ($new_validator !== true){
+                dd($new_validator);
+                return redirect()->back()->withErrors($new_validator)->withInput();
+            }
         }
 
         $user = new User();
+        $user->name = $request->name.' '.$request->surname;
         $user->phone = $request->phone;
-        $user->name = $request->name;
-        $user->surname = $request->surname;
-        $user->patronym = $request->patronym;
-        $user->type = $request->user_type;
-        $user->category_id = $request->category_id;
-        $user->region_id = $request->region_id;
-        $user->role = $request->role;
+        $user->type = 'nurse';
+        $user->status = 'new';
+        $user->role = 1;
         $user->password = bcrypt($request->password);
-        $user->pinfl = $request->pinfl;
-        $user->passport = $request->passport;
-        $user->central_polyclinic = $request->central_polyclinic;
-        $user->family_polyclinic = $request->family_polyclinic;
-        $user->doctor_station = $request->doctor_station;
-        $path = $request->file('reference')->storeAs('public/references', $user->passport.'.pdf');
-        $user->reference = $path;
         $user->save();
-        $user_id = $user->id;
 
-        DB::table('user_diplomas')->insert([
-            'user_id' => $user_id,
-            'institution' => $request->institution,
-            'number' => $request->diplom_number,
-            'date' => date('Y-m-d', strtotime($request->diplom_date)),
-            'file' => '/sasass',
-            'degree' => $request->degree,
-        ]);
-        DB::table('user_certificates')->insert([
-            'user_id' => $user_id,
-            'institution' => $request->certificate_institution,
-            'number' => $request->certificate_number,
-            'date' => date('Y-m-d', strtotime($request->certificate_date)),
-            'end_date' => date("Y-m-d", strtotime(date("Y-m-d", strtotime($request->certificate_date)) . " + 3 year")),
-            'file' => '/sasass',
-        ]);
+        $licence_file = $request->file('licence_file');
+        $licence_filename = 'nurse_licence_' . time() . '.' . $licence_file->getClientOriginalExtension();
+        $licence_path = $licence_file->storeAs('public/licences', $licence_filename);
+        $nurse = new Nurse();
+        $nurse->user_id = $user->id;
+        $nurse->name = $request->name;
+        $nurse->surname = $request->surname;
+        $nurse->patronymic = $request->patronymic;
+        $nurse->area = $request->area;
+        $nurse->passport = $request->passport;
+        $nurse->pinfl = $request->pinfl;
+        $nurse->category_id = $request->category_id;
+        $nurse->licence = $licence_path;
+        $nurse->region_id = '1';
+        $nurse->polyclinic_id = $request->partner_polyclinic;
+        $nurse->save();
+
+        $diploma_file = $request->file('diploma_file');
+        $diploma_filename = 'nurse_diploma_' . time() . '.' . $diploma_file->getClientOriginalExtension();
+        $diploma_path = $diploma_file->storeAs('public/diplomas', $diploma_filename);
+
+        $diploma = new Diplom();
+        $diploma->nurse_id = $nurse->id;
+        $diploma->college_id = $request->diploma_institution;
+        $diploma->number = $request->diploma_number;
+        $diploma->date = date('Y-m-d', strtotime($request->diploma_date));
+        $diploma->file =  $diploma_path;
+        $diploma->degree = $request->degree;
+        $diploma->save();
+
+        $certificate_file = $request->file('certificate_file');
+        $certificate_filename = 'nurse_certificate_' . time() . '.' . $certificate_file->getClientOriginalExtension();
+        $certificate_path = $certificate_file->storeAs('public/certificates', $certificate_filename);
+
+        $certificate = new Certificate();
+        $certificate->nurse_id = $nurse->id;
+        $certificate->training_center_id = $request->certificate_institution;
+        $certificate->number = $request->certificate_number;
+        $certificate->date = date('Y-m-d', strtotime($request->certificate_date));
+        $certificate->end_date = date("Y-m-d", strtotime(date("Y-m-d", strtotime($request->certificate_date)) . " + 3 year"));
+        $certificate->file = $certificate_path;
+        $certificate->save();
         return redirect("login")->withSuccess('Telefon raqam va parol orqali kabinetga kirishingiz mumkin!');
     }
 }
