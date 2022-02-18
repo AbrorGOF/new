@@ -66,6 +66,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/nurse', [Nurse::class, 'index'])->name('nurse-index');
         Route::get('/nurse/list', [Nurse::class, 'NurseList'])->name('nurse-list');
         Route::post('/nurse/add', [Nurse::class, 'NurseAdd'])->name('nurse-add');
+        Route::get('/nurse/show/{id}', [Nurse::class, 'view'])->name('nurse-view');
     //    worker  //
 });
 Route::post('/get/nurse/info', [LoginController::class, 'ConnectPinfl'])->name('get-nurse-info');

@@ -320,149 +320,83 @@
     <script src="/assets/plugins/perfect-scrollbar/js/perfect-scrollbar.js"></script>
     <!--app JS-->
     <script src="/assets/js/app.js"></script>
-    <script>
-        @if (count($errors) > 0)
-        $('#reg').removeClass('d-none');
-        @endif
-        window.addEventListener('load', function() {
+<script>
+    @if (count($errors) > 0)
+    $('#addNurse').modal('show');
+    @endif
+    $(function () {
+        const table = $('#nurses').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: "/nurse/list",
+            columns: [
+                {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+                {data: 'name', name: 'name'},
+                {data: 'surname', name: 'surname'},
+                {data: 'passport', name: 'passport'},
+                {data: 'polyclinic_id', name: 'polyclinic_id'},
+                {data: 'region_id', name: 'region_id'},
+                {
+                    data: 'action',
+                    name: 'action',
+                    orderable: true,
+                    searchable: true
+                },
+            ]
+        });
+    });
+    $( "#search_pinfl" ).keyup(function() {
+        const pinfl = $( "#search_pinfl" ).val();
+        if (pinfl.length===14) {
             $.ajax({
-                url: '/select/options',
-                type: "GET",
+                url: '/admin/get/info',
+                type: "POST",
+                headers: { 'X-CSRF-Token' : $('meta[name=_token]').attr('content') }, // More information on this below
+                data:{
+                    "_token": "{{ csrf_token() }}",
+                    'pinfl':pinfl,
+                },
                 dataType: 'json',
                 success: function(dataResult){
-                    var cats = dataResult.data.cats;
-                    var regions = dataResult.data.regions;
-                    if (cats) {
-                        $.each(cats, function(key, value) {
-                            $('#search_category_id').append(`<option value="${value.cat_id}">${value.title}</option>`);
-                        });
-                    }else{
-                        $('#search_category_id')
-                            .find('option')
-                            .remove()
-                            .end()
-                            .append('<option value="">Yo`nalish</option>')
-                            .val('')
-                        ;
-                    }
-                    if (regions) {
-                        $.each(regions, function(key, value) {
-                            $('#search_region_id').append(`<option value="${value.id}">${value.title}</option>`);
-                        });
-                    }else{
-                        $('#search_region_id')
-                            .find('option')
-                            .remove()
-                            .end()
-                            .append('<option value="">Viloyat</option>')
-                            .val('')
-                        ;
-                    }
-                }
-            });
-            // $(document).ready(function () {
-            //     $('#phone').inputmask({"mask": "+\\9\\98 99 999-99-99"}); //specifying options
-            //     // $('#search_pinfl').inputmask({"mask": "9-999999-999-999-9"}); //specifying options
-            //     $('#pinfl').inputmask({"mask": "9-999999-999-999-9"}); //specifying options
-            //     $('#passport').inputmask({"mask": "AA-9999999"}); //specifying options
-            // });
-        });
-        function getInfo() {
-
-            var pinfl = $('#search_pinfl').val();
-            var cat_id = $('#search_category_id').val();
-            var reg_id = $('#search_region_id').val();
-            if (pinfl.length===14) {
-                $.ajax({
-                    url: '/get/nurse/info',
-                    type: "POST",
-                    headers: { 'X-CSRF-Token' : $('meta[name=_token]').attr('content') }, // More information on this below
-                    data:{
-                        "_token": "{{ csrf_token() }}",
-                        'pinfl':pinfl,
-                        'cat_id':cat_id,
-                        'reg_id':reg_id
-                    },
-                    dataType: 'json',
-                    success: function(dataResult){
-                        if (dataResult.desk && dataResult.imedic){
-                            $('#reg').removeClass('d-none');
-                            $('#category_id').val(cat_id);
-                            $('#region_id').val(reg_id);
-                            // desk info
-                            var person = dataResult.desk;
-                            var fullName= person.fullName
-                            fullName = fullName.split(" ",4);
-                            var surname = fullName[0];
-                            var name = fullName[1];
-                            var patronym = '';
-                            if (fullName[3]) {
-                                patronym = fullName[2]+' '+fullName[3];
-                            }else{
-                                patronym = fullName[2];
-                            }
-                            var day = pinfl.slice(1,3);
-                            var month = pinfl.slice(3,5);
-                            var year = pinfl.slice(5,7);
-                            if (year.slice(0,1)<5) {
-                                year = '20'+year;
-                            }else{
-                                year = '19'+year;
-                            }
-                            var birthDate = year+'-'+month+'-'+day;
-                            var passport = person.passSeries+person.passNumber
-                            $('#name').val(name);
-                            $('#surname').val(surname);
-                            $('#patronym').val(patronym);
-                            $('#passport').val(passport);
-                            $('#birth_date').val(birthDate);
-                            $('#pinfl').val(pinfl);
-
-                            // desk info
-                            // imedic
-                            var nurse = dataResult.imedic;
-                            var nurse_phone = nurse.nurse_phone;
-                            var nurse_diplom = nurse.nurse_diplom;
-                            var nurse_diplom_number = nurse.nurse_diplom_number;
-                            var nurse_diplom_date = nurse.nurse_diplom_date;
-                            if (nurse.certificate_date){
-                                var certificate_date = nurse.certificate_date;
-                                $('#certificate_date').val(certificate_date);
-                            }
-                            if (nurse.certificate_number){
-                                var certificate_number = nurse.certificate_number;
-                                $('#certificate_number').val(certificate_number);
-                            }
-                            $('#phone').val(nurse_phone);
-                            $('#institution').val(nurse_diplom);
-                            $('#diplom_number').val(nurse_diplom_number);
-                            $('#diplom_date').val(nurse_diplom_date);
-                            // imedic
+                    if (dataResult.success){
+                        // desk info
+                        var person = dataResult.success;
+                        var fullName= person.fullName
+                        fullName = fullName.split(" ",4);
+                        var surname = fullName[0];
+                        var name = fullName[1];
+                        var patronym = '';
+                        if (fullName[3]) {
+                            patronym = fullName[2]+' '+fullName[3];
                         }else{
-                            ('#reg').addClass('d-none');
-                            alert(dataResult.error);
+                            patronym = fullName[2];
                         }
+                        var day = pinfl.slice(1,3);
+                        var month = pinfl.slice(3,5);
+                        var year = pinfl.slice(5,7);
+                        if (year.slice(0,1)<5) {
+                            year = '20'+year;
+                        }else{
+                            year = '19'+year;
+                        }
+                        var birthDate = year+'-'+month+'-'+day;
+                        var passport = person.passSeries+person.passNumber
+                        $('#name').val(name);
+                        $('#surname').val(surname);
+                        $('#patronymic').val(patronym);
+                        $('#passport').val(passport);
+                        $('#birth_date').val(birthDate);
+                        $('#pinfl').val(pinfl);
 
+                        // desk info
+                    }else{
+                        alert(dataResult.error);
                     }
-                });
-            }
-
-        }
-        $(document).ready(function () {
-            $("#show_hide_password a").on('click', function (event) {
-                event.preventDefault();
-                if ($('#show_hide_password input').attr("type") == "text") {
-                    $('#show_hide_password input').attr('type', 'password');
-                    $('#show_hide_password i').addClass("bx-hide");
-                    $('#show_hide_password i').removeClass("bx-show");
-                } else if ($('#show_hide_password input').attr("type") == "password") {
-                    $('#show_hide_password input').attr('type', 'text');
-                    $('#show_hide_password i').removeClass("bx-hide");
-                    $('#show_hide_password i').addClass("bx-show");
                 }
             });
-        });
-    </script>
+        }
+    });
+</script>
 
 </body>
 

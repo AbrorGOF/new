@@ -22,9 +22,9 @@ class CreateNursesTable extends Migration
             $table->string('passport');
             $table->string('pinfl');
             $table->string('area');
-            $table->bigInteger('category_id');
-            $table->bigInteger('region_id');
-            $table->bigInteger('polyclinic_id');
+            $table->unsignedBigInteger('category_id');
+            $table->unsignedBigInteger('region_id');
+            $table->unsignedBigInteger('polyclinic_id');
             $table->string('licence')->nullable();
             $table->string('reference')->nullable();
             $table->string('status')->default('active');

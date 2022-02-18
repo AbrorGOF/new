@@ -12,20 +12,18 @@
                         </button>
                     </div>
                     <div class="card-body">
-                        <table class="table table-bordered" id="nurses">
+                        <table class="table table-bordered text-center" id="nurses">
                             <thead>
                                 <tr>
                                     <th>#</th>
                                     <th>F.I.O</th>
-                                    <th>Muolaja nomi</th>
-                                    <th>Sog‘lom </th>
-                                    <th>Boshqalar</th>
-                                    <th>Boshqalar</th>
-                                    <th>Boshqalar</th>
+                                    <th>Telefon</th>
+                                    <th>Hudud </th>
+                                    <th>Pasport</th>
                                 </tr>
                             </thead>
-                            <tbody class="text-center"></tbody>
-                            <tfoot class="text-center"></tfoot>
+                            <tbody></tbody>
+                            <tfoot></tfoot>
                         </table>
                     </div>
                 </div>
@@ -303,19 +301,24 @@
                 ajax: "/nurse/list",
                 columns: [
                     {data: 'DT_RowIndex', name: 'DT_RowIndex'},
-                    {data: 'name', name: 'name'},
-                    {data: 'surname', name: 'surname'},
+                    {data: 'full_name', name: 'full_name'},
+                    {data: 'phone.phone', name: 'phone'},
+                    {data: 'area', name: 'area'},
                     {data: 'passport', name: 'passport'},
-                    {data: 'polyclinic_id', name: 'polyclinic_id'},
-                    {data: 'region_id', name: 'region_id'},
-                    {
-                        data: 'action',
-                        name: 'action',
-                        orderable: true,
-                        searchable: true
-                    },
+                ],
+                columnDefs: [
+                  {
+                      "aTargets": [1],
+                      "mRender": function (data, type, full) {
+                      return `<a href="/nurse/show/${full.id}">${data}</a>`
+                      }
+                  }
                 ]
             });
+            $('#nurses').on('click', 'tbody tr', function() {
+                // window.location.href = '/nurse/view/'+table.row( this ).id();
+            });
+            $('tr').css('cursor','pointer');
         });
         $( "#search_pinfl" ).keyup(function() {
             const pinfl = $( "#search_pinfl" ).val();

@@ -16,7 +16,7 @@ class CreateReportQuarterliesTable extends Migration
     {
         Schema::create('report_quarterlies', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('user_id');
+            $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('category_id');
             $table->Integer('year')->nullable(true);
             $table->Integer('first')->nullable(true);

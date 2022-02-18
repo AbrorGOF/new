@@ -15,7 +15,7 @@ class CreateReportJournalsTable extends Migration
     {
         Schema::create('report_journals', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('user_id');
+            $table->unsignedBigInteger('user_id');
             $table->string('patient_full_name');
             $table->tinyInteger('patient_age');
             $table->timestamp('patient_visit_time');
@@ -23,7 +23,7 @@ class CreateReportJournalsTable extends Migration
             $table->string('doctor_full_name');
             $table->string('doctor_diagnosis');
             $table->string('treatment_name');
-            $table->bigInteger('category_id');
+            $table->unsignedBigInteger('category_id');
             $table->string('others')->nullable(true);
             $table->timestamps();
         });

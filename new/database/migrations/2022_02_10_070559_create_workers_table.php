@@ -22,8 +22,8 @@ class CreateWorkersTable extends Migration
             $table->string('position')->nullable();
             $table->string('passport');
             $table->string('pinfl');
-            $table->bigInteger('region_id');
-            $table->bigInteger('training_center_id');
+            $table->unsignedBigInteger('region_id');
+            $table->unsignedBigInteger('training_center_id');
             $table->string('status')->default('active');
             $table->timestamps();
         });
