@@ -18,10 +18,14 @@ use Illuminate\Support\Facades\Route;
 */
 Route::post('login', [PassportController::class, 'login']);
 Route::post('refresh/token', [PassportController::class, 'refreshToken']);
-Route::post('/register', [UserController::class, 'AuthReg']);
+Route::post('/register', [UserController::class, 'register']);
 Route::post('/check/nurse', [UserController::class, 'ConnectPinfl']);
 Route::get('/regions', [UserController::class, 'getRegions']);
 Route::get('/categories', [UserController::class, 'getCategories']);
+Route::post('/get/info', [AdminController::class, 'getInfo']);
+Route::get('/training/centers', [UserController::class, 'getTrainingCenters']);
+Route::get('/colleges', [UserController::class, 'getColleges']);
+Route::get('/polyclinics', [UserController::class, 'getPolyclinics']);
 Route::group(['middleware' => 'auth:api'], function () {
     Route::post('logout', [PassportController::class, 'logout']);
     Route::get('check/user/tokens', [PassportController::class, 'checkUserTokens']);

@@ -45,4 +45,8 @@ class User extends Authenticatable
     {
         return $this->where('phone', $phone)->first();
     }
+    public function Nurse(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Nurse::class);
+    }
 }

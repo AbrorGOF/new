@@ -4,16 +4,22 @@ namespace App\Http\Controllers;
 
 use App\Models\Certificate;
 use App\Models\Diplom;
+use App\Models\Doctor;
 use App\Models\Nurse;
 use App\Models\NurseActionLog;
 use App\Models\Polyclinic;
 use App\Models\TrainingCenter;
 use App\Models\User;
+use App\Models\Worker;
+use http\Encoding\Stream\Debrotli;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use PhpParser\Comment\Doc;
+use PhpParser\Node\Expr\Cast\Object_;
+use stdClass;
 use Yajra\DataTables\Facades\DataTables;
 
 class NurseController extends Controller
@@ -26,17 +32,23 @@ class NurseController extends Controller
         return view('nurse.list', compact('regions', 'polyclinics', 'centers', 'categories'));
     }
     public function NurseList(Request $request){
-        if ($request->ajax()) {
-            $data = Nurse::get();
-            return Datatables::of($data)
-                ->addIndexColumn()
-                ->addColumn('action', function($row){
-                    $button = '<a href="javascript:void(0)" class="edit btn btn-success btn-sm">Edit</a> <a href="javascript:void(0)" class="delete btn btn-danger btn-sm">Delete</a>';
-                    return $button;
-                })
-                ->rawColumns(['action'])
-                ->make(true);
-        }
+      $user_id = Auth::id();
+      $user_type = Auth::user()->type;
+      if ($user_type == 'doctor'){
+        $doctor = Doctor::where('user_id', $user_id)->first();
+        $data = Nurse::with('phone')->where('polyclinic_id', $doctor->polyclinic_id)->get();
+      }elseif ($user_type == 'worker'){
+        $worker = Worker::where('user_id', $user_id)->first();
+        $data = Nurse::with('phone')->where('region_id', $worker->region_id)->get();
+      }elseif ($user_type == 'admin'){
+          $data = Nurse::with('phone')->get();
+      }
+      return Datatables::of($data)
+        ->addIndexColumn()
+        ->addColumn('full_name', function ($row) {
+          return $row->surname . ' ' . $row->name . ' ' . $row->patronymic;
+        })
+        ->make(true);
     }
     public function NurseAdd(Request $request){
         $options = [
@@ -137,5 +149,50 @@ class NurseController extends Controller
         $action_log->action = 'create';
         $action_log->save();
         return redirect()->back()->with(['message'=>'success']);
+    }
+    public function view($id)
+    {
+      $user_id = Auth::id();
+      $user_type = Auth::user()->type;
+      $nurse = new stdClass();
+      $diploma = new stdClass();
+      $certificate = new stdClass();
+      if ($user_type == 'doctor'){
+        $doctor = Doctor::where('user_id', $user_id)->first();
+        $nurse = Nurse::leftJoin('categories', 'nurses.category_id', '=', 'categories.id')
+          ->leftJoin('regions', 'nurses.region_id', '=', 'regions.id')
+          ->leftJoin('polyclinics', 'nurses.polyclinic_id', '=', 'polyclinics.id')
+          ->leftJoin('users', 'nurses.user_id', '=', 'users.id')
+          ->select('nurses.*', 'categories.title as category_title', 'regions.title as region_title', 'polyclinics.title as polyclinic_title', 'users.status as user_status')
+          ->where('nurses.id', $id)
+          ->where('nurses.polyclinic_id', $doctor->polyclinic_id)
+          ->first();
+        $diploma = Diplom::where('nurse_id', $id)->first();
+        $certificate = Certificate::where('nurse_id', $id)->first();
+      }elseif ($user_type == 'worker'){
+        $worker = Worker::where('user_id', $user_id)->first();
+        $nurse = Nurse::leftJoin('categories', 'nurses.category_id', '=', 'categories.id')
+          ->leftJoin('regions', 'nurses.region_id', '=', 'regions.id')
+          ->leftJoin('polyclinics', 'nurses.polyclinic_id', '=', 'polyclinics.id')
+          ->leftJoin('users', 'nurses.user_id', '=', 'users.id')
+          ->select('nurses.*', 'categories.title as category_title', 'regions.title as region_title', 'polyclinics.title as polyclinic_title', 'users.status as user_status')
+          ->where('nurses.id', $id)
+          ->where('nurses.region_id', $worker->region_id)
+          ->first();
+      }elseif ($user_type == 'admin'){
+        $nurse = Nurse::leftJoin('categories', 'nurses.category_id', '=', 'categories.id')
+          ->leftJoin('regions', 'nurses.region_id', '=', 'regions.id')
+          ->leftJoin('polyclinics', 'nurses.polyclinic_id', '=', 'polyclinics.id')
+          ->leftJoin('users', 'nurses.user_id', '=', 'users.id')
+          ->select('nurses.*', 'categories.title as category_title', 'regions.title as region_title', 'polyclinics.title as polyclinic_title', 'users.status as user_status')
+          ->where('nurses.id', $id)
+          ->first();
+        $diploma = Diplom::where('nurse_id', $id)->first();
+        $certificate = Certificate::where('nurse_id', $id)->first();
+      }else{
+        return redirect()->back();
+      }
+
+      return view('nurse.view', compact('nurse', 'diploma', 'certificate'));
     }
 }

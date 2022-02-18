@@ -25,4 +25,8 @@ class Nurse extends Model
             'reference',
             'status'
         ];
+    public function phone(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne(User::class, 'id', 'user_id')->select(['phone', 'id']);
+    }
 }

@@ -15,8 +15,8 @@ class CreateChechCertificateTable extends Migration
     {
         Schema::create('check_certificate', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('category_id')->nullable(true);
-            $table->bigInteger('region_id')->nullable(true);
+            $table->unsignedBigInteger('category_id')->nullable(true);
+            $table->unsignedBigInteger('region_id')->nullable(true);
             $table->string('passport')->nullable(true);
             $table->text('receive')->nullable(true);
             $table->text('error')->nullable(true);

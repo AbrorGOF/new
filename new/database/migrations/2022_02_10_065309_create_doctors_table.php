@@ -22,8 +22,8 @@ class CreateDoctorsTable extends Migration
             $table->string('position')->nullable();
             $table->string('passport');
             $table->string('pinfl');
-            $table->bigInteger('region_id');
-            $table->bigInteger('polyclinic_id');
+            $table->unsignedBigInteger('region_id');
+            $table->unsignedBigInteger('polyclinic_id');
             $table->string('status')->default('active');
             $table->timestamps();
         });
