@@ -14,6 +14,9 @@ use GuzzleHttp\Exception\BadResponseException;
 
 class PassportController extends Controller
 {
+  /**
+   * @unauthenticated
+   */
     public function login(Request $request)
     {
         $errors = array();
@@ -81,6 +84,9 @@ class PassportController extends Controller
     {
         return response()->json(['user'=>auth()->user()], 200);
     }
+  /**
+   * @unauthenticated
+   */
     public function refreshToken(Request $request) {
         $http =new Client();
         try {

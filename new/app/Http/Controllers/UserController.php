@@ -16,9 +16,14 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
-
+/**
+ * @group Auth
+ */
 class UserController extends Controller
 {
+  /**
+   * @unauthenticated
+   */
     public function AuthReg(Request $request)
     {
         $errors = array();
@@ -112,6 +117,9 @@ class UserController extends Controller
         }
 
     }
+  /**
+   * @unauthenticated
+   */
     public function ConnectPinfl(Request $request)
     {
         $pinfl = $request->pinfl;
@@ -212,17 +220,26 @@ class UserController extends Controller
             return  response()->json($send, 200);
         }
     }
+  /**
+   * @unauthenticated
+   */
     public function getRegions()
     {
         $regions = DB::table('regions')->get();
         return response()->json($regions);
     }
+  /**
+   * @unauthenticated
+   */
     public function getCategories()
     {
         $cats = DB::table('categories')->get();
         return response()->json($cats);
     }
-    public function register(Request $request)
+  /**
+   * @unauthenticated
+   */
+  public function register(Request $request)
     {
       $options = [
         'name' => 'required|max:255',
@@ -336,16 +353,25 @@ class UserController extends Controller
         ], 200
       );
     }
+  /**
+   * @unauthenticated
+   */
   public function getTrainingCenters(): \Illuminate\Http\JsonResponse
   {
     $training_centers = DB::table('training_center')->get();
     return response()->json($training_centers);
   }
+  /**
+   * @unauthenticated
+   */
   public function getColleges(): \Illuminate\Http\JsonResponse
   {
     $colleges = DB::table('colleges')->get();
     return response()->json($colleges);
   }
+  /**
+   * @unauthenticated
+   */
   public function getPolyclinics(): \Illuminate\Http\JsonResponse
   {
     $polyclinics = DB::table('polyclinics')->get();

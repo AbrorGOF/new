@@ -9,6 +9,7 @@
         "ext-curl": "*",
         "ext-json": "*",
         "barryvdh/laravel-dompdf": "^1.0",
+        "darkaonline/l5-swagger": "^8.3",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^8.75",
@@ -22,6 +23,7 @@
     "require-dev": {
         "facade/ignition": "^2.5",
         "fakerphp/faker": "^1.9.1",
+        "knuckleswtf/scribe": "^3.23",
         "laravel/sail": "^1.0.1",
         "mockery/mockery": "^1.4.4",
         "nunomaduro/collision": "^5.10",
