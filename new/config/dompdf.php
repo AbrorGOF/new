@@ -14,6 +14,7 @@ return array(
     'show_warnings' => false,   // Throw an Exception on warnings from dompdf
     'orientation' => 'portrait',
     'defines' => array(
+      "DOMPDF_LOG_OUTPUT_FILE" => ini_get('upload_tmp_dir').'/log.htm',
         /**
          * The location of the DOMPDF font directory
          *
