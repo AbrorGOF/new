@@ -1,8 +1,13 @@
 <?php
 
 use App\Models\DeskLogs;
+use App\Models\Nurse;
+use App\Models\NurseReferences;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 function getQuarterOfYear()
@@ -121,7 +126,7 @@ function getDateInLatin($date = false): string
     if (!isset($date)){
         $date = date('Y.m.d');
     }
-    $date = date('Y n F', strtotime($date));
+    $date = date('Y j F', strtotime($date));
     $months = array(
         'January'=>'yanvar',
         'February'=>'fevral',
@@ -139,16 +144,56 @@ function getAddress($pin)
 {
     $address = array();
     $info = DeskLogs::where('pinfl', $pin)->first();
-    $response = json_decode($info->response, true);
-    $token = 'blabla';
-    $auth_token = "test";
-    $data = [
+    if (!empty($info)){
+      $response = json_decode($info->response, true);
+      $token = 'blabla';
+      $auth_token = "test";
+      $data = [
         "method" => "connect.region",
         "params" => array(
+          "token" => $token,
+          "districtId" => $response['DistrictId'],
+        )
+      ];
+    }else{
+      $response = passportInfo($pin);
+      $log_id = $response['log_id'];
+      unset($response['jsonrpc']);
+      unset($response['method']);
+      if (!empty($response['error'])) {
+        $info['status'] = '2';
+        $info['http_code'] = $response['error']['code'];
+        $info['response'] = $response['error']['message'];
+        $send = ['error' => $info['response']];
+      } elseif (!empty($response['result'])) {
+        $info['status'] = '1';
+        $info['http_code'] = 200;
+        $info['response'] = $response['result'];
+        $send['success'] = $response['result'];
+      } else {
+        $info['status'] = '2';
+        $info['http_code'] = 101;
+        $info['response'] = $response;
+        $send = ['error' => 'Unexpected error'];
+      }
+      $Partner_log = DeskLogs::find($log_id);
+      $Partner_log->update($info);
+      if (isset($send['error'])){
+        return $send;
+      }else{
+        $response = json_decode($response['result'], true);
+        $token = 'blabla';
+        $auth_token = "test";
+        $data = [
+          "method" => "connect.region",
+          "params" => array(
             "token" => $token,
             "districtId" => $response['DistrictId'],
-        )
-    ];
+          )
+        ];
+      }
+    }
+
     $data_json = json_encode($data);
     $curl = curl_init();
     curl_setopt_array($curl, array(
@@ -169,13 +214,15 @@ function getAddress($pin)
     $result = json_decode($result, true);
     $err = curl_error($curl);
     curl_close($curl);
-    if ($result['result']){
+    if (!empty($result['result'])){
         $reg = $result['result']['region'];
         $dis = $result['result']['district'];
         $address['region'] = krillLatin($reg);
         $address['district'] = krillLatin($dis);
+        return $address;
+    }else{
+      return ['error' => 'Unexpected error'];
     }
-    return $address;
 }
 function krillLatin($string){
     $string    = strip_tags(trim($string));
@@ -259,3 +306,4 @@ function webValidator($request, $options){
         return true;
     }
 }
+

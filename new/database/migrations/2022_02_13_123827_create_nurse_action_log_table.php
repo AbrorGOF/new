@@ -14,11 +14,12 @@ class CreateNurseActionLogTable extends Migration
     public function up()
     {
         Schema::create('nurse_action_log', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('nurse_id');
-            $table->string('action');
-            $table->timestamps();
+          $table->id();
+          $table->unsignedBigInteger('user_id');
+          $table->unsignedBigInteger('nurse_id');
+          $table->string('action');
+          $table->string('reason')->nullable();
+          $table->timestamps();
         });
     }
 

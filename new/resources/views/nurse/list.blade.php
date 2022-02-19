@@ -134,8 +134,8 @@
                                 <label class="form-label">Diplom bergan muassasa</label>
                                 <select class="form-select mb-3" name="diploma_institution" id="diploma_institution">
                                     <option>Tanlang</option>
-                                    @forelse($polyclinics as $polyclinic)
-                                        <option value="{{ $polyclinic->id }}" {{ old('diploma_institution') == $polyclinic->id ? "selected" :""}}>{{ $polyclinic->title }}</option>
+                                    @forelse($colleges as $college)
+                                        <option value="{{ $college->id }}" {{ old('diploma_institution') == $college->id ? "selected" :""}}>{{ $college->title }}</option>
                                     @empty
                                     @endforelse
                                 </select>

@@ -37,7 +37,7 @@
         // Build a system
         const ui = SwaggerUIBundle({
             dom_id: '#swagger-ui',
-            url: "http://cabinet.imedic.uz/docs/openapi.yaml",
+            url: "{{ env('APP_URL') }}/docs/openapi.yaml",
             operationsSorter: {!! isset($operationsSorter) ? '"' . $operationsSorter . '"' : 'null' !!},
             configUrl: {!! isset($configUrl) ? '"' . $configUrl . '"' : 'null' !!},
             validatorUrl: {!! isset($validatorUrl) ? '"' . $validatorUrl . '"' : 'null' !!},

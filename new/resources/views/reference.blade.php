@@ -20,9 +20,9 @@
                         vazirligida mustaqil hamshira faoliyati bilan shug‘ullanish bo‘yicha<br>
                         ro‘yxatdan o‘tganligini tasdiqlovchi<br>
                         <strong>GUVOHNOMA</strong><br>
-                        {{ auth()->id() }}-son
+                        {{ $nurse->id }}-son
                     </p>
-                    <p class="text-center" style="text-align: center">{{ auth()->user()->name }} {{ auth()->user()->surname }} {{ auth()->user()->patronym }}</p><br>
+                    <p class="text-center" style="text-align: center">{{ $nurse->name }} {{ $nurse->surname }} {{ $nurse->patronym }}</p><br>
                     <p class="text-left" style="margin-bottom: 15px; text-align: left">
                         o‘zini o‘zi band qilgan “hamshiralik ishi” faoliyatini amalga oshiruvchi hamshira sifatida
                         {{ $date }}da ro‘yxatga olindi.
@@ -31,7 +31,7 @@
                         Faoliyatni amalga oshirish manzili:<br>
                         1. Qoraqalpog‘iston Respublikasi, Toshkent sh., viloyat: {{ $address['region'] }}<br>
                         2. Tuman (shahar): {{ $address['district'] }}<br>
-                        3. Hudud:
+                        3. Hudud: {{ $nurse->area }}
                         <br><br>
                         Hamkorlikda ishlaydigan birlamchi tibbiyot tashkiloti:_____________________________<br>
                         ______________________________________________________________________________________

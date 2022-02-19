@@ -67,12 +67,17 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/nurse/list', [Nurse::class, 'NurseList'])->name('nurse-list');
         Route::post('/nurse/add', [Nurse::class, 'NurseAdd'])->name('nurse-add');
         Route::get('/nurse/show/{id}', [Nurse::class, 'view'])->name('nurse-view');
+        Route::post('/nurse/cancel/{id}', [Nurse::class, 'cancel'])->name('nurse-cancel');
+        Route::get('/nurse/accept/{id}', [Nurse::class, 'accept'])->name('nurse-accept');
     //    worker  //
 });
 Route::post('/get/nurse/info', [LoginController::class, 'ConnectPinfl'])->name('get-nurse-info');
 Route::post('/auth/reg', [LoginController::class, 'AuthReg'])->name('auth-reg');
 Route::post('/auth/log', [LoginController::class, 'AuthLog'])->name('auth-log');
 Route::get('/select/options', [LoginController::class, 'SelectOptions'])->name('get-select-options');
-Route::get('/pdf/new', [PdfController::class, 'new'])->name('new-pdf');
+Route::get('/pdf/reference/create', [PdfController::class, 'createReference'])->name('create-reference-pdf');
 Route::get('/pdf/reference/download', [PdfController::class, 'downloadReference'])->name('reference-pdf-download');
 Route::get('/pdf/reference/view', [PdfController::class, 'viewReference'])->name('reference-pdf-view');
+Route::get('/test', function () {
+  return createReference(1);
+});

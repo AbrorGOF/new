@@ -239,8 +239,8 @@ class UserController extends Controller
   /**
    * @unauthenticated
    */
-  public function register(Request $request)
-    {
+  public function register(Request $request): \Illuminate\Http\JsonResponse
+  {
       $options = [
         'name' => 'required|max:255',
         'surname' => 'required',
@@ -259,9 +259,9 @@ class UserController extends Controller
         'phone' => 'required|unique:users|max:12',
         'password' => 'required|min:8'
       ];
-      $validator = webValidator($request, $options);
-      if ($validator !== true){
-        foreach ($validator->toArray() as $key => $value) {
+      $validator = Validator::make($request->all(), $options);
+      if ($validator->fails()){
+        foreach ($validator->messages()->toArray() as $key => $value) {
           $error['field_name'] = $key;
           $error['message'] = $value['0'];
           $errors[] = $error;
@@ -281,9 +281,9 @@ class UserController extends Controller
           'certificate_date' => 'required',
           'certificate_file' => 'required',
         ];
-        $new_validator = webValidator($request, $new_options);
-        if ($new_validator !== true){
-          foreach ($validator->toArray() as $key => $value) {
+        $new_validator = Validator::make($request->all(), $new_options);
+        if ($new_validator->fails()){
+          foreach ($validator->messages()->toArray() as $key => $value) {
             $error['field_name'] = $key;
             $error['message'] = $value['0'];
             $errors[] = $error;

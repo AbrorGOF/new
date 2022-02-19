@@ -7,29 +7,38 @@ use App\Models\Diplom;
 use App\Models\Doctor;
 use App\Models\Nurse;
 use App\Models\NurseActionLog;
+use App\Models\NurseCancel;
+use App\Models\NurseReferences;
 use App\Models\Polyclinic;
 use App\Models\TrainingCenter;
 use App\Models\User;
 use App\Models\Worker;
-use http\Encoding\Stream\Debrotli;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
-use PhpParser\Comment\Doc;
-use PhpParser\Node\Expr\Cast\Object_;
 use stdClass;
 use Yajra\DataTables\Facades\DataTables;
 
 class NurseController extends Controller
 {
     public function index(){
-        $polyclinics = Polyclinic::get();
-        $centers = TrainingCenter::get();
-        $regions = DB::table('regions')->get();
-        $categories = DB::table('categories')->get();
-        return view('nurse.list', compact('regions', 'polyclinics', 'centers', 'categories'));
+      $polyclinics = Polyclinic::get();
+      $centers = TrainingCenter::get();
+      $regions = DB::table('regions')->get();
+      $colleges = DB::table('colleges')->get();
+      $categories = DB::table('categories')->get();
+        return view('nurse.list',
+          compact(
+            'regions',
+            'polyclinics',
+            'centers',
+            'categories',
+            'colleges'
+          )
+        );
     }
     public function NurseList(Request $request){
       $user_id = Auth::id();
@@ -51,45 +60,45 @@ class NurseController extends Controller
         ->make(true);
     }
     public function NurseAdd(Request $request){
-        $options = [
-            'name' => 'required|max:255',
-            'surname' => 'required',
-            'patronymic' => 'required',
-            'passport' => 'required|unique:doctors',
-            'pinfl' => 'required|unique:doctors',
-            'birth_date' => 'required',
-            'degree' => 'required',
-            'diploma_institution' => 'required',
-            'diploma_number' => 'required',
-            'diploma_date' => 'required',
-            'partner_polyclinic' => 'required',
-            'category_id' => 'required',
-            'area' => 'required',
-            'licence_file' => 'required',
-            'phone' => 'required|unique:users|max:12',
-            'password' => 'required|min:8'
-        ];
-        $validator = webValidator($request, $options);
-        if ($validator !== true){
-            return redirect()->back()->withErrors($validator)->withInput();
-        }
-        $start = Carbon::parse($request->diploma_date);
-        $end =  Carbon::parse(date('d.m.Y'));
-        $days = $end->diffInDays($start);
-        if ($days>1095){
-            $new_options = [
-                'certificate_number' => 'required|max:255',
-                'certificate_institution' => 'required',
-                'certificate_date' => 'required',
-                'certificate_file' => 'required',
-            ];
-            $new_validator = webValidator($request, $new_options);
-            if ($new_validator !== true){
-                dd($new_validator);
-                return redirect()->back()->withErrors($new_validator)->withInput();
-            }
-        }
-
+      $options = [
+          'name' => 'required|max:255',
+          'surname' => 'required',
+          'patronymic' => 'required',
+          'passport' => 'required|unique:nurses',
+          'pinfl' => 'required|unique:nurses',
+          'birth_date' => 'required',
+          'degree' => 'required',
+          'diploma_institution' => 'required',
+          'diploma_number' => 'required',
+          'diploma_date' => 'required',
+          'partner_polyclinic' => 'required',
+          'category_id' => 'required',
+          'area' => 'required',
+          'licence_file' => 'required',
+          'phone' => 'required|unique:users|max:12',
+          'password' => 'required|min:8'
+      ];
+      $validator = webValidator($request, $options);
+      if ($validator !== true){
+        return redirect()->back()->withErrors($validator)->withInput();
+      }
+      $start = Carbon::parse($request->diploma_date);
+      $end =  Carbon::parse(date('d.m.Y'));
+      $days = $end->diffInDays($start);
+      if ($days>1095){
+          $new_options = [
+              'certificate_number' => 'required|max:255',
+              'certificate_institution' => 'required',
+              'certificate_date' => 'required',
+              'certificate_file' => 'required',
+          ];
+          $new_validator = webValidator($request, $new_options);
+          if ($new_validator !== true){
+              return redirect()->back()->withErrors($new_validator)->withInput();
+          }
+      }
+      DB::beginTransaction();
+      try {
         $user = new User();
         $user->parent_id = Auth::id();
         $user->name = $request->name.' '.$request->surname;
@@ -148,7 +157,33 @@ class NurseController extends Controller
         $action_log->nurse_id = $nurse->id;
         $action_log->action = 'create';
         $action_log->save();
-        return redirect()->back()->with(['message'=>'success']);
+
+        $name = 'nurse_reference_' . time() . '.pdf';
+        $link = 'storage/references/'.$name;
+        $date = getDateInLatin($nurse->created_at);
+        $address = getAddress($nurse->pinfl);
+        $qrcode = 'Hamshira: '.$nurse->name.' '.$nurse->surname.' Pasport: '.$nurse->passport.' Berilgan sana: '.date('d.m.Y', strtotime($nurse->created_at));
+        view()->share('date', $date);
+        view()->share('nurse', $nurse);
+        view()->share('address', $address);
+        view()->share('qrcode', $qrcode);
+        $pdf = PDF::loadView('reference');
+        $path ='public/references/'.$name;
+        Storage::put($path, $pdf->output());
+        $nurse->reference = $link;
+        $nurse->save();
+
+        $reference = new NurseReferences();
+        $reference->user_id = $nurse->user_id;
+        $reference->nurse_id = $nurse->id;
+        $reference->file = $link;
+        $reference->status = 'active';
+        $reference->save();
+        DB::commit();
+      }catch (\Exception $e){
+        return redirect()->back()->with(['message'=>$e->getMessage()]);
+      }
+      return redirect()->back()->with(['message'=>'success']);
     }
     public function view($id)
     {
@@ -194,5 +229,74 @@ class NurseController extends Controller
       }
 
       return view('nurse.view', compact('nurse', 'diploma', 'certificate'));
+    }
+    public function cancel(Request $request, $id): \Illuminate\Http\JsonResponse
+    {
+      DB::beginTransaction();
+      try {
+
+        $log = new NurseActionLog();
+        $log->nurse_id = $id;
+        $log->user_id = Auth::id();
+        $log->action = 'cancel';
+        $log->reason = $request->reason;
+        $log->save();
+
+        $nurse = Nurse::findOrFail($id);
+        $nurse->status = 'canceled';
+        $nurse->save();
+
+        $user = User::findOrFail($nurse->user_id);
+        $user->status = 'canceled';
+        $user->save();
+        DB::commit();
+      }catch (\Exception $exception){
+        return response()->json(
+          [
+            'message'=>$exception->getMessage(),
+            'status'=>'error',
+            'code'=>$exception->getCode()
+          ]
+        );
+      }
+      return response()->json(
+        [
+          'message'=>"Hamshira ma'lumotlari bekor qilindi!",
+          'status'=>'canceled'
+        ]
+      );
+    }
+    public function accept($id): \Illuminate\Http\JsonResponse
+    {
+      DB::beginTransaction();
+      try {
+
+        $log = new NurseActionLog();
+        $log->nurse_id = $id;
+        $log->user_id = Auth::id();
+        $log->action = 'accept';
+        $log->save();
+
+        $nurse = Nurse::findOrFail($id);
+
+        $user = User::findOrFail($nurse->user_id);
+        $user->status = 'active';
+        $user->save();
+        DB::commit();
+      }catch (\Exception $exception){
+        return response()->json(
+          [
+            'message'=>$exception->getMessage(),
+            'status'=>'error',
+            'code'=>$exception->getCode()
+          ]
+        );
+      }
+      return response()->json(
+        [
+          'message'=>"Hamshira ma'lumotlari qabul qilindi!",
+          'status'=>'canceled'
+        ]
+      );
     }
 }

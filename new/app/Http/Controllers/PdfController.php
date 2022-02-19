@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Nurse;
+use App\Models\NurseReferences;
 use App\Models\User;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
-
 class PdfController extends Controller
 {
     public function new(){
@@ -48,5 +49,41 @@ class PdfController extends Controller
             $user->save();
         }
         return view('pdf.reference');
+    }
+    public function createReference($id)
+    {
+      $nurse = Nurse::findOrFail($id);
+      $link = 'storage/references/'.$nurse->passport.'.pdf';
+      $date = getDateInLatin($nurse->created_at);
+      $address = getAddress($nurse->pinfl);
+      $qrcode = 'Hamshira: '.$nurse->name.' '.$nurse->surname.' Pasport: '.$nurse->passport.' Berilgan sana: '.date('d.m.Y', strtotime($nurse->created_at));
+      view()->share('date', $date);
+      view()->share('address', $address);
+      view()->share('qrcode', $qrcode);
+      if (isset($nurse->reference)){
+        if (Storage::exists('public/references/'.$nurse->passport.'.pdf')){
+          $link = $nurse->reference;
+        }else{
+          $pdf = PDF::loadView('reference');
+          $path ='public/references/'.$nurse->passport.'.pdf';
+          Storage::put($path, $pdf->output());
+          $nurse->reference = $link;
+          $nurse->save();
+        }
+      }else{
+        $pdf = PDF::loadView('reference');
+        $path ='public/references/'.$nurse->passport.'.pdf';
+        Storage::put($path, $pdf->output());
+        $nurse->reference = $link;
+        $nurse->save();
+
+        $reference = new NurseReferences();
+        $reference->user_id = $nurse->user_id;
+        $reference->nurse_id = $nurse->id;
+        $reference->file = $link;
+        $reference->status = 'active';
+        $reference->save();
+      }
+      return $link;
     }
 }
