@@ -59,7 +59,7 @@
                                         </p>
                                     </div>
                                     <div class="form-body">
-                                        <form action="/nurse/add" method="POST" enctype="multipart/form-data">
+                                        <form action="/auth/reg" method="POST" enctype="multipart/form-data">
                                                 <div class="row">
                                                     <div class="col-3">
                                                         <h5 style="text-align: right !important;">PINFL orqali qidirish</h5>
@@ -128,7 +128,7 @@
                                                     </div>
                                                     <div class="col-3">
                                                         <label class="form-label">Ma'lumoti</label>
-                                                        <select class="form-select mb-3" name="degree" id="degree">
+                                                        <select class="form-select mb-3" name="degree" id="degree" required>
                                                             <option>Tanlang</option>
                                                             <option value="1">O'rta maxsus</option>
                                                             <option value="2">Oliy</option>
