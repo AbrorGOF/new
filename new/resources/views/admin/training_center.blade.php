@@ -20,7 +20,6 @@
                     <td>Manzili</td>
                     <td>Direktori</td>
                     <td>Telefon raqami</td>
-                    <td>Qoshimcha</td>
                 </tr>
                 </thead>
                 <tbody class="text-center"></tbody>
@@ -121,13 +120,6 @@
                     {data: 'address', name: 'address'},
                     {data: 'director', name: 'director'},
                     {data: 'phone', name: 'phone'},
-
-                    {
-                        data: 'action',
-                        name: 'action',
-                        orderable: true,
-                        searchable: true
-                    },
                 ]
             });
 

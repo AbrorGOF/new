@@ -132,13 +132,14 @@
                             <h4 class="text-center">Diplom ma'lumotlari</h4>
                             <div class="col-3">
                                 <label class="form-label">Diplom bergan muassasa</label>
-                                <select class="form-select mb-3" name="diploma_institution" id="diploma_institution">
-                                    <option>Tanlang</option>
-                                    @forelse($colleges as $college)
-                                        <option value="{{ $college->id }}" {{ old('diploma_institution') == $college->id ? "selected" :""}}>{{ $college->title }}</option>
-                                    @empty
-                                    @endforelse
-                                </select>
+                              <input name="diploma_institution"  class="form-control mb-3" type="text" value="{{ old('diploma_institution') }}" required>
+{{--                                <select class="form-select mb-3" name="diploma_institution" id="diploma_institution">--}}
+{{--                                    <option>Tanlang</option>--}}
+{{--                                    @forelse($colleges as $college)--}}
+{{--                                        <option value="{{ $college->id }}" {{ old('diploma_institution') == $college->id ? "selected" :""}}>{{ $college->title }}</option>--}}
+{{--                                    @empty--}}
+{{--                                    @endforelse--}}
+{{--                                </select>--}}
                                 @error('diploma_institution')
                                 <span class="text-danger">
                                         <strong>{{ $message }}</strong>

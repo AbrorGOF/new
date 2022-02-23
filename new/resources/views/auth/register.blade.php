@@ -153,17 +153,18 @@
                                                     <h4 class="text-center">Diplom ma'lumotlari</h4>
                                                     <div class="col-3">
                                                         <label class="form-label">Diplom bergan muassasa</label>
-                                                        <select class="form-select mb-3" name="diploma_institution" id="diploma_institution">
-                                                            <option>Tanlang</option>
-                                                            @forelse($polyclinics as $polyclinic)
-                                                                <option value="{{ $polyclinic->id }}" {{ old('diploma_institution') == $polyclinic->id ? "selected" :""}}>{{ $polyclinic->title }}</option>
-                                                            @empty
-                                                            @endforelse
-                                                        </select>
+                                                      <input name="diploma_institution"  class="form-control mb-3" type="text" value="{{ old('diploma_institution') }}" required>
+{{--                                                        <select class="form-select mb-3" name="diploma_institution" id="diploma_institution">--}}
+{{--                                                            <option>Tanlang</option>--}}
+{{--                                                            @forelse($polyclinics as $polyclinic)--}}
+{{--                                                                <option value="{{ $polyclinic->id }}" {{ old('diploma_institution') == $polyclinic->id ? "selected" :""}}>{{ $polyclinic->title }}</option>--}}
+{{--                                                            @empty--}}
+{{--                                                            @endforelse--}}
+{{--                                                        </select>--}}
                                                         @error('diploma_institution')
                                                         <span class="text-danger">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+                                                            <strong>{{ $message }}</strong>
+                                                        </span>
                                                         @enderror
                                                     </div>
                                                     <div class="col-3">

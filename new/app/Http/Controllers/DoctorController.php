@@ -23,11 +23,6 @@ class DoctorController extends Controller
             $data = Doctor::get();
             return Datatables::of($data)
                 ->addIndexColumn()
-                ->addColumn('action', function($row){
-                    $button = '<a href="javascript:void(0)" class="edit btn btn-success btn-sm">Edit</a> <a href="javascript:void(0)" class="delete btn btn-danger btn-sm">Delete</a>';
-                    return $button;
-                })
-                ->rawColumns(['action'])
                 ->make(true);
         }
     }

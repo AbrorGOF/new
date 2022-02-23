@@ -10,7 +10,11 @@
           <div class="card-body">
             <div class="d-flex flex-column align-items-center text-center">
               <div class="mt-3">
-                <h4>{{ $nurse->surname }} {{ $nurse->name }}</h4>
+                <h4>
+                  {{ $nurse->surname }} {{ $nurse->name }}
+                  @if($nurse->status == 'canceled')
+                  @endif
+                </h4>
                 @if($nurse->user_status == 'new' && $nurse->status == 'active')
                   <button type="button" class="btn btn-success"id="acceptNurse">Ruxsat berish</button>
                   <button class="btn btn-outline-danger" id="cancelNurse">Rad etish</button>
@@ -166,7 +170,7 @@
           return !result && 'Ma`lumot togriligini tasdiqlang!'
         }
       }).then(function () {
-        if ($('#swal2-checkbox').val())
+        if ($('#swal2-checkbox').val() == 1)
         {
           axios.get('/nurse/accept/{{ $nurse->id }}')
             .then((response) => {

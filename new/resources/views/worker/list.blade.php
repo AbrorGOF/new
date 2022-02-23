@@ -15,12 +15,11 @@
                 <thead>
                     <tr>
                         <td>#</td>
-                        <td>name</td>
-                        <td>surname</td>
-                        <td>position</td>
-                        <td>region_id</td>
-                        <td>training_center_id</td>
-                        <td>training_center_id</td>
+                        <td>Ism</td>
+                        <td>Familiya</td>
+                        <td>Lavozim</td>
+                        <td>Viloyat</td>
+                        <td>Markaz</td>
                     </tr>
                 </thead>
                 <tbody class="text-center"></tbody>
@@ -195,12 +194,6 @@
                     {data: 'position', name: 'position'},
                     {data: 'region_id', name: 'region_id'},
                     {data: 'training_center_id', name: 'training_center_id'},
-                    {
-                        data: 'action',
-                        name: 'action',
-                        orderable: true,
-                        searchable: true
-                    },
                 ]
             });
 

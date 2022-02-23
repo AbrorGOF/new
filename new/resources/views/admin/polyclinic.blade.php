@@ -19,7 +19,6 @@
                         <th  width="10px" scope="col">#</th>
                         <th scope="col">Nomlanishi</th>
                         <th scope="col">Manzili</th>
-                        <th scope="col">Manzili</th>
                     </tr>
                     </thead>
                 </table>
@@ -138,12 +137,6 @@
                     {data: 'DT_RowIndex', name: 'DT_RowIndex'},
                     {data: 'title', name: 'title'},
                     {data: 'address', name: 'address'},
-                    {
-                        data: 'action',
-                        name: 'action',
-                        orderable: true,
-                        searchable: true
-                    },
                 ]
             });
 

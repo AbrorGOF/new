@@ -33,8 +33,7 @@
                         2. Tuman (shahar): {{ $address['district'] }}<br>
                         3. Hudud: {{ $nurse->area }}
                         <br><br>
-                        Hamkorlikda ishlaydigan birlamchi tibbiyot tashkiloti:_____________________________<br>
-                        ______________________________________________________________________________________
+                        Hamkorlikda ishlaydigan birlamchi tibbiyot tashkiloti: {{ $polyclinic->title }}
                     </p>
                     <table>
                         <tr>

@@ -15,12 +15,11 @@
                 <thead>
                 <tr>
                     <td>#</td>
-                    <td>name</td>
-                    <td>surname</td>
-                    <td>position</td>
-                    <td>polyclinic_id</td>
-                    <td>region_id</td>
-                    <td>training_center_id</td>
+                    <td>Ism</td>
+                    <td>Familiya</td>
+                    <td>Lavozimi</td>
+                    <td>Muassasa</td>
+                    <td>Viloyat</td>
                 </tr>
                 </thead>
                 <tbody class="text-center"></tbody>
@@ -191,12 +190,6 @@
                     {data: 'position', name: 'position'},
                     {data: 'polyclinic_id', name: 'polyclinic_id'},
                     {data: 'region_id', name: 'region_id'},
-                    {
-                        data: 'action',
-                        name: 'action',
-                        orderable: true,
-                        searchable: true
-                    },
                 ]
             });
         });

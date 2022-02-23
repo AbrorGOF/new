@@ -109,6 +109,12 @@ class NurseController extends Controller
         $user->password = bcrypt($request->password);
         $user->save();
 
+        $college_id = DB::table('colleges')->insertGetId([
+          'title' => $request->diploma_institution,
+          'region_id' => 1,
+          'user_id' => $user->id
+        ]);
+
         $licence_file = $request->file('licence_file');
         $licence_filename = 'nurse_licence_' . time() . '.' . $licence_file->getClientOriginalExtension();
         $licence_path = $licence_file->storeAs('public/licences', $licence_filename);
@@ -132,7 +138,7 @@ class NurseController extends Controller
 
         $diploma = new Diplom();
         $diploma->nurse_id = $nurse->id;
-        $diploma->college_id = $request->diploma_institution;
+        $diploma->college_id = $college_id;
         $diploma->number = $request->diploma_number;
         $diploma->date = date('Y-m-d', strtotime($request->diploma_date));
         $diploma->file =  $diploma_path;
@@ -162,11 +168,13 @@ class NurseController extends Controller
         $link = 'storage/references/'.$name;
         $date = getDateInLatin($nurse->created_at);
         $address = getAddress($nurse->pinfl);
+        $polyclinic = Polyclinic::findOrFail($nurse->polyclinic_id);
         $qrcode = 'Hamshira: '.$nurse->name.' '.$nurse->surname.' Pasport: '.$nurse->passport.' Berilgan sana: '.date('d.m.Y', strtotime($nurse->created_at));
         view()->share('date', $date);
         view()->share('nurse', $nurse);
         view()->share('address', $address);
         view()->share('qrcode', $qrcode);
+        view()->share('polyclinic', $polyclinic);
         $pdf = PDF::loadView('reference');
         $path ='public/references/'.$name;
         Storage::put($path, $pdf->output());
