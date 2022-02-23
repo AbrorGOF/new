@@ -170,7 +170,7 @@
           return !result && 'Ma`lumot togriligini tasdiqlang!'
         }
       }).then(function () {
-        if ($('#swal2-checkbox').val() == 1)
+        if ($('#swal2-checkbox').is(":checked"))
         {
           axios.get('/nurse/accept/{{ $nurse->id }}')
             .then((response) => {
