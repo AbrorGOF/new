@@ -44,7 +44,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/report/quarterly/pdf', [QuarterlyController::class, 'viewPdf'])->name('report-quarterly-pdf');
     Route::get('/nurse/list', [NurseController::class, 'list'])->name('nurse-list');
     //    ADMIN  //
-        Route::post('/admin/get/info', [AdminController::class, 'getInfo'])->name('admin-get-info');
+
         Route::get('/admin/polyclinic', [AdminController::class, 'PolyclinicIndex'])->name('polyclinic-index');
         Route::get('/admin/polyclinic/list', [AdminController::class, 'PolyclinicList'])->name('polyclinic-list');
         Route::post('/admin/polyclinic/add', [AdminController::class, 'PolyclinicAdd'])->name('polyclinic-add');
@@ -81,3 +81,4 @@ Route::get('/pdf/reference/view', [PdfController::class, 'viewReference'])->name
 Route::get('/test', function () {
   return createReference(1);
 });
+Route::post('/admin/get/info', [AdminController::class, 'getInfo'])->name('admin-get-info');
