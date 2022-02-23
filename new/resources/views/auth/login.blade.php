@@ -29,7 +29,7 @@
                                 <div class="border p-4 rounded">
                                     <div class="text-center">
                                         <h3 class="">Kabinetga kirish</h3>
-                                        <p>Profilingiz yo'qmi? <a href="{{ route('register') }}">Ro'yxatdan o'tish</a>
+                                        <p>Profilingiz yo'qmi? <a href="/auth/register">Ro'yxatdan o'tish</a>
                                         </p>
                                     </div>
                                     <div class="form-body">
