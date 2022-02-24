@@ -7,13 +7,17 @@ use App\Models\DeskLogs;
 use App\Models\Diplom;
 use App\Models\Nurse;
 use App\Models\NurseActionLog;
+use App\Models\NurseReferences;
+use App\Models\Polyclinic;
 use App\Models\User;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 /**
@@ -294,58 +298,93 @@ class UserController extends Controller
           ], Response::HTTP_BAD_REQUEST);
         }
       }
+      DB::beginTransaction();
+      try {
+        $user = new User();
+        $user->name = $request->name.' '.$request->surname;
+        $user->phone = $request->phone;
+        $user->type = 'nurse';
+        $user->status = 'new';
+        $user->role = 1;
+        $user->password = bcrypt($request->password);
+        $user->save();
 
-      $user = new User();
-      $user->name = $request->name.' '.$request->surname;
-      $user->phone = $request->phone;
-      $user->type = 'nurse';
-      $user->status = 'new';
-      $user->role = 1;
-      $user->password = bcrypt($request->password);
-      $user->save();
+        $college_id = DB::table('colleges')->insertGetId([
+          'title' => $request->diploma_institution,
+          'region_id' => 1,
+          'user_id' => $user->id
+        ]);
 
-      $licence_file = $request->file('licence_file');
-      $licence_filename = 'nurse_licence_' . time() . '.' . $licence_file->getClientOriginalExtension();
-      $licence_path = $licence_file->storeAs('public/licences', $licence_filename);
-      $nurse = new Nurse();
-      $nurse->user_id = $user->id;
-      $nurse->name = $request->name;
-      $nurse->surname = $request->surname;
-      $nurse->patronymic = $request->patronymic;
-      $nurse->area = $request->area;
-      $nurse->passport = $request->passport;
-      $nurse->pinfl = $request->pinfl;
-      $nurse->category_id = $request->category_id;
-      $nurse->licence = $licence_path;
-      $nurse->region_id = '1';
-      $nurse->polyclinic_id = $request->partner_polyclinic;
-      $nurse->save();
+        $licence_file = $request->file('licence_file');
+        $licence_filename = 'nurse_licence_' . time() . '.' . $licence_file->getClientOriginalExtension();
+        $licence_path = $licence_file->storeAs('public/licences', $licence_filename);
+        $nurse = new Nurse();
+        $nurse->user_id = $user->id;
+        $nurse->name = $request->name;
+        $nurse->surname = $request->surname;
+        $nurse->patronymic = $request->patronymic;
+        $nurse->area = $request->area;
+        $nurse->passport = $request->passport;
+        $nurse->pinfl = $request->pinfl;
+        $nurse->category_id = $request->category_id;
+        $nurse->licence = $licence_path;
+        $nurse->region_id = '1';
+        $nurse->polyclinic_id = $request->partner_polyclinic;
+        $nurse->save();
 
-      $diploma_file = $request->file('diploma_file');
-      $diploma_filename = 'nurse_diploma_' . time() . '.' . $diploma_file->getClientOriginalExtension();
-      $diploma_path = $diploma_file->storeAs('public/diplomas', $diploma_filename);
+        $diploma_file = $request->file('diploma_file');
+        $diploma_filename = 'nurse_diploma_' . time() . '.' . $diploma_file->getClientOriginalExtension();
+        $diploma_path = $diploma_file->storeAs('public/diplomas', $diploma_filename);
 
-      $diploma = new Diplom();
-      $diploma->nurse_id = $nurse->id;
-      $diploma->college_id = $request->diploma_institution;
-      $diploma->number = $request->diploma_number;
-      $diploma->date = date('Y-m-d', strtotime($request->diploma_date));
-      $diploma->file =  $diploma_path;
-      $diploma->degree = $request->degree;
-      $diploma->save();
+        $diploma = new Diplom();
+        $diploma->nurse_id = $nurse->id;
+        $diploma->college_id = $college_id;
+        $diploma->number = $request->diploma_number;
+        $diploma->date = date('Y-m-d', strtotime($request->diploma_date));
+        $diploma->file =  $diploma_path;
+        $diploma->degree = $request->degree;
+        $diploma->save();
 
-      $certificate_file = $request->file('certificate_file');
-      $certificate_filename = 'nurse_certificate_' . time() . '.' . $certificate_file->getClientOriginalExtension();
-      $certificate_path = $certificate_file->storeAs('public/certificates', $certificate_filename);
+        $certificate_file = $request->file('certificate_file');
+        $certificate_filename = 'nurse_certificate_' . time() . '.' . $certificate_file->getClientOriginalExtension();
+        $certificate_path = $certificate_file->storeAs('public/certificates', $certificate_filename);
 
-      $certificate = new Certificate();
-      $certificate->nurse_id = $nurse->id;
-      $certificate->training_center_id = $request->certificate_institution;
-      $certificate->number = $request->certificate_number;
-      $certificate->date = date('Y-m-d', strtotime($request->certificate_date));
-      $certificate->end_date = date("Y-m-d", strtotime(date("Y-m-d", strtotime($request->certificate_date)) . " + 3 year"));
-      $certificate->file = $certificate_path;
-      $certificate->save();
+        $certificate = new Certificate();
+        $certificate->nurse_id = $nurse->id;
+        $certificate->training_center_id = $request->certificate_institution;
+        $certificate->number = $request->certificate_number;
+        $certificate->date = date('Y-m-d', strtotime($request->certificate_date));
+        $certificate->end_date = date("Y-m-d", strtotime(date("Y-m-d", strtotime($request->certificate_date)) . " + 3 year"));
+        $certificate->file = $certificate_path;
+        $certificate->save();
+
+        $name = 'nurse_reference_' . time() . '.pdf';
+        $link = 'storage/references/'.$name;
+        $date = getDateInLatin($nurse->created_at);
+        $address = getAddress($nurse->pinfl);
+        $polyclinic = Polyclinic::findOrFail($nurse->polyclinic_id);
+        $qrcode = 'Hamshira: '.$nurse->name.' '.$nurse->surname.' Pasport: '.$nurse->passport.' Berilgan sana: '.date('d.m.Y', strtotime($nurse->created_at));
+        view()->share('date', $date);
+        view()->share('nurse', $nurse);
+        view()->share('address', $address);
+        view()->share('qrcode', $qrcode);
+        view()->share('polyclinic', $polyclinic);
+        $pdf = PDF::loadView('reference');
+        $path ='public/references/'.$name;
+        Storage::put($path, $pdf->output());
+        $nurse->reference = $link;
+        $nurse->save();
+
+        $reference = new NurseReferences();
+        $reference->user_id = $nurse->user_id;
+        $reference->nurse_id = $nurse->id;
+        $reference->file = $link;
+        $reference->status = 'active';
+        $reference->save();
+        DB::commit();
+      }catch (\Exception $e){
+        return redirect()->back()->with(['message'=>$e->getMessage()]);
+      }
       return response()->json(
         [
           'message' => 'User created successfully! Phone number for login.',
