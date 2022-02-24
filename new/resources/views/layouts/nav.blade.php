@@ -11,40 +11,42 @@
     $type = auth()->user()->type;
 @endphp
 <div class="sidebar-wrapper" data-simplebar="true">
-    <div class="sidebar-header">
-        <a href="/home" class="navbar-brand"><i class="fa fa-info"></i> Medic</a>
-            <div class="toggle-icon ms-auto"><i class='bx bx-arrow-to-left'></i>
-            </div>
+  <div class="sidebar-header">
+    <a href="/home" class="navbar-brand"><i class="fa fa-info"></i> Medic</a>
+    <div class="toggle-icon ms-auto"><i class='bx bx-arrow-to-left'></i>
     </div>
+  </div>
     <!--navigation-->
     <ul class="metismenu" id="menu">
-        @if($type == 'nurse')
-            <li class="mm">
-                <a class="has-arrow" href="javascript:;" aria-expanded="true">
-                    <div class="parent-icon"><i class="lni lni-bookmark"></i></div>
-                    <div class="menu-title">Хисоботлар</div>
-                </a>
-                <ul class="mm-collapse" style="">
-                    <li class="">
-                        <a class="" href="/report/journal" aria-expanded="true">
-                            Журнал
-                        </a>
-                    </li>
-                    <li class="">
-                        <a class="" href="/report/quarterly" aria-expanded="true">
-                            Чорак давр
-                        </a>
-                    </li>
-                </ul>
-            </li>
-        @else
-            <li>
-                <a href="/worker">
-                    <div class="parent-icon"><i class="lni lni-users"></i>
-                    </div>
-                    <div class="menu-title">Markaz hodimlari</div>
-                </a>
-            </li>
+      @if($type == 'nurse')
+          <li class="mm">
+              <a class="has-arrow" href="javascript:;" aria-expanded="true">
+                  <div class="parent-icon"><i class="lni lni-bookmark"></i></div>
+                  <div class="menu-title">Хисоботлар</div>
+              </a>
+              <ul class="mm-collapse" style="">
+                  <li class="">
+                      <a class="" href="/report/journal" aria-expanded="true">
+                          Журнал
+                      </a>
+                  </li>
+                  <li class="">
+                      <a class="" href="/report/quarterly" aria-expanded="true">
+                          Чорак давр
+                      </a>
+                  </li>
+              </ul>
+          </li>
+      @else
+        @if($type == 'admin')
+          <li>
+            <a href="/worker">
+                <div class="parent-icon"><i class="lni lni-users"></i>
+                </div>
+                <div class="menu-title">Markaz hodimlari</div>
+            </a>
+          </li>
+        @endif
             <li>
                 <a href="/doctor">
                     <div class="parent-icon"><i class="lni lni-users"></i>
@@ -65,11 +67,13 @@
                     <div class="menu-title">Sozlamalar</div>
                 </a>
                 <ul class="mm-collapse" style="">
+                  @if($type == 'admin')
                     <li class="">
                         <a class="" href="/admin/training/center" aria-expanded="true">
                             Markazlar
                         </a>
                     </li>
+                  @endif
                     <li class="">
                         <a class="" href="/admin/polyclinic" aria-expanded="true">
                             Muassasalar

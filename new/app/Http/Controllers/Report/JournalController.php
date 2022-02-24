@@ -11,16 +11,28 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use stdClass;
+use Yajra\DataTables\Facades\DataTables;
 
 class JournalController extends Controller
 {
     public function index()
     {
-        $patients = ReportJournal::where('user_id', Auth::id())->paginate(10);
-        $categories = DB::table('report_categories')->where('type', '!=', null)->get();
-        return view('report.journal', compact('patients', 'categories'));
+      $categories = DB::table('report_categories')->where('type', '!=', null)->get();
+      return view('report.journal', compact('categories'));
     }
-    public function create(Request $request)
+  public function List(Request $request){
+    $patients = new stdClass();
+    if (Auth::user()->type == 'nurse'){
+      $patients = ReportJournal::where('user_id', Auth::id())->get();
+    }elseif (Auth::user()->type != 'nurse'){
+        $patients = ReportJournal::where('user_id', $request->id)->get();
+    }
+    return Datatables::of($patients)
+      ->addIndexColumn()
+      ->make(true);
+  }
+    public function create(Request $request): \Illuminate\Http\RedirectResponse
     {
         $validator = Validator::make($request->all(), [
             'patient_full_name' => 'required|max:255',

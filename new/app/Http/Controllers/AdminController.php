@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\DeskLogs;
 use App\Models\Polyclinic;
+use App\Models\ReportCategories;
 use App\Models\TrainingCenter;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -105,16 +106,19 @@ class AdminController extends Controller
         $center->save();
         return redirect()->back()->with(['message'=>'success']);
     }
-    public function getInfo(Request $request)
+    public function getInfo(Request $request): array
     {
-        $pinfl = $request->pinfl;
+
+      $pinfl = $request->pinfl;
         if (is_numeric($pinfl) && strlen($pinfl) == 14) {
             $is_in_db = DeskLogs::
                 where('pinfl', '=', $pinfl)
                 ->where('status', '=', '1')
                 ->first();
             if ($is_in_db) {
-                return array('success' => json_decode($is_in_db->response, true));
+              $result = json_decode($is_in_db->response, true);
+              $result['birth_date'] = getBirthDateFromPINFL($pinfl);
+              return array('success' => json_decode($is_in_db->response, true));
             } else {
                 $response = passportInfo($pinfl);
                 $log_id = $response['log_id'];
@@ -129,6 +133,7 @@ class AdminController extends Controller
                     $info['status'] = '1';
                     $info['http_code'] = 200;
                     $info['response'] = $response['result'];
+                    $response['result']['birth_date'] = getBirthDateFromPINFL($pinfl);
                     $send['success'] = $response['result'];
                 } else {
                     $info['status'] = '2';
@@ -143,5 +148,9 @@ class AdminController extends Controller
         } else {
             return ['error' => 'Pinfl is incorrect!'];
         }
+    }
+    public function reportCategories(): \Illuminate\Http\JsonResponse
+    {
+      return response()->json(['categories' => ReportCategories::get()]);
     }
 }

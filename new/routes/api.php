@@ -28,10 +28,11 @@ Route::get('/training/centers', [UserController::class, 'getTrainingCenters']);
 Route::get('/colleges', [UserController::class, 'getColleges']);
 Route::get('/polyclinics', [UserController::class, 'getPolyclinics']);
 Route::group(['middleware' => 'auth:api'], function () {
-    Route::post('logout', [PassportController::class, 'logout']);
-    Route::get('check/user/tokens', [PassportController::class, 'checkUserTokens']);
-    Route::get('detail', [PassportController::class, 'detail']);
+  Route::post('logout', [PassportController::class, 'logout']);
+  Route::get('check/user/tokens', [PassportController::class, 'checkUserTokens']);
+  Route::get('detail', [PassportController::class, 'detail']);
   Route::get('/patients', [ReportController::class, 'getPatients']);
   Route::post('/patient/add', [ReportController::class, 'createPatient']);
+  Route::post('/get/report/categories', [AdminController::class, 'reportCategories']);
 });
 Route::post('/test', [AdminController::class, 'index']);

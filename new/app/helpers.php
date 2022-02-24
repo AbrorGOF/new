@@ -306,4 +306,16 @@ function webValidator($request, $options){
         return true;
     }
 }
+function getBirthDateFromPINFL($pinfl): string
+{
+  $day = substr($pinfl, 1, 2);
+  $month = substr($pinfl, 3, 2);
+  $year = substr($pinfl, 5, 2);
+  if ($year[0] < 5){
+    $year = '20'.$year;
+  }else{
+    $year = '19'.$year;
+  }
+  return $day.'.'.$month.'.'.$year;
+}
 
