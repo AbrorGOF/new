@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use GuzzleHttp\Exception\BadResponseException;
 
@@ -142,5 +144,43 @@ class PassportController extends Controller
             'refresh_token' =>$refresh_token,
             'status' => 200,
         ], 200);
+    }
+    public function changePassword(Request $request): \Illuminate\Http\JsonResponse
+    {
+        $validator=Validator::make($request->all(), [
+          'old_password' => 'required|min:8',
+          'new_password' => 'required|min:8',
+          'new_password_conf' => 'required|same:new_password',
+        ]);
+        if ($validator->fails()) {
+            foreach ($validator->errors()->toArray() as $key => $value) {
+              $error['field_name'] = $key;
+              $error['message'] = $value['0'];
+              $errors[] = $error;
+            }
+            return response()->json([
+              'errors' => $errors,
+              'status' => Response::HTTP_BAD_REQUEST,
+            ], Response::HTTP_BAD_REQUEST);
+        }else{
+          $request_data = $request->all();
+          $current_password = Auth::User()->password;
+          if(Hash::check($request_data['old_password'], $current_password)){
+            $user_id = Auth::id();
+            $user = User::find($user_id);
+            $user->password = Hash::make($request_data['new_password']);
+            $user->save();
+            if ($user->save()) {
+              return response()->json(['message' => 'Пароль был изменен!']);
+            }
+          }else{
+            $error = array('old_password' => 'Пожалуйста, введите правильный текущий пароль');
+            $errors[] = $error;
+            return response()->json([
+              'errors' => $errors,
+              'status' => Response::HTTP_BAD_REQUEST,
+            ], Response::HTTP_BAD_REQUEST);
+          }
+        }
     }
 }

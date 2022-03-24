@@ -1,7 +1,10 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\NewsController;
+use App\Http\Controllers\NurseController;
 use App\Http\Controllers\PassportController;
+use App\Http\Controllers\Report\QuarterlyController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -29,10 +32,14 @@ Route::get('/colleges', [UserController::class, 'getColleges']);
 Route::get('/polyclinics', [UserController::class, 'getPolyclinics']);
 Route::group(['middleware' => 'auth:api'], function () {
   Route::post('logout', [PassportController::class, 'logout']);
+  Route::post('password/change', [PassportController::class, 'changePassword']);
   Route::get('check/user/tokens', [PassportController::class, 'checkUserTokens']);
   Route::get('detail', [PassportController::class, 'detail']);
   Route::get('/patients', [ReportController::class, 'getPatients']);
   Route::post('/patient/add', [ReportController::class, 'createPatient']);
   Route::post('/get/report/categories', [AdminController::class, 'reportCategories']);
+  Route::post('/nurse/certificate', [NurseController::class, 'nurseCertificate']);
+  Route::post('/report/quarterly', [QuarterlyController::class, 'getInfo']);
+  Route::post('/news', [NewsController::class, 'getNews']);
 });
 Route::post('/test', [AdminController::class, 'index']);

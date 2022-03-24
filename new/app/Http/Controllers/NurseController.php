@@ -155,7 +155,7 @@ class NurseController extends Controller
         $certificate->number = $request->certificate_number;
         $certificate->date = date('Y-m-d', strtotime($request->certificate_date));
         $certificate->end_date = date("Y-m-d", strtotime(date("Y-m-d", strtotime($request->certificate_date)) . " + 3 year"));
-        $certificate->file = $certificate_path;
+        $certificate->file = 'storage/certificates/'.$certificate_filename;
         $certificate->save();
 
         $action_log = new NurseActionLog();
@@ -306,5 +306,15 @@ class NurseController extends Controller
           'status'=>'canceled'
         ]
       );
+    }
+    public function nurseCertificate(): \Illuminate\Http\JsonResponse
+    {
+        $id = Auth::id();
+        $nurse = Nurse::where('user_id', $id)->first();
+        $nurse_id = $nurse->id;
+        $certificate = NurseReferences::where('nurse_id', $nurse_id)->first();
+        $data['link'] = $certificate->file;
+        $data['status'] = $certificate->status;
+        return response()->json($data);
     }
 }

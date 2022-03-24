@@ -29,15 +29,33 @@ class QuarterlyController extends Controller
 
     public function createPdf($id)
     {
-        $client = Client::findOrFail($id);
-        if ($client) {
-            view()->share('client', $client);
-            $pdf = PDF::loadView('client_pdf', $client);
+      $year = date('Y');
+      $user_id = Auth::id();
+      $categories = ReportCategories::with(['quarterlies'=>function($q) use ($user_id,$year){
+        $q->where('user_id', '=',$user_id);
+        $q->where('year','=',$year);
+      }])->orderBy('type', 'asc')->get();
+        if ($categories) {
+            view()->share('client', $categories);
+            $pdf = PDF::loadView('client_pdf', $categories);
 
             // download PDF file with download method
-            return $pdf->download($client->id . '.pdf');
+            return $pdf->download(Auth::id() . '.pdf');
         } else {
             abort(404, 'Client not found!');
         }
     }
+
+  public function getInfo(): \Illuminate\Http\JsonResponse
+  {
+    $year = date('Y');
+    $user_id = Auth::id();
+    $categories = ReportCategories::with(['quarterlies'=>function($q) use ($user_id,$year){
+      $q->where('user_id', '=',$user_id);
+      $q->where('year','=',$year);
+    }])->orderBy('type', 'asc')->get();
+    return response()->json($categories);
+  }
+
+
 }
