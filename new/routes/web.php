@@ -38,11 +38,12 @@ Auth::routes();
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/logout', 'App\Http\Controllers\Auth\LoginController@logout')->name('logout');
     Route::get('/home', [HomeController::class, 'index'])->name('home');
-    Route::get('/report/journal', [JournalController::class, 'index'])->name('report-journal');
-    Route::get('/report/journal/list', [JournalController::class, 'list'])->name('report-journal-list');
+    Route::get('/report/journal/{id?}', [JournalController::class, 'index'])->name('report-journal');
+    Route::get('/report/list', [JournalController::class, 'list'])->name('report-journal-list');
+    Route::get('/report/journal/list/{id}', [JournalController::class, 'list'])->name('report-journal-list-id');
     Route::post('/report/journal/add', [JournalController::class, 'create'])->name('report-journal-add');
-    Route::get('/report/quarterly', [QuarterlyController::class, 'viewPdf'])->name('report-quarterly');
-    Route::get('/report/quarterly/pdf', [QuarterlyController::class, 'viewPdf'])->name('report-quarterly-pdf');
+    Route::get('/report/quarterly/{id?}', [QuarterlyController::class, 'viewPdf'])->name('report-quarterly');
+    Route::get('/report/quarterly/pdf/{id?}', [QuarterlyController::class, 'viewPdf'])->name('report-quarterly-pdf');
     Route::get('/nurse/list', [NurseController::class, 'list'])->name('nurse-list');
     //    ADMIN  //
 
