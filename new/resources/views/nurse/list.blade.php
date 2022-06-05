@@ -17,6 +17,8 @@
                                 <tr>
                                     <th>#</th>
                                     <th>F.I.O</th>
+                                    <th>Bemorlari</th>
+                                    <th>Chorak davr</th>
                                     <th>Telefon</th>
                                     <th>Hudud </th>
                                     <th>Pasport</th>
@@ -49,6 +51,8 @@
                 columns: [
                     {data: 'DT_RowIndex', name: 'DT_RowIndex'},
                     {data: 'full_name', name: 'full_name'},
+                    {data: 'full_name', name: 'full_name'},
+                    {data: 'full_name', name: 'full_name'},
                     {data: 'phone.phone', name: 'phone'},
                     {data: 'area', name: 'area'},
                     {data: 'passport', name: 'passport'},
@@ -62,7 +66,19 @@
                       }
                   },
                   {
-                    "aTargets": [5],
+                    "aTargets": [2],
+                    "mRender": function (data, type, full) {
+                      return `<a href="/report/journal/${full.user_id}">Ma'lumotlarni ko'rish</a>`
+                    }
+                  },
+                  {
+                    "aTargets": [3],
+                    "mRender": function (data, type, full) {
+                      return `<a href="/report/quarterly/${full.user_id}">Ma'lumotlarni ko'rish</a>`
+                    }
+                  },
+                  {
+                    "aTargets": [7],
                     "mRender": function (data, type, full) {
                       let status;
                       if (data === 'active'){

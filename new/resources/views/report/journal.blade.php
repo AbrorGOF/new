@@ -52,7 +52,7 @@
       const table = $('#reportTable').DataTable({
         processing: true,
         serverSide: true,
-        ajax: "/report/journal/list",
+        ajax: "{{ $link }}",
         columns: [
           {data: 'DT_RowIndex', name: 'DT_RowIndex'},
           {data: 'patient_full_name', name: 'patient_full_name'},

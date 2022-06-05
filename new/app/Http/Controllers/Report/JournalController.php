@@ -16,22 +16,23 @@ use Yajra\DataTables\Facades\DataTables;
 
 class JournalController extends Controller
 {
-    public function index()
+    public function index($id = false)
     {
+      $link = ($id === false) ? '/report/list' : '/report/journal/list/'.$id;
       $categories = DB::table('report_categories')->where('type', '!=', null)->get();
-      return view('report.journal', compact('categories'));
+      return view('report.journal', compact('categories', 'link'));
     }
-  public function List(Request $request){
-    $patients = new stdClass();
-    if (Auth::user()->type == 'nurse'){
-      $patients = ReportJournal::where('user_id', Auth::id())->get();
-    }elseif (Auth::user()->type != 'nurse'){
-        $patients = ReportJournal::where('user_id', $request->id)->get();
+    public function list($id = false){
+      $patients = new stdClass();
+      if (Auth::user()->type == 'nurse'){
+        $patients = ReportJournal::where('user_id', Auth::id())->get();
+      }elseif (Auth::user()->type != 'nurse'){
+          $patients = ReportJournal::where('user_id', $id)->get();
+      }
+      return Datatables::of($patients)
+        ->addIndexColumn()
+        ->make(true);
     }
-    return Datatables::of($patients)
-      ->addIndexColumn()
-      ->make(true);
-  }
     public function create(Request $request): \Illuminate\Http\RedirectResponse
     {
         $validator = Validator::make($request->all(), [
