@@ -243,7 +243,7 @@ class UserController extends Controller
   /**
    * @unauthenticated
    */
-  public function register(Request $request): \Illuminate\Http\JsonResponse
+  public function register(Request $request)
   {
       $options = [
         'name' => 'required|max:255',
@@ -383,7 +383,7 @@ class UserController extends Controller
         $reference->save();
         DB::commit();
       }catch (\Exception $e){
-        return redirect()->back()->with(['message'=>$e->getMessage()]);
+        return  response()->json(['message'=>$e->getMessage()]);
       }
       return response()->json(
         [
