@@ -58,8 +58,8 @@ class AdminController extends Controller
             'title' => 'required',
             'address' => 'required',
             'phone'  => 'required',
-            'training_center_id'  => 'required',
-            'region_id'  => 'required'
+            'training_center_id'  => 'required|integer',
+            'region_id'  => 'required|integer'
         ];
         $validator = webValidator($request, $options);
         if ($validator !== true){

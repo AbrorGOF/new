@@ -45,9 +45,9 @@
                                                 <div class="col-sm-9">
                                                     <input type="text" class="form-control" id="title" name="title">
                                                     @error('title')
-                                                    <span class="text-danger">
-                                                                <strong>{{ $message }}</strong>
-                                                            </span>
+                                                        <span class="text-danger">
+                                                            <strong>{{ $message }}</strong>
+                                                        </span>
                                                     @enderror
                                                 </div>
                                             </div>
@@ -65,7 +65,7 @@
                                             <div class="row mb-3">
                                                 <label class="col-sm-3 col-form-label">Malaka oshirish markazi</label>
                                                 <div class="col-sm-9">
-                                                    <select class="form-select mb-3" name="training_center_id" id="training_center_id">
+                                                    <select class="form-select mb-3" name="training_center_id" id="training_center_id" required>
                                                         <option>Tanlang</option>
                                                         @forelse($centers as $center)
                                                             <option value="{{ $center->id }}" >{{ $center->title }}</option>
@@ -82,7 +82,7 @@
                                             <div class="row mb-3">
                                                 <label class="col-sm-3 col-form-label">Viloyat</label>
                                                 <div class="col-sm-9">
-                                                    <select class="form-select mb-3" name="region_id" id="region_id">
+                                                    <select class="form-select mb-3" name="region_id" id="region_id" required>
                                                         <option>Tanlang</option>
                                                         @forelse($regions as $region)
                                                             <option value="{{ $region->id }}" >{{ $region->title }}</option>
